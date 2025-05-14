@@ -1,3 +1,13 @@
 {
-    
+    "navbar":{
+        "user":"User",
+        "search":"Search",
+        "orders":"Orders",
+        "status":"Status",
+        "analysis": "Sales analysis",
+        "replenishment":"Replenishment",
+        "record": "Record",
+        "alert": "Alerts",
+        "batch": "Batch management"
+    }
 }

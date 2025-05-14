@@ -3,10 +3,16 @@ import './style.css'
 import App from './App.vue'
 import i18n from "./i18n";
 import PrimeVue from 'primevue/config';
-import router from './router/index.js';
+import Menu from 'primevue/menu';
+import Avatar from 'primevue/avatar';
+import SelectButton from 'primevue/selectbutton';
+import 'primeicons/primeicons.css'
 
 const app = createApp(App); 
 app.use(i18n);
-app.use(PrimeVue);
-app.use(router);
+app.use(PrimeVue, { ripple: true });
+
+app.component("pv-menu", Menu);
+app.component("pv-avatar", Avatar); 
+app.component("pv-selectbutton", SelectButton);
 app.mount('#app');

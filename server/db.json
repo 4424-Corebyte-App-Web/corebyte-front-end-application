@@ -405,5 +405,116 @@
       "batch": 16,
       "stock": 840
     }
+  ],
+  "orders": [
+    {
+      "id": "1001",
+      "client": "Bodega El Sol",
+      "date": "2025-06-01",
+      "product": "Vino Tinto Reserva 2020",
+      "quantity": 10,
+      "total": 1200,
+      "imageUrl": "https://ferrand.com.pe/cdn/shop/files/B3DC6785-9365-4C2B-A774-E75DE90C526B.png?crop=center&height=480&v=1729894924&width=480"
+    },
+    {
+      "id": "1002",
+      "client": "Viñedos Santa Clara",
+      "date": "2025-06-05",
+      "product": "Vino Blanco Chardonnay",
+      "quantity": 8,
+      "total": 880,
+      "imageUrl": "https://plazavea.vteximg.com.br/arquivos/ids/493484-1000-1000/932731.jpg"
+    },
+    {
+      "id": "1003",
+      "client": "Distribuidora Andina",
+      "date": "2025-06-08",
+      "product": "Vino Rosé Dulce",
+      "quantity": 12,
+      "total": 1320,
+      "imageUrl": "https://acdn-us.mitiendanube.com/stores/001/211/660/products/photoroom_20240208_144642-8816acd89246110ef917074167256714-480-0.webp"
+    },
+    {
+      "id": "1004",
+      "client": "La Casa del Vino",
+      "date": "2025-06-10",
+      "product": "Vino Espumante Brut",
+      "quantity": 6,
+      "total": 780,
+      "imageUrl": "https://licoreria247.pe/wp-content/uploads/2022/11/Espumante-TABERNERO-Brut-Botella-de-750ml.jpg.webp"
+    },
+    {
+      "id": "1005",
+      "client": "Hotel Viña Real",
+      "date": "2025-06-12",
+      "product": "Vino Malbec Premium",
+      "quantity": 15,
+      "total": 2250,
+      "imageUrl": "https://oechsle.vteximg.com.br/arquivos/ids/16425995-1000-1000/image-e3361f30a9294973ae0a7b45e3ab908f.jpg?v=638325077806870000"
+    },
+    {
+      "id": "1006",
+      "client": "Restaurante El Parrillón",
+      "date": "2025-06-15",
+      "product": "Vino Cabernet Sauvignon",
+      "quantity": 20,
+      "total": 3000,
+      "imageUrl": "https://licoreriasunidas.pe/cdn/shop/products/b310be7d91c047a8a912495bbfe89124.webp?v=1677856389&width=400"
+    },
+    {
+      "id": "1007",
+      "client": "Bodega La Cosecha",
+      "date": "2025-06-17",
+      "product": "Vino Syrah Selección",
+      "quantity": 10,
+      "total": 1500,
+      "imageUrl": "https://licoreriasunidas.pe/cdn/shop/products/vino-tributo-seleccion-familia-syrah-750ml.webp?v=1677962863&width=500"
+    },
+    {
+      "id": "1008",
+      "client": "Vinoteca Perú",
+      "date": "2025-06-20",
+      "product": "Vino Blanco Seco",
+      "quantity": 5,
+      "total": 525,
+      "imageUrl": "https://delabodega.pe/wp-content/uploads/2020/06/sauvignon-blanc-89-puntos-.png"
+    },
+    {
+      "id": "1009",
+      "client": "Distribuciones Del Valle",
+      "date": "2025-06-22",
+      "product": "Vino Pinot Noir",
+      "quantity": 7,
+      "total": 980,
+      "imageUrl": "https://metroio.vtexassets.com/arquivos/ids/418792-1200-auto?v=638279378547900000&width=1200&height=auto&aspect=true"
+    },
+    {
+      "id": "1010",
+      "client": "Supermercado Los Viñedos",
+      "date": "2025-07-01",
+      "product": "Vino Rosado Joven",
+      "quantity": 9,
+      "total": 990,
+      "imageUrl": "https://oechsle.vteximg.com.br/arquivos/ids/7245665-1000-1000/image-7953e184bc50447ebe0645d7b98573cc.jpg?v=637805655705500000"
+    },
+    {
+      "id": "1011",
+      "client": "Restaurante Mar & Vino",
+      "date": "2025-07-05",
+      "product": "Vino Blanco Sauvignon Blanc",
+      "quantity": 6,
+      "total": 720,
+      "imageUrl": "https://plazavea.vteximg.com.br/arquivos/ids/29321950-1000-1000/925177.jpg"
+    },
+    {
+      "id": "1012",
+      "client": "Vinoteca Andina",
+      "date": "2025-07-08",
+      "product": "Vino Tinto Crianza",
+      "quantity": 14,
+      "total": 1820,
+      "imageUrl": "https://tabernero.vteximg.com.br/arquivos/ids/155503-1000-1000/9010005981_1.jpg?v=637278351442070000"
+    }
   ]
+
 }

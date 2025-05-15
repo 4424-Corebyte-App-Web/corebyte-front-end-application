@@ -9,5 +9,9 @@
         "record": "Registro",
         "alert": "Alertas",
         "batch": "Gestion de lotes"
+    },
+    "titles":{
+        "state":"Estado",
+        "record":"Historial"
     }
 }

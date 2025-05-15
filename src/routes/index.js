@@ -1,18 +1,33 @@
-import { createRouter, createWebHistory} from "vue-router";
-
-const PageNotFoundComponent = () => import("../public/pages/page-not-found.component.vue");
-const StatusComponent = ()=> import("../history-status/pages/status.component.vue");
-const RecordComponent = () => import("../history-status/pages/record.component.vue");    
+import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
-    {   path: "/status", name:'status', component: StatusComponent, meta: {title: "Status"} },
-    {   path: "/record", name:'record', component: RecordComponent, meta: {title: "Record"} },
-    {   path: "/:pathMatch(.*)*", name:'not-found', component: PageNotFoundComponent, meta: {title: "Page Not Found"}},
-]
+    {
+        path: '/',
+        redirect: '/orders'
+    },
+    {
+        path: '/orders',
+        name: 'Orders',
+        component: () => import('./../orders/pages/order-table.component.vue'),
+    },
+    {
+        path: '/orders/details/:id',
+        name: 'OrderDetails',
+        component: () => import('./../orders/pages/view-details-orders.component.vue'),
+
+    }
+    ,
+    {
+        path: '/orders/register',
+        name: 'RegisterOrder',
+        component: () => import('../orders/pages/register-order.component.vue') // o el archivo correcto
+    }
+
+];
 
 const router = createRouter({
     history: createWebHistory(),
-    routes: routes
-})
+    routes
+});
 
 export default router;

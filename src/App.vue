@@ -16,11 +16,12 @@ export default {
 </script>
 
 <template>
-  <div style="display: flex;">
-    <side-navbar :items="items" />
-    <div style="flex-grow: 1; padding: 1rem;">
-      <router-view/>
-    </div>
+  <div class="app-container" style="display: flex;">
+    <side-navbar />
+    <main style="flex: 1; padding: 1rem;">
+
+      <router-view />
+    </main>
   </div>
 </template>
 

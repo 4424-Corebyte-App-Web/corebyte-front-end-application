@@ -9,6 +9,7 @@ import SelectButton from 'primevue/selectbutton';
 import 'primeicons/primeicons.css';
 import AutoComplete from 'primevue/autocomplete';
 import Button from 'primevue/button';
+import ToastService from 'primevue/toastservice';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import router from './routes/index.js';
@@ -21,7 +22,8 @@ import autoTable from 'jspdf-autotable';
 
 const app = createApp(App); 
 app.use(i18n);
-app.use(PrimeVue);
+app.use(PrimeVue, { ripple: true });
+app.use(ToastService);
 app.use(router);
 app.component("pv-menu", Menu);
 app.component("pv-avatar", Avatar); 

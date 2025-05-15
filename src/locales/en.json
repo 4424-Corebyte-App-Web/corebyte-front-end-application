@@ -9,5 +9,9 @@
         "record": "Record",
         "alert": "Alerts",
         "batch": "Batch management"
+    },
+    "titles":{
+        "state":"States",
+        "record":"Record"
     }
 }

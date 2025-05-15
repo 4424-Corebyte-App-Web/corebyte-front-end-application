@@ -40,6 +40,7 @@ const items = ref([
             {
                 label: t('navbar.status'),
                 icon: 'pi pi-check-circle',
+                to: '/status',
             },
             {
                 label: t('navbar.analysis'),
@@ -52,6 +53,7 @@ const items = ref([
             {
                 label: t('navbar.record'),
                 icon: 'pi pi-file',
+                to: '/record',
             },
             {
                 label: t('navbar.alert'),
@@ -97,8 +99,14 @@ const items = ref([
             <template #submenulabel="{ item }">
                 <span class="sub-label">{{ item.label }}</span>
             </template>
-            <template #item="{ item, props }">
-                <a v-ripple :class="['menu-item', item.class]" v-bind="props.action">
+            <template #item="{ item, props: itemProps }">
+                <router-link v-if="item.to" :to="item.to" custom v-slot="{ href, navigate, isActive, isExactActive }">
+                    <a v-ripple :href="href" @click="navigate" :class="['menu-item', item.class, {'active-link': isActive, 'active-exact-link': isExactActive}]" v-bind="itemProps.action">
+                        <i :class="[item.icon]" />
+                        <span>{{ item.label }}</span>
+                    </a>
+                </router-link>
+                <a v-else v-ripple :class="['menu-item', item.class]" v-bind="itemProps.action">
                     <i :class="[item.icon]" />
                     <span>{{ item.label }}</span>
                 </a>

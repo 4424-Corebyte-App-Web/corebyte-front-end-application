@@ -56,7 +56,8 @@ The API endpoints should be access at `http://localhost:3000`. The current API r
 - `http://localhost:3000/profiles`
 - `http://localhost:3000/users`
 - `http://localhost:3000/products`
-- `http://localhost:3000/records`   
+- `http://localhost:3000/records`
+- `https://localhost:3001/batches`    
 ```
 
 ## Build

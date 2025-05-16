@@ -29,7 +29,7 @@ This project was generated using [Vue](https://github.com/vuejs/vue-cli) version
 
 It also uses the following dependencies:
 
-- Angular Material (https://primevue.org/vite/)
+- Prime vue (https://primevue.org/vite/)
 - i18n language (https://vue-i18n.intlify.dev/guide/installation.html)
 - Vue axios latest version (https://www.npmjs.com/package/vue-axios)
 - JsPDF (https://www.npmjs.com/package/jspdf)

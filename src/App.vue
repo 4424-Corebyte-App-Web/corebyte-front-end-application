@@ -1,7 +1,12 @@
 <script>
+import SideNavbar from './public/components/side-navbar.component.vue'
 import SideNavbar from './public/components/side-navbar.component.vue';
-
 export default {
+    components: {SideNavbar},
+    data(){
+      return {
+        items:[]
+      }
   name: 'App',
   components: { SideNavbar },
   data() {
@@ -22,6 +27,7 @@ export default {
 </script>
 
 <template>
+  <side-navbar/>
   <div style="display: flex;">
     <!-- Mostrar sidebar solo si el usuario está logueado -->
     <side-navbar v-if="isLoggedIn" :items="items" />
@@ -35,4 +41,3 @@ export default {
 </template>
 
 <style scoped>
-</style>

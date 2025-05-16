@@ -1,3 +1,4 @@
+<<<<<<< feature/authentication
 
 import { createRouter, createWebHistory } from "vue-router";
 import RecoverCode from "../authentication/pages/recover-code.vue";
@@ -5,7 +6,6 @@ import RecoverCode from "../authentication/pages/recover-code.vue";
 // Public Pages
 const LandingComponent = () => import('../public/pages/landing.component.vue');
 const PageNotFoundComponent = () => import("../public/pages/page-not-found.component.vue");
-
 // History Status
 const StatusComponent = () => import("../history-status/pages/status.component.vue");
 const RecordComponent = () => import("../history-status/pages/record.component.vue");
@@ -40,6 +40,33 @@ const routes = [
     { path: "/password-recovered", name: "passwordrecovered", component: PasswordRecovered, meta: { title: "Contraseña Recuperada" } },
 
     { path: '/password-recovered', name: 'passwordrecovered', component: PasswordRecovered },
+=======
+import { createRouter, createWebHistory } from 'vue-router';
+
+const routes = [
+    {
+        path: '/',
+        redirect: '/orders'
+    },
+    {
+        path: '/orders',
+        name: 'Orders',
+        component: () => import('./../orders/pages/order-table.component.vue'),
+    },
+    {
+        path: '/orders/details/:id',
+        name: 'OrderDetails',
+        component: () => import('./../orders/pages/view-details-orders.component.vue'),
+
+    }
+    ,
+    {
+        path: '/orders/register',
+        name: 'RegisterOrder',
+        component: () => import('../orders/pages/register-order.component.vue') // o el archivo correcto
+    }
+
+>>>>>>> develop
 ];
 
 const router = createRouter({

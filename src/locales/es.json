@@ -1,14 +1,39 @@
 {
     "navbar":{
-        "user":"Usuario",
-        "search":"Buscar",
+        "user":"Perfil",
         "orders":"Pedidos",
         "status":"Estado",
-        "analysis": "Análisis",
+        "analysis": "Venta y Análisis",
         "replenishment":"Reponer",
         "record": "Registro",
         "alert": "Alertas",
-        "batch": "Gestion de lotes"
+        "batch": "Gestion de lotes",
+        "log-out": "Cerrar Sesión"
+    },
+    "login":{
+        "confirmation":"Ingrese el código de verificación enviado a su correo electrónico.",
+        "send":"Enviar",
+        "forgot":"Recordarme?",
+        "login":"Iniciar sesión",
+        "password":"¿Olvidaste tu contraseña?",
+        "user":"Hola, usuario",
+        "text":"Regístrate con tu cuenta personal para usar todas las características de la herramienta",
+        "register":"Registrarte"    
+    },
+    "password-recover":{
+        "title":"Contraseña Recuperada",
+        "text":"Ahora puedes volver a iniciar sesión.",
+        "button":"Volver al Login"
+    },
+    "recover":{
+        "title":"Recuperar Contraseña",
+        "text":"Ingrese su correo electrónico y le enviaremos un código de verificación.",
+        "button":"Enviar"
+    },
+    "register":{
+        "title":"Bienvenido de nuevo",
+        "text":"Ingresa tus datos personales para usar todas las características de la herramienta",
+        "login":"Iniciar sesión"
     },
     "titles":{
         "state":"Estado",

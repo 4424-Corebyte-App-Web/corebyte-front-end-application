@@ -114,7 +114,7 @@ const routes = [
                 meta: { title: "Record" } 
             },
     
-    // Ruta 404 debe ir al final
+
     { 
         path: "/:pathMatch(.*)*", 
         name: 'not-found', 
@@ -128,9 +128,9 @@ const router = createRouter({
     routes: routes
 })
 
-// Guardia de navegación para rutas protegidas
+
 router.beforeEach((to, from, next) => {
-    const isAuthenticated = localStorage.getItem('token') // Ajusta esto según tu método de autenticación
+    const isAuthenticated = localStorage.getItem('token') 
     
     if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
         next({ name: 'login' })

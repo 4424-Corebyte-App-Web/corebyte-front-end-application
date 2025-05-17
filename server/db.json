@@ -1,9 +1,61 @@
 {
   "profiles": [],
+  "batches": [
+    {
+      "id": 1,
+      "name": "Lote 001",
+      "estado": "fermentation",
+      "grapes": "Cabernet Sauvignon",
+      "quantity": 1000,
+      "startDate": "2025-05-01",
+      "currentStage": "fermentation",
+      "status": "active"
+    },
+    {
+      "id": 2,
+      "name": "Lote 002",
+      "estado": "pressing",
+      "grapes": "Malbec",
+      "quantity": 1200,
+      "startDate": "2025-04-25",
+      "currentStage": "pressing",
+      "status": "active"
+    },
+    {
+      "id": 3,
+      "name": "Lote 003",
+      "estado": "clarification",
+      "grapes": "Merlot",
+      "quantity": 800,
+      "startDate": "2025-04-15",
+      "currentStage": "clarification",
+      "status": "active"
+    },
+    {
+      "id": 4,
+      "name": "Lote 004",
+      "estado": "aging",
+      "grapes": "Syrah",
+      "quantity": 900,
+      "startDate": "2025-04-05",
+      "currentStage": "aging",
+      "status": "active"
+    },
+    {
+      "id": 5,
+      "name": "Lote 005",
+      "estado": "bottled",
+      "grapes": "Rosé",
+      "quantity": 700,
+      "startDate": "2025-03-20",
+      "currentStage": "bottled",
+      "status": "completed"
+    }
+  ],
   "users": [
     {
-      "id": "1",
-      "name": "Juan"
+      "email": "admin@example.com",
+      "password": "password123"
     }
   ],
   "products": [
@@ -14,7 +66,7 @@
       "product": "Cabernet Sauvignon",
       "amount": 6,
       "total": 1200,
-      "status": "Pendiente"
+      "status": "Entregado"
     },
     {
       "id": "1002",
@@ -23,7 +75,7 @@
       "product": "Malbec",
       "amount": 12,
       "total": 360,
-      "status": "Pendiente"
+      "status": "Entregado"
     },
     {
       "id": "1003",
@@ -408,15 +460,6 @@
   ],
   "orders": [
     {
-      "id": "1001",
-      "client": "Bodega El Sol",
-      "date": "2025-06-01",
-      "product": "Vino Tinto Reserva 2020",
-      "quantity": 10,
-      "total": 1200,
-      "imageUrl": "https://ferrand.com.pe/cdn/shop/files/B3DC6785-9365-4C2B-A774-E75DE90C526B.png?crop=center&height=480&v=1729894924&width=480"
-    },
-    {
       "id": "1002",
       "client": "Viñedos Santa Clara",
       "date": "2025-06-05",
@@ -516,5 +559,4 @@
       "imageUrl": "https://tabernero.vteximg.com.br/arquivos/ids/155503-1000-1000/9010005981_1.jpg?v=637278351442070000"
     }
   ]
-
 }

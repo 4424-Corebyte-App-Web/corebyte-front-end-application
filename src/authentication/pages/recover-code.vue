@@ -20,8 +20,8 @@ function handleSubmit() {
 <template>
   <div class="recover-container">
     <div class="overlay">
-      <h2>Recuperar Contraseña</h2>
-      <p>Escriba su correo electrónico y le enviaremos un código de verificación.</p>
+      <h2>{{ $t("recover.title") }}</h2>
+      <p>{{ $t("recover.text") }}</p>
       <input
           type="email"
           v-model="email"
@@ -29,7 +29,7 @@ function handleSubmit() {
           class="email-input"
       />
       <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
-      <button @click="handleSubmit" class="submit-btn">Enviar</button>
+      <button @click="handleSubmit" class="submit-btn">{{$t("recover.button") }}</button>
     </div>
   </div>
 </template>
@@ -38,7 +38,7 @@ function handleSubmit() {
 .recover-container {
   width: 100vw;
   height: 100vh;
-  background-image: url('/src/assets/recover-bg.png'); /* Cambia esta ruta */
+  background-image: url('/src/assets/recover-bg.png'); 
   background-size: cover;
   background-position: center;
   position: relative;

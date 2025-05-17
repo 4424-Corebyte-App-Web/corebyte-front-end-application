@@ -1,41 +1,64 @@
-import http from '/src/shared/services/http.instance.js';
+import axios from 'axios';
 
-export async function getOrders() {
-    try {
-        const response = await http.get('/orders');
-        return response.data;
-    } catch (error) {
-        console.error('Error al cargar órdenes:', error);
-        return [];
-    }
-}
-export async function addOrder(order) {
-    try {
-        const response = await http.post('/orders', order);
-        return response.data; // la orden creada (opcional)
-    } catch (error) {
-        console.error('Error al agregar la orden:', error);
-        throw error;
-    }
-}
+const API_URL = 'http://localhost:3000';
 
 
-export async function getOrderById(id) {
-    try {
-        const response = await http.get(`/orders/${id}`);
-        return response.data;
-    } catch (error) {
-        console.error('Error al obtener la orden por ID:', error);
-        throw new Error('No se encontró la orden');
-    }
-}
+export const getOrders = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/orders`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener las órdenes:', error);
+    throw error;
+  }
+};
 
-export async function deleteOrderById(id) {
-    try {
-        await http.delete(`/orders/${id}`);
-        return true;
-    } catch (error) {
-        console.error('Error al eliminar la orden:', error);
-        throw error;
-    }
-}
+
+export const getOrderById = async (orderId) => {
+  try {
+    const response = await axios.get(`${API_URL}/orders/${orderId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener la orden:', error);
+    throw error;
+  }
+};
+
+
+export const createOrder = async (orderData) => {
+  try {
+    const response = await axios.post(`${API_URL}/orders`, orderData);
+    return response.data;
+  } catch (error) {
+    console.error('Error al crear la orden:', error);
+    throw error;
+  }
+};
+
+
+export const updateOrder = async (orderId, orderData) => {
+  try {
+    const response = await axios.put(`${API_URL}/orders/${orderId}`, orderData);
+    return response.data;
+  } catch (error) {
+    console.error('Error al actualizar la orden:', error);
+    throw error;
+  }
+};
+
+
+export const deleteOrderById = async (orderId) => {
+  try {
+    await axios.delete(`${API_URL}/orders/${orderId}`);
+  } catch (error) {
+    console.error('Error al eliminar la orden:', error);
+    throw error;
+  }
+};
+
+export default {
+  getOrders,
+  createOrder,
+  updateOrder,
+  deleteOrderById
+};

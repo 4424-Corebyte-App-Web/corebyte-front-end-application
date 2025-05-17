@@ -170,6 +170,7 @@
     transition: background-color 0.2s, color 0.2s;
     padding: 10px;
     border-radius: 25px;
+    box-shadow: none !important;
 }
 
 .filter-controls-container :deep(.p-button:hover) {

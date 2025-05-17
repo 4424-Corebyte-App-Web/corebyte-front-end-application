@@ -5,65 +5,80 @@ import LanguageSwitcher from './language-switcher.component.vue'
 
 const { t } = useI18n();
 
-const topItemsLeft = ref([
-    {
-        items: [
-            {
-                label: t('navbar.user'),
-                icon: 'pi pi-user'
-
-            }
-        ]
-    }
-]);
-const topItemsRight = ref([
-    {
-        items: [
-            {
-                label: t('navbar.search'),
-                icon: 'pi pi-search'
-            }
-        ]
-    }
-]);
-
 const items = ref([
     {
         separator: true
     },
     {
         items: [
+        {
+                label: t('navbar.user'),
+                icon: 'pi pi-user',
+                to: '/profile'
+            },
+            {
+                separator: true
+            },
+            {
+                separator: true
+            },
             {
                 label: t('navbar.orders'),
-                icon: 'pi pi-shopping-cart',
+                icon: 'pi pi-plus-circle',
+                to: '/orders/register'
             },
             {
-                label: t('navbar.status'),
-                icon: 'pi pi-check-circle',
-                to: '/status',
-            },
-            {
-                label: t('navbar.analysis'),
-                icon: 'pi pi-chart-bar',
-            },
-            {
-                label: t('navbar.replenishment'),
-                icon: 'pi pi-box',
-            },
-            {
-                label: t('navbar.record'),
-                icon: 'pi pi-file',
-                to: '/record',
-            },
-            {
-                label: t('navbar.alert'),
-                icon: 'pi pi-bell',
+                separator: true
             },
             {
                 label: t('navbar.batch'),
                 icon: 'pi pi-database',
+                to: '/batch-management/fermentation'
+            },
+            {
+                separator: true
+            },
+            {
+                separator: true
+            },
+            {
+                label: t('navbar.status'),
+                icon: 'pi pi-check-circle',
+                to: '/status'
+            },
+            {
+                label: t('navbar.record'),
+                icon: 'pi pi-file',
+                to: '/record'
+            },
+            {
+                label: t('navbar.alert'),
+                icon: 'pi pi-bell',
+                to: '/'
+            },
+            {
+                label: t('navbar.analysis'),
+                icon: 'pi pi-chart-line',
+                to: '/'
+            },
+            {
+                label: t('navbar.replenishment'),
+                icon: 'pi pi-refresh',
+                to: '/'
+            },
+            {
+                separator: true
+            },
+            {
+                label: t('navbar.log-out'),
+                icon: 'pi pi-sign-out',
+                command: () => {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    router.push('/login');
+                }
             }
-        ],
+        ]
     },
     {
         separator: true
@@ -74,28 +89,6 @@ const items = ref([
     
     <div class="custom-sidebar">
         <pv-menu :model="items">
-            <template #start>
-                <div class="top-menu-left">
-                    <pv-menu :model="topItemsLeft">
-                        <template #item="{ item }">
-                            <a v-ripple :class="['menu-item', item.class]">
-                                <i :class="[item.icon]" />
-                                <span>{{ item.label }}</span>
-                            </a>
-                        </template>
-                    </pv-menu>
-                </div>
-                <div class="top-menu-right">
-                    <pv-menu :model="topItemsRight">
-                        <template #item="{ item }">
-                            <a v-ripple :class="['menu-item', item.class]">
-                                <i :class="[item.icon]" />
-                                <span>{{ item.label }}</span>
-                            </a>
-                        </template>
-                    </pv-menu>
-                </div>
-            </template>
             <template #submenulabel="{ item }">
                 <span class="sub-label">{{ item.label }}</span>
             </template>
@@ -106,7 +99,7 @@ const items = ref([
                         <span>{{ item.label }}</span>
                     </a>
                 </router-link>
-                <a v-else v-ripple :class="['menu-item', item.class]" v-bind="itemProps.action">
+                <a v-else v-ripple :class="['menu-item', item.class]" @click="item.command?.()" v-bind="itemProps.action">
                     <i :class="[item.icon]" />
                     <span>{{ item.label }}</span>
                 </a>

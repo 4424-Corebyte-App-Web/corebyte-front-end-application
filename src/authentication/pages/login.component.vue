@@ -71,8 +71,10 @@ const onSubmit = () => {
 
   if (user) {
     alert(`Bienvenido, ${user.email}`);
+    // Emitir el evento de login con los datos del usuario
     emit("login", { user, rememberMe: rememberMe.value });
-    router.push("/profile");
+    // Redirigir al dashboard o página principal
+    router.push("/app");
   } else {
     error.value = "Correo o contraseña incorrectos.";
   }
@@ -134,7 +136,7 @@ const onSubmit = () => {
                 v-model="rememberMe"
                 :aria-checked="rememberMe ? 'true' : 'false'"
             />
-            <label for="remember">Recordarme</label>
+            <label for="remember">{{ $t("login.forgot") }}</label>
           </div>
 
           <button
@@ -144,7 +146,7 @@ const onSubmit = () => {
               :aria-busy="loading ? 'true' : 'false'"
           >
             <span v-if="loading" class="spinner" aria-hidden="true"></span>
-            Iniciar sesión
+            {{ $t("login.login") }}
           </button>
 
           <button
@@ -152,7 +154,7 @@ const onSubmit = () => {
               class="forgot"
               type="button"
           >
-            ¿Olvidaste tu contraseña?
+            {{ $t("login.password") }}
           </button>
 
           <div class="social-login" aria-label="Iniciar sesión con ">
@@ -173,13 +175,12 @@ const onSubmit = () => {
       </div>
 
       <div class="right-panel">
-        <h3>Hola, usuario</h3>
+        <h3>{{ $t("login.user") }}</h3>
         <p>
-          Regístrate con tu cuenta personal para usar todas las características
-          de la herramienta
+          {{ $t("login.text") }}
         </p>
         <button class="register-button" @click="goToRegister">
-          Registrarte
+          {{ $t("login.register") }}
         </button>
       </div>
     </div>

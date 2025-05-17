@@ -91,9 +91,9 @@ const goToLogin = () => router.push("/login");
 <template>
   <div class="register-container">
     <div class="left-panel">
-      <h2>Bienvenido de nuevo</h2>
-      <p>Ingresa tus datos personales para usar todas las características de la herramienta</p>
-      <button class="secondary-button" @click="goToLogin">Iniciar sesión</button>
+      <h2>{{ $t("register.title") }}</h2>
+      <p>{{ $t("register.text") }}</p>
+      <button class="secondary-button" @click="goToLogin">{{ $t("register.login") }}</button>
     </div>
 
     <div class="right-panel">
@@ -134,12 +134,12 @@ const goToLogin = () => router.push("/login");
             :class="{ invalid: !isRoleValid && role !== '' }"
             required
         >
-          <option disabled value="">Seleccione un rol</option>
-          <option value="productor">Productor</option>
-          <option value="distribuidor">Distribuidor</option>
+          <option disabled value="">Select a role</option>
+          <option value="productor">Producer</option>
+          <option value="distribuidor">Distributor</option>
         </select>
 
-        <small>La contraseña debe tener mínimo 8 caracteres</small>
+        <small>Password must have a minimum of 8 characters</small>
 
         <div v-if="error" class="error" role="alert" aria-live="assertive">{{ error }}</div>
 
@@ -148,7 +148,7 @@ const goToLogin = () => router.push("/login");
             class="primary-button"
             :disabled="loading || !isFormValid"
         >
-          {{ loading ? "Registrando..." : "Crear cuenta" }}
+          {{ loading ? "Registering..." : "Create account" }}
         </button>
 
         <div class="divider"></div>

@@ -1,176 +1,166 @@
 <template>
-  <div class="form-card">
-    <h2>Registrar Nueva Orden</h2>
-    <form @submit.prevent="submitForm">
-
-      <div class="field-card">
-        <label>Cliente:</label>
-        <InputText v-model="form.client" class="custom-text-color" required />
-      </div>
-
-      <div class="field-card">
-        <label>Producto:</label>
-        <InputText v-model="form.product" class="custom-text-color" required />
-      </div>
-
-      <div class="field-card">
-        <label>Cantidad:</label>
-        <InputNumber v-model="form.quantity" class="custom-text-color" required :min="1" />
-      </div>
-
-      <div class="field-card">
-        <label>Fecha:</label>
-        <Calendar v-model="form.date"  dateFormat="yy-mm-dd" class="custom-text-color" required />
-      </div>
-
-      <div class="field-card">
-        <label>Total:</label>
-        <InputNumber v-model="form.total" class="custom-text-color" required mode="currency" currency="PEN" locale="es-PE" />
-      </div>
-
-      <div class="field-card">
-        <label>Imagen (URL):</label>
-        <InputText v-model="form.imageUrl" class="custom-text-color" />
-      </div>
-
-      <div class="flex gap-15 mt-4">
+    <div class="table-container">
+      <h1 class="text-white">Ordenes de pedidos</h1>
+  
+      <div class="flex justify-between items-center mb-4">
         <Button
-            label="Registrar"
-            type="submit"
-            class="register-button"
+            label="Procesar órdenes de pedido"
+            class="custom-order-button"
+            @click="goToRegister"
         />
-        <RouterLink to="/orders" class="back-link">← Volver</RouterLink>
+        <br>
+        <br>
       </div>
-
-    </form>
-  </div>
-</template>
-
-<script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import InputText from 'primevue/inputtext';
-import InputNumber from 'primevue/inputnumber';
-import Calendar from 'primevue/calendar';
-import Button from 'primevue/button';
-import { useToast } from 'primevue/usetoast';
-import { getOrders,addOrder } from '../services/orders.service.js';
-
-const router = useRouter();
-const toast = useToast();
-const form = ref({
-
-  client: '',
-  product: '',
-  quantity: 1,
-  date: new Date(),
-  total: 0,
-  imageUrl: ''
-});
-
-async function submitForm() {
-  try {
-
-    const orders = await getOrders();
-    const maxId = orders.reduce((max, order) => {
-      const idNum = Number(order.id);
-      return idNum > max ? idNum : max;
-    }, 0);
-
-
-    const newId = (maxId + 1).toString();
-
-
-    const newOrder = {
-      ...form.value,
-      id: newId,
-      date: form.value.date.toISOString().split('T')[0]
-    };
-
-    // Guardar nueva orden
-    await addOrder(newOrder);
-
-    toast.add({
-      severity: 'success',
-      summary: 'Éxito',
-      detail: `Orden registrada correctamente con ID ${newId}`,
-      life: 3000
-    });
-
-    router.push('/orders');
-  } catch (error) {
-    toast.add({
-      severity: 'error',
-      summary: 'Error',
-      detail: error.message,
-      life: 4000
-    });
+  
+      <DataTable
+          :value="orders"
+          paginator
+          :rows="6"
+          :rowsPerPageOptions="[6, 8, 12]"
+          tableStyle="min-width: 60rem"
+          paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+          currentPageReportTemplate="{first} a {last} "
+      >
+        <!-- Botón izquierdo de paginador -->
+        <template #paginatorstart>
+          <div class="p-paginator">
+            <!--CENTRAR-PAGINATOR-->
+          </div>
+        </template>
+  
+        <!-- Botón derecho de paginador -->
+        <template #paginatorend>
+          <div class="p-paginator">
+            <!--CENTRAR-PAGINATOR-->
+          </div>
+        </template>
+  
+        <!-- Columnas -->
+        <Column field="id" header="ID Pedido" />
+        <Column field="client" header="Cliente" />
+        <Column field="date" header="Fecha" />
+        <Column field="product" header="Producto" />
+        <Column field="quantity" header="Cantidad" />
+        <Column field="total" header="Total" />
+        <Column header=" " style="width: 150px; text-align: center">
+          <template #body="slotProps">
+            <Button
+                label="Detalles"
+                icon="pi pi-search"
+                class="details-button"
+                @click="goToOrderDetails(slotProps.data.id)"
+            />
+  
+          </template>
+        </Column>
+  
+      </DataTable>
+    </div>
+  </template>
+  
+  <script setup>
+  import { ref, onMounted } from 'vue';
+  import { useRouter } from 'vue-router';
+  import Column from 'primevue/column';
+  import DataTable from 'primevue/datatable';
+  import Button from 'primevue/button';
+  import { getOrders } from '../services/orders.service.js';
+  
+  const orders = ref([]);
+  const router = useRouter();
+  
+  onMounted(async () => {
+    orders.value = await getOrders();
+  });
+  
+  
+  function goToOrderDetails(orderId) {
+    router.push(`/orders/details/${orderId}`);
   }
-}
-</script>
-
-<style scoped>
-.form-card {
-  max-width: 500px;
-  margin: auto;
-  background-color: gray;
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-.register-button {
-  background-color: #16a34a;
-  color: white;
-  font-weight: bold;
-  border-radius: 9999px;
-  padding: 0.5rem 1.5rem;
-  transition: transform 0.2s ease, background-color 0.3s ease;
-}
-
-.register-button:hover {
-  background-color: #22c55e;
-  transform: scale(1.05);
-}
-
-.back-link {
-  display: inline-block;
-  color: #111;
-  font-weight: bold;
-  text-decoration: none;
-  padding: 0.5rem 1.5rem;
-  border: 2px solid #999;
-  border-radius: 9999px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.back-link:hover {
-  background-color: #f3f3f3;
-  color: #000;
-}
-.field-card {
-  background: darkgrey; /* color de fondo suave */
-  border: 1px solid #d1d5db; /* borde gris claro */
-  border-radius: 8px;
-  padding: 1rem 1.25rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-  transition: box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
-}
-
-.field-card:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.field-card label {
-  font-weight: 600;
-  color: #374151;
-  margin-bottom: 0.5rem;
-  font-size: 1rem;
-}
-.custom-text-color {
-  color: black;
-}
-
-</style>
+  function goToRegister() {
+    router.push('/orders/register');
+  }
+  
+  </script>
+  
+  
+  
+  <style scoped>
+  .table-container {
+    max-width: 1500px;
+    margin: 2px;
+    padding: 1rem;
+    background-color: #1a1a1a;
+    border-radius: 100px;
+  }
+  
+  :deep(.p-datatable .p-datatable-thead > tr > th),
+  :deep(.p-datatable .p-datatable-tbody > tr > td),
+  :deep(.p-datatable .p-datatable-tfoot > tr > td) {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  :deep(.p-paginator) {
+    padding-top: 0.1rem !important;
+    padding-bottom: 0.1rem !important;
+    margin-top: 0.1rem;
+  }
+  
+  :deep(.p-paginator .p-paginator-pages .p-paginator-page),
+  :deep(.p-paginator .p-paginator-first),
+  :deep(.p-paginator .p-paginator-prev),
+  :deep(.p-paginator .p-paginator-next),
+  :deep(.p-paginator .p-paginator-last),
+  :deep(.p-paginator .p-dropdown) {
+    padding: 0.10rem 0.5rem !important;
+    height: auto !important;
+    min-height: 1.5rem !important;
+    line-height: 1.2rem !important;
+    font-size: 0.85rem;
+  }
+  
+  
+  /* Encabezado amarillo */
+  :deep(.p-datatable-thead > tr > th) {
+    background-color: #facc15;
+    color: #000;
+  }
+  
+  /* Estilo para paginador */
+  :deep(.p-paginator) {
+    background-color: #1a1a1a;
+    color: white;
+    border-top: 1px solid #333;
+    margin-top: 1rem;
+    padding-top: 1rem;
+  }
+  :deep(.custom-order-button) {
+    background-color: #000 !important;    
+    color: #fff !important;               
+    border: 2px solid #facc15 !important;  /
+    border-radius: 9999px !important;     
+    padding: 0.5rem 1.5rem !important;    
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+  
+  :deep(.custom-order-button:hover) {
+    background-color: #facc15 !important; 
+    color: #000 !important;                
+  }
+  :deep(.details-button) {
+    background-color: transparent;
+    border: 2px solid #facc15;
+    color: #facc15;
+    border-radius: 9999px;
+    font-weight: bold;
+    padding: 0.25rem 1rem;
+    transition: all 0.3s ease;
+  }
+  
+  :deep(.details-button:hover) {
+    background-color: #facc15;
+    color: #000;
+  }
+  
+  </style>

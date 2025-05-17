@@ -23,10 +23,9 @@
       </div>
     </div>
 
-    <p v-else>No se encontró la orden.</p> <!-- Mostrar sólo si no hay orden -->
+    <p v-else>No se encontró la orden.</p> 
   </div>
 </template>
-
 
 <script setup>
 import { ref, onMounted } from 'vue';
@@ -82,6 +81,7 @@ async function deleteOrder() {
   background-color: #facc15;
   color: black;
 }
+
 .card {
   background-color: gray;
   border-radius: 12px;
@@ -108,6 +108,7 @@ async function deleteOrder() {
   border-radius: 8px;
   object-fit: cover;
 }
+
 .delete-button {
   background-color: #dc2626;
   color: white;
@@ -120,5 +121,4 @@ async function deleteOrder() {
 .delete-button:hover {
   background-color: #b91c1c;
 }
-
 </style>

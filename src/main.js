@@ -8,8 +8,8 @@ import Avatar from 'primevue/avatar';
 import SelectButton from 'primevue/selectbutton';
 import 'primeicons/primeicons.css';
 import AutoComplete from 'primevue/autocomplete';
-import Button from 'primevue/button';
 import ToastService from 'primevue/toastservice';
+import Button from 'primevue/button';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import router from './routes/index.js';
@@ -22,7 +22,7 @@ import autoTable from 'jspdf-autotable';
 
 const app = createApp(App); 
 app.use(i18n);
-app.use(PrimeVue, { ripple: true });
+app.use(PrimeVue);
 app.use(ToastService);
 app.use(router);
 app.component("pv-menu", Menu);
@@ -35,7 +35,6 @@ app.component("pv-column", Column);
 app.component("pv-dialog", Dialog);
 app.component("pv-checkbox", Checkbox);
 app.component("pv-checkboxgroup", CheckboxGroup);
-// Make jsPDF and autoTable available globally
 window.jsPDF = jsPDF;
 window.autoTable = autoTable;
 app.mount('#app');

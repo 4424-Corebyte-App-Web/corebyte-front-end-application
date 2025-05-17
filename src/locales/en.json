@@ -1,0 +1,42 @@
+{
+    "navbar":{
+        "user":"User",
+        "orders":"Orders",
+        "status":"Status",
+        "analysis": "Sales and analysis",
+        "replenishment":"Replenishment",
+        "record": "Record",
+        "alert": "Alerts",
+        "batch": "Batch management",
+        "log-out": "Log out"
+    },
+    "login":{
+        "confirmation":"Enter the verification code sent to your email.",
+        "send":"Send",
+        "forgot":"Remember me?",
+        "login":"Log in",
+        "password":"Forgot your password?",
+        "user":"Hello, user",
+        "text":"Register with your personal account to use all the features of the tool",
+        "register":"Register"
+    },
+    "password-recover":{
+        "title":"Password Recovered",
+        "text":"You can now log back in.",
+        "button":"Return to Login"
+    },
+    "recover":{
+        "title":"Recover Password",
+        "text":"Enter your email address and we'll send you a verification code.",
+        "button":"Send"
+    },
+    "register":{
+        "title":"Welcome back",
+        "text":"Enter your personal information to use all the features of the tool",
+        "login":"Login"
+    },
+    "titles":{
+        "state":"States",
+        "record":"Record"
+    }
+}

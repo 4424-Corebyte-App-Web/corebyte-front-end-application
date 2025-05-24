@@ -23,7 +23,7 @@
       </div>
     </div>
 
-    <p v-else>No se encontró la orden.</p> 
+    <p v-else>No se encontró la orden.</p> <!-- Mostrar sólo si no hay orden -->
   </div>
 </template>
 

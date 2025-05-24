@@ -25,7 +25,7 @@ const items = ref([
             {
                 label: t('navbar.orders'),
                 icon: 'pi pi-plus-circle',
-                to: '/orders/register'
+                to: '/orders'
             },
             {
                 separator: true

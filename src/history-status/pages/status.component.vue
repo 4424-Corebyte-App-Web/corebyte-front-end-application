@@ -8,6 +8,7 @@ export default {
     name: "status",
     title: "Status",
     components: {SideNavbar, LanguageSwitcher},
+    emits: ['close', 'update:visible', 'login'],
     data() {
         return {
             historyService: new HistoryStatusService(),
@@ -37,16 +38,22 @@ export default {
                     if (productIndex !== -1) {
                         this.products[productIndex] = updatedProduct; 
                     }
-                    this.closeDialog();
+                    this.showDialog = false;
+                    this.resetForm();
                 } catch (error) {
                     console.error("Failed to save changes:", error);
                 }
             }
         },
-        closeDialog() {
+        closeModal() {
             this.showDialog = false;
-            this.isDelivered = false;
+            this.resetForm();
+            this.$emit('close');
+            this.$emit('update:visible', false);
+        },
+        resetForm() {
             this.selectedProduct = null;
+            this.isDelivered = false;
         },
     },
     created() {
@@ -94,33 +101,253 @@ export default {
                     <pv-column field="status" header="Status" sortable style="width: 10%"></pv-column>
                     <pv-column header="Actions" style="width: 10%; text-align: center;">
                         <template #body="slotProps">
-                            <pv-button label="Modify" icon="pi pi-pencil" iconPos="right" class="p-button-sm p-button-info" @click="modifyProduct(slotProps.data)" />
+                            <pv-button 
+                                label="Modify" 
+                                icon="pi pi-pencil" 
+                                iconPos="right" 
+                                class="p-button-sm p-button-info" 
+                                @click="modifyProduct(slotProps.data)" 
+                                style="z-index: 10;"
+                            />
                         </template>
                     </pv-column>
                 </pv-datatable>
             </div>
-            <!-- Dialog for modifying product status -->
-            <pv-dialog v-model:visible="showDialog" :header="'Modify Order Status: ' + (selectedProduct ? selectedProduct.id : '')" :modal="true" :style="{ width: '450px' }" @hide="closeDialog">
-                <div v-if="selectedProduct" class="product-details-dialog-content">
-                    <p><strong>ID:</strong> {{ selectedProduct.id }}</p>
-                    <p><strong>Customer:</strong> {{ selectedProduct.customer }}</p>
-                    <p><strong>Product:</strong> {{ selectedProduct.product }}</p>
-                    <p><strong>Current Status:</strong> {{ selectedProduct.status }}</p>
-                    <div class="field-checkbox" style="margin-top: 1rem; margin-bottom: 1rem;">
-                        <pv-checkbox v-model="isDelivered" inputId="deliveredStatusCheckbox" name="deliveredStatus" :binary="true" />
-                        <label for="deliveredStatusCheckbox" style="margin-left: 0.5rem;">Mark as Delivered</label>
-                    </div>
-                </div>
-                <template #footer>
-                    <pv-button label="Cancel" icon="pi pi-times" class="p-button-text" @click="closeDialog" />
-                    <pv-button label="Save Changes" icon="pi pi-check" @click="saveChanges" />
-                </template>
-            </pv-dialog>
         </div>
     </div>
     </div>
+    <!-- Dialog for modifying product status -->
+    <pv-dialog
+        v-model:visible="showDialog"
+        :modal="true"
+        :style="{ width: '500px', borderRadius: '12px', boxShadow: '0 10px 25px rgba(0, 0, 0, 0.3)' }"
+        :header="'Modify Order #' + (selectedProduct ? selectedProduct.id : '')"
+        :closable="false"
+        @hide="closeModal"
+        class="custom-dialog dark-dialog"
+    >
+        <div v-if="selectedProduct" class="dialog-content">
+            <div class="dialog-section">
+                <h4 class="section-title">Order Details</h4>
+                <div class="detail-row">
+                    <span class="detail-label">ID:</span>
+                    <span class="detail-value">{{ selectedProduct.id }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Customer:</span>
+                    <span class="detail-value">{{ selectedProduct.customer }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Product:</span>
+                    <span class="detail-value">{{ selectedProduct.product }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Status:</span>
+                    <span class="status-badge" :class="{ 'status-delivered': selectedProduct.status === 'Entregado', 'status-pending': selectedProduct.status !== 'Entregado' }">
+                        {{ selectedProduct.status }}
+                    </span>
+                </div>
+            </div>
+            
+            <div class="dialog-section">
+                <h4 class="section-title">Update Status</h4>
+                <div class="checkbox-container">
+                    <pv-checkbox 
+                        v-model="isDelivered" 
+                        inputId="deliveredStatusCheckbox"
+                        name="deliveredStatus"
+                        :binary="true"
+                        class="custom-checkbox"
+                    />
+                    <label for="deliveredStatusCheckbox" class="checkbox-label">
+                        Mark as Delivered
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <template #footer>
+            <div class="dialog-footer">
+                <pv-button 
+                    label="Cancel" 
+                    icon="pi pi-times" 
+                    class="p-button-text p-button-secondary" 
+                    @click="closeModal"
+                />
+                <pv-button 
+                    label="Save Changes" 
+                    icon="pi pi-check"
+                    class="p-button-primary"
+                    @click="saveChanges"
+                    autofocus
+                />
+            </div>
+        </template>
+    </pv-dialog>
 </template>
 <style scoped>
+/* Dialog Styles */
+:deep(.dark-dialog) {
+    background: #242424;
+    color: #ffffff;
+}
+
+:deep(.p-dialog .p-dialog-header) {
+    background: #333333;
+    border-bottom: 1px solid #444444;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    padding: 1.25rem 1.5rem;
+}
+
+:deep(.p-dialog .p-dialog-header .p-dialog-title) {
+    color: #ffffff;
+}
+
+:deep(.p-dialog .p-dialog-header .p-dialog-title) {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+:deep(.p-dialog .p-dialog-content) {
+    padding: 1.5rem;
+    background: #242424;
+}
+
+:deep(.p-dialog .p-dialog-footer) {
+    border-top: 1px solid #444444;
+    padding: 1rem 1.5rem;
+    background: #333333;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    text-align: right;
+}
+
+.dialog-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.dialog-section {
+    background: #333333;
+    border-radius: 8px;
+    padding: 1.25rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #444444;
+}
+
+.detail-row {
+    display: flex;
+    margin-bottom: 0.75rem;
+    align-items: center;
+}
+
+.detail-label {
+    font-weight: 500;
+    color: #a0a0a0;
+    width: 100px;
+    flex-shrink: 0;
+}
+
+.detail-value {
+    color: #ffffff;
+    flex-grow: 1;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.checkbox-label {
+    color: #2c3e50;
+    cursor: pointer;
+    user-select: none;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.status-delivered {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+:deep(.p-button) {
+    min-width: 100px;
+}
+
+:deep(.p-button.p-button-primary) {
+    background: #3b82f6;
+    border-color: #3b82f6;
+}
+
+:deep(.p-button.p-button-primary:hover) {
+    background: #2563eb;
+    border-color: #2563eb;
+}
+
+:deep(.p-button.p-button-secondary) {
+    color: #ffffff;
+    background: #444444;
+    border: 1px solid #555555;
+}
+
+:deep(.p-button.p-button-secondary:hover) {
+    background: #555555;
+    border-color: #666666;
+}
+
+:deep(.p-checkbox .p-checkbox-box) {
+    border-radius: 4px;
+    border-color: #666666;
+    background: #444444;
+}
+
+:deep(.p-checkbox .p-checkbox-box .p-checkbox-icon) {
+    color: #ffffff;
+}
+
+:deep(.p-checkbox .p-checkbox-box.p-highlight) {
+    background: #3b82f6;
+    border-color: #3b82f6;
+}
+
+:deep(.p-dialog .p-dialog-header-close) {
+    color: #ffffff;
+}
+
+:deep(.p-dialog .p-dialog-header-close:hover) {
+    color: #a0a0a0;
+}
 .main-content-padding {
     padding: 5rem;
     height: 100vh;

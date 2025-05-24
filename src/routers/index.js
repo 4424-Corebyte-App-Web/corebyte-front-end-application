@@ -27,100 +27,21 @@ const routes = [
     { path: "/recuperar-codigo", name: "recuperarcodigo", component: ConfirmationCode, meta: { title: "Recuperar Código" } },
     { path: "/password-recovered", name: "passwordrecovered", component: PasswordRecovered, meta: { title: "Contraseña Recuperada" } },
     { path: "/recuperar", name: "recuperar", component: RecoverCodes, meta: { title: "Recuperar Gmail" } },
-
-            // Dashboard u otra ruta por defecto
-            { path: '', redirect: '/app/orders' },
-            
-            // Rutas de órdenes
-            {
-                path: '/orders',
-                name: 'Orders',
-                component: () => import('../orders/pages/order-table.component.vue'),
-            },
-            {
-                path: '/orders/details/:id',
-                name: 'OrderDetails',
-                component: () => import('../orders/pages/view-details-orders.component.vue'),
-            },
-            {
-                path: '/orders/register',
-                name: 'RegisterOrder',
-                component: () => import('../orders/pages/register-order.component.vue')
-            },
-            
-            // Rutas de gestión de lotes
-            {
-                path: '/batch-management',
-                name: 'BatchManagementOverview',
-                redirect: '/app/batch-management/fermentation'
-            },
-            {
-                path: '/batch-management/fermentation',
-                name: 'FermentationStage',
-                component: FermentationStage
-            },
-            {
-                path: '/batch-management/pressing',
-                name: 'PressingStage',
-                component: PressingStage
-            },
-            {
-                path: '/batch-management/clarification',
-                name: 'ClarificationStage',
-                component: ClarificationStage
-            },
-            {
-                path: '/batch-management/aging',
-                name: 'AgingStage',
-                component: AgingStage
-            },
-            {
-                path: '/batch-management/bottled',
-                name: 'BottledStage',
-                component: BottledStage
-            },
-            
-            // Rutas de perfil
-            { 
-                path: '/profile', 
-                name: 'profile', 
-                component: ProfileComponent, 
-                meta: { title: "Profile" } 
-            },
-            { 
-                path: '/profile/benefits', 
-                name: 'benefits', 
-                component: Benefits, 
-                meta: { title: "Benefits" } 
-            },
-            { 
-                path: '/profile/type-account', 
-                name: 'type-account', 
-                component: AccountTypes, 
-                meta: { title: "Account Type" } 
-            },
-            
-            // Otras rutas
-            { 
-                path: '/status', 
-                name: 'status', 
-                component: StatusComponent, 
-                meta: { title: "Status" } 
-            },
-            { 
-                path: '/record', 
-                name: 'record', 
-                component: RecordComponent, 
-                meta: { title: "Record" } 
-            },
-    
-
-    { 
-        path: "/:pathMatch(.*)*", 
-        name: 'not-found', 
-        component: PageNotFoundComponent, 
-        meta: { title: "Page Not Found" }
-    }
+    {path: '/orders',ame: 'Orders',component: () => import('../orders/pages/order-table.component.vue'),},
+    {path: '/orders/details/:id',name: 'OrderDetails',component: () => import('../orders/pages/view-details-orders.component.vue'),},
+    {path: '/orders/register',name: 'RegisterOrder',component: () => import('../orders/pages/register-order.component.vue'),},
+    {path: '/batch-management',name: 'BatchManagementOverview',redirect: '/batch-management/fermentation',},
+    {path: '/batch-management/fermentation',name: 'FermentationStage',component: FermentationStage},
+    {path: '/batch-management/pressing',name: 'PressingStage',component: PressingStage},
+    {path: '/batch-management/clarification',name: 'ClarificationStage',component: ClarificationStage},
+    {path: '/batch-management/aging',name: 'AgingStage',component: AgingStage},
+    {path: '/batch-management/bottled',name: 'BottledStage',component: BottledStage},
+    { path: '/profile', name: 'profile', component: ProfileComponent, meta: { title: "Profile" } },
+    { path: '/profile/benefits', name: 'benefits', component: Benefits, meta: { title: "Benefits" } },
+    { path: '/profile/type-account', name: 'type-account', component: AccountTypes, meta: { title: "Account Type" } },
+    { path: '/status', name: 'status', component: StatusComponent, meta: { title: "Status" } },
+    { path: '/record', name: 'record', component: RecordComponent, meta: { title: "Record" } },
+    {path: "/:pathMatch(.*)*", name: 'not-found', component: PageNotFoundComponent, meta: { title: "Page Not Found" }}
 ]
 
 const router = createRouter({
@@ -128,9 +49,9 @@ const router = createRouter({
     routes: routes
 })
 
-
+// Guardia de navegación para rutas protegidas
 router.beforeEach((to, from, next) => {
-    const isAuthenticated = localStorage.getItem('token') 
+    const isAuthenticated = localStorage.getItem('token') // Ajusta esto según tu método de autenticación
     
     if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
         next({ name: 'login' })

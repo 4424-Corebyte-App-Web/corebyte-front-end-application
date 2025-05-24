@@ -1,18 +1,52 @@
+<script>
+  import { ref, onMounted } from 'vue';
+  import { useRouter } from 'vue-router';
+  import Column from 'primevue/column';
+  import DataTable from 'primevue/datatable';
+  import Button from 'primevue/button';
+  import { getOrders } from '../services/orders.service.js';
+
+  export default {
+    name: 'OrderTable',
+    components: {
+      Column,
+      DataTable,
+      Button
+    },
+    data() {
+      return {
+        orders: [],
+        router: useRouter()
+      };
+    },
+    methods: {
+      fetchOrders() {
+        getOrders().then(data => {
+          this.orders = data;
+        });
+      },
+      goToRegisterOrder() {
+        this.router.push('/orders/register');
+      },
+    },
+    mounted() {
+      this.fetchOrders();
+    },
+  }
+</script>
 <template>
     <div class="table-container">
       <h1 class="text-white">Ordenes de pedidos</h1>
   
       <div class="flex justify-between items-center mb-4">
-          <Button
+          <pv-button
               label="Procesar órdenes de pedido"
               class="custom-order-button"
               @click="goToRegisterOrder"
           />
-        <br>
-        <br>
       </div>
   
-      <DataTable
+      <pv-datatable
           :value="orders"
           paginator
           :rows="6"
@@ -36,52 +70,28 @@
         </template>
   
         <!-- Columnas -->
-        <Column field="id" header="ID Pedido" />
-        <Column field="client" header="Cliente" />
-        <Column field="date" header="Fecha" />
-        <Column field="product" header="Producto" />
-        <Column field="quantity" header="Cantidad" />
-        <Column field="total" header="Total" />
-        <Column header=" " style="width: 150px; text-align: center">
+        <pv-column field="id" header="ID Pedido" />
+        <pv-column field="client" header="Cliente" />
+        <pv-column field="date" header="Fecha" />
+        <pv-column field="product" header="Producto" />
+        <pv-column field="quantity" header="Cantidad" />
+        <pv-column field="total" header="Total" />
+        <pv-column header=" " style="width: 150px; text-align: center">
           <template #body="slotProps">
             <RouterLink :to="{ name: 'OrderDetails', params: { id: slotProps.data.id } }" class="details-button">
-              <Button
+              <pv-button
                 label="Detalles"
                 icon="pi pi-search"
                 class="details-button"
               />
             </RouterLink>
           </template>
-        </Column>
+        </pv-column>
   
-      </DataTable>
+      </pv-datatable>
     </div>
-  </template>
-  
-  <script setup>
-  import { ref, onMounted } from 'vue';
-  import { useRouter } from 'vue-router';
-  import Column from 'primevue/column';
-  import DataTable from 'primevue/datatable';
-  import Button from 'primevue/button';
-  import { getOrders } from '../services/orders.service.js';
-  
-  const orders = ref([]);
-  const router = useRouter();
-  
-  onMounted(async () => {
-    orders.value = await getOrders();
-  });
-
-  const goToRegisterOrder = () => {
-    router.push('/orders/register');
-  };
-  
-  </script>
-  
-  
-  
-  <style scoped>
+</template>
+<style scoped>
   .table-container {
     max-width: 1500px;
     margin: 2px;

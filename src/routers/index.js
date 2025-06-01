@@ -18,6 +18,7 @@ const Benefits = () => import('../profile-management/pages/benefits.component.vu
 const AccountTypes = () => import('../profile-management/pages/type-account.component.vue');
 const PasswordRecoverComponent = () => import('../authentication/pages/password-recover.component.vue');
 const RecoverCodes = () => import('../authentication/pages/recover-code.vue');
+const RegisterReplenishment = () => import('../replenishment/pages/register-replenishment.component.vue');
 
 const routes = [
     // Rutas públicas
@@ -41,7 +42,9 @@ const routes = [
     { path: '/profile/type-account', name: 'type-account', component: AccountTypes, meta: { title: "Account Type" } },
     { path: '/status', name: 'status', component: StatusComponent, meta: { title: "Status" } },
     { path: '/record', name: 'record', component: RecordComponent, meta: { title: "Record" } },
-    {path: "/:pathMatch(.*)*", name: 'not-found', component: PageNotFoundComponent, meta: { title: "Page Not Found" }}
+    {path: "/:pathMatch(.*)*", name: 'not-found', component: PageNotFoundComponent, meta: { title: "Page Not Found" }},
+        { path: '/replenishment',name: 'Replenishment',component: ReplenishmentComponent,meta: { title: "Replenishment" }},
+    {path: '/replenishment/register',name: 'RegisterReplenishment',component: RegisterReplenishment,meta: { title: "Register Replenishment" }}
 ]
 
 const router = createRouter({

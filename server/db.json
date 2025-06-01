@@ -558,5 +558,43 @@
       "total": 1820,
       "imageUrl": "https://tabernero.vteximg.com.br/arquivos/ids/155503-1000-1000/9010005981_1.jpg?v=637278351442070000"
     }
+  ],
+  "replenishment": [
+    {
+      "id": "1002",
+      "name": "Malbec",
+      "type": "Tinto",
+      "date": "2025-04-11",
+      "stockActual": 360,
+      "stockMinimo": 200,
+      "price": 30
+    },
+    {
+      "id": "1003",
+      "name": "Merlot",
+      "type": "Tinto",
+      "date": "2025-03-20",
+      "stockActual": 720,
+      "stockMinimo": 300,
+      "price": 30
+    },
+    {
+      "id": "1004",
+      "name": "Rosé",
+      "type": "Rosado",
+      "date": "2025-04-14",
+      "stockActual": 540,
+      "stockMinimo": 200,
+      "price": 30
+    },
+    {
+      "id": "1005",
+      "name": "Syrah",
+      "type": "Tinto",
+      "date": "2025-04-15",
+      "stockActual": 240,
+      "stockMinimo": 100,
+      "price": 30
+    }
   ]
 }

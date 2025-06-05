@@ -17,10 +17,13 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const isNameValid = computed(() => name.value.trim().length > 0);
 const isEmailValid = computed(() => emailRegex.test(email.value.trim()));
 const isPasswordValid = computed(() => password.value.length >= 8);
-const isConfirmPasswordValid = computed(() => password.value === confirmPassword.value);
+const isConfirmPasswordValid = computed(
+  () => password.value === confirmPassword.value
+);
 const isRoleValid = computed(() => role.value !== "");
 
-const isFormValid = computed(() =>
+const isFormValid = computed(
+  () =>
     isNameValid.value &&
     isEmailValid.value &&
     isPasswordValid.value &&
@@ -48,7 +51,7 @@ const onSubmit = async () => {
     const existingUsers = await existingUsersResponse.json();
 
     const emailExists = existingUsers.some(
-        (user) => user.email.toLowerCase() === email.value.trim().toLowerCase()
+      (user) => user.email.toLowerCase() === email.value.trim().toLowerCase()
     );
 
     if (emailExists) {
@@ -79,7 +82,7 @@ const onSubmit = async () => {
   } catch (err) {
     console.error("Error al conectar con el servidor:", err);
     error.value =
-        "No se pudo conectar con el servidor. Verifica que esté activo en http://localhost:3000.";
+      "No se pudo conectar con el servidor. Verifica que esté activo en http://localhost:3000.";
   } finally {
     loading.value = false;
   }
@@ -93,46 +96,50 @@ const goToLogin = () => router.push("/login");
     <div class="left-panel">
       <h2>{{ $t("register.title") }}</h2>
       <p>{{ $t("register.text") }}</p>
-      <button class="secondary-button" @click="goToLogin">{{ $t("register.login") }}</button>
+      <button class="secondary-button" @click="goToLogin">
+        {{ $t("register.login") }}
+      </button>
     </div>
 
     <div class="right-panel">
       <h2>Crear una cuenta</h2>
       <form @submit.prevent="onSubmit" class="form" novalidate>
         <input
-            v-model="name"
-            type="text"
-            placeholder="Nombre"
-            :class="{ invalid: !isNameValid && name.length > 0 }"
-            required
+          v-model="name"
+          type="text"
+          placeholder="Nombre"
+          :class="{ invalid: !isNameValid && name.length > 0 }"
+          required
         />
         <input
-            v-model="email"
-            type="email"
-            placeholder="Correo electrónico"
-            :class="{ invalid: !isEmailValid && email.length > 0 }"
-            required
+          v-model="email"
+          type="email"
+          placeholder="Correo electrónico"
+          :class="{ invalid: !isEmailValid && email.length > 0 }"
+          required
         />
         <input
-            v-model="password"
-            type="password"
-            placeholder="Contraseña"
-            :class="{ invalid: !isPasswordValid && password.length > 0 }"
-            required
-            minlength="8"
+          v-model="password"
+          type="password"
+          placeholder="Contraseña"
+          :class="{ invalid: !isPasswordValid && password.length > 0 }"
+          required
+          minlength="8"
         />
         <input
-            v-model="confirmPassword"
-            type="password"
-            placeholder="Confirmar contraseña"
-            :class="{ invalid: !isConfirmPasswordValid && confirmPassword.length > 0 }"
-            required
+          v-model="confirmPassword"
+          type="password"
+          placeholder="Confirmar contraseña"
+          :class="{
+            invalid: !isConfirmPasswordValid && confirmPassword.length > 0,
+          }"
+          required
         />
         <select
-            v-model="role"
-            class="role-select"
-            :class="{ invalid: !isRoleValid && role !== '' }"
-            required
+          v-model="role"
+          class="role-select"
+          :class="{ invalid: !isRoleValid && role !== '' }"
+          required
         >
           <option disabled value="">Select a role</option>
           <option value="productor">Producer</option>
@@ -141,21 +148,38 @@ const goToLogin = () => router.push("/login");
 
         <small>Password must have a minimum of 8 characters</small>
 
-        <div v-if="error" class="error" role="alert" aria-live="assertive">{{ error }}</div>
+        <div v-if="error" class="error" role="alert" aria-live="assertive">
+          {{ error }}
+        </div>
 
         <button
-            type="submit"
-            class="primary-button"
-            :disabled="loading || !isFormValid"
+          type="submit"
+          class="primary-button"
+          :disabled="loading || !isFormValid"
         >
           {{ loading ? "Registering..." : "Create account" }}
         </button>
 
         <div class="divider"></div>
         <div class="social-icons" aria-label="Alternativas de registro social">
-          <div class="circle" role="button" tabindex="0" aria-label="Registrar con Google"></div>
-          <div class="circle" role="button" tabindex="0" aria-label="Registrar con Facebook"></div>
-          <div class="circle" role="button" tabindex="0" aria-label="Registrar con Twitter"></div>
+          <div
+            class="circle"
+            role="button"
+            tabindex="0"
+            aria-label="Registrar con Google"
+          ></div>
+          <div
+            class="circle"
+            role="button"
+            tabindex="0"
+            aria-label="Registrar con Facebook"
+          ></div>
+          <div
+            class="circle"
+            role="button"
+            tabindex="0"
+            aria-label="Registrar con Twitter"
+          ></div>
         </div>
       </form>
     </div>

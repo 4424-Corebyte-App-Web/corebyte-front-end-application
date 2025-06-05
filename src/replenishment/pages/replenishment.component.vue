@@ -1,9 +1,13 @@
 <script>
 import { Replenishment } from "../model/replenishment.entity.js";
 import { ReplenishmentApiService } from "../services/replenishment-api.service.js";
+import LanguageSwitcher from "../../public/components/language-switcher.component.vue";
 
 export default {
   name: "replenishment",
+  components: {
+    LanguageSwitcher,
+  },
   data() {
     return {
       replenishment: new Replenishment({}),
@@ -34,31 +38,33 @@ export default {
 
 <template>
   <div class="container">
-    <h2>Solicitud de stock</h2>
-
+    <h2>{{ $t("replenishment.title") }}</h2>
+    <LanguageSwitcher />
     <div class="actions">
       <input type="text" placeholder="Buscar" class="search-input" />
-      <button class="filter-btn">Filtros</button>
+      <button class="filter-btn">{{ $t("replenishment.texts.filter") }}</button>
     </div>
 
     <div class="btn-group">
       <router-link to="/replenishment/register">
-        <button class="action-btn">Registrar nuevo producto</button>
+        <button class="action-btn">
+          {{ $t("replenishment.texts.register") }}
+        </button>
       </router-link>
 
-      <button class="action-btn">Actualizar Insumos</button>
+      <button class="action-btn">{{ $t("replenishment.texts.update") }}</button>
     </div>
 
     <table class="stock-table">
       <thead>
         <tr>
           <th><input type="checkbox" /></th>
-          <th>Nombre</th>
-          <th>Tipo</th>
-          <th>Fecha de caducidad</th>
-          <th>Stock actual</th>
-          <th>Stock mínimo</th>
-          <th>Precio</th>
+          <th>{{ $t("replenishment.tables.name") }}</th>
+          <th>{{ $t("replenishment.tables.type") }}</th>
+          <th>{{ $t("replenishment.tables.date") }}</th>
+          <th>{{ $t("replenishment.tables.stockActual") }}</th>
+          <th>{{ $t("replenishment.tables.stockMinimo") }}</th>
+          <th>{{ $t("replenishment.tables.price") }}</th>
         </tr>
       </thead>
       <tbody>
@@ -106,9 +112,16 @@ h2 {
 .filter-btn {
   border: 1px solid #f5b301;
   background: transparent;
-  color: white;
+  color: #facc15;
   padding: 0.5rem 1rem;
   border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+  background-color: #f5b301;
+  color: #000;
 }
 
 .btn-group {
@@ -119,10 +132,17 @@ h2 {
 
 .action-btn {
   border: 1px solid #f5b301;
+  color: #facc15;
   background: transparent;
-  color: white;
   padding: 0.5rem 1rem;
   border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+  background-color: #f5b301;
+  color: #000;
 }
 
 .stock-table {

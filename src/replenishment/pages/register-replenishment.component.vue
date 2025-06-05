@@ -1,9 +1,13 @@
 <script>
 import { Replenishment } from "../model/replenishment.entity.js";
 import { ReplenishmentApiService } from "../services/replenishment-api.service.js";
+import LanguageSwitcher from "../../public/components/language-switcher.component.vue";
 
 export default {
   name: "register-replenishment",
+  components: {
+    LanguageSwitcher,
+  },
   data() {
     return {
       replenishment: new Replenishment({

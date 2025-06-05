@@ -2,7 +2,7 @@
   "profiles": [],
   "batches": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Lote 001",
       "estado": "fermentation",
       "grapes": "Cabernet Sauvignon",
@@ -12,7 +12,7 @@
       "status": "active"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Lote 002",
       "estado": "pressing",
       "grapes": "Malbec",
@@ -22,7 +22,7 @@
       "status": "active"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Lote 003",
       "estado": "clarification",
       "grapes": "Merlot",
@@ -32,7 +32,7 @@
       "status": "active"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Lote 004",
       "estado": "aging",
       "grapes": "Syrah",
@@ -42,7 +42,7 @@
       "status": "active"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Lote 005",
       "estado": "bottled",
       "grapes": "Rosé",
@@ -50,12 +50,73 @@
       "startDate": "2025-03-20",
       "currentStage": "bottled",
       "status": "completed"
+    },
+    {
+      "id": "1749086727730",
+      "name": "asd",
+      "type": "asd",
+      "status": "actiasdve",
+      "temperature": 12,
+      "startDate": "2025-06-05",
+      "currentStage": "fermentation",
+      "quantity": 0,
+      "grapes": "Uva no especificada",
+      "estado": "fermentation"
+    },
+    {
+      "id": "1749086743376",
+      "name": "asd",
+      "type": "asd",
+      "status": "acti12ve",
+      "temperature": 12,
+      "startDate": "2025-06-05",
+      "currentStage": "fermentation",
+      "quantity": 0,
+      "grapes": "Uva no especificada",
+      "estado": "fermentation"
+    },
+    {
+      "id": "1749086752823",
+      "name": "ads",
+      "type": "asd",
+      "status": "activeas",
+      "temperature": 1,
+      "startDate": "2025-06-05",
+      "currentStage": "fermentation",
+      "quantity": 0,
+      "grapes": "Uva no especificada",
+      "estado": "fermentation"
+    },
+    {
+      "id": "1749086851282",
+      "name": "asd",
+      "type": "asd",
+      "status": "activasde",
+      "temperature": 12,
+      "startDate": "2025-06-05",
+      "currentStage": "fermentation",
+      "quantity": 0,
+      "grapes": "Uva no especificada",
+      "estado": "fermentation"
+    },
+    {
+      "id": "1749086873584",
+      "name": "asd",
+      "type": "asd",
+      "status": "actiasdve",
+      "temperature": 123,
+      "startDate": "2025-06-05",
+      "currentStage": "fermentation",
+      "quantity": 0,
+      "grapes": "Uva no especificada",
+      "estado": "fermentation"
     }
   ],
   "users": [
     {
       "email": "admin@example.com",
-      "password": "password123"
+      "password": "password123",
+      "id": "540a"
     }
   ],
   "products": [
@@ -84,7 +145,7 @@
       "product": "Merlot",
       "amount": 24,
       "total": 720,
-      "status": "Pendiente"
+      "status": "Entregado"
     },
     {
       "id": "1004",
@@ -102,7 +163,7 @@
       "product": "Syrah",
       "amount": 8,
       "total": 240,
-      "status": "Pendiente"
+      "status": "Entregado"
     },
     {
       "id": "1006",
@@ -111,7 +172,7 @@
       "product": "Pinot Noir",
       "amount": 10,
       "total": 300,
-      "status": "Pendiente"
+      "status": "Entregado"
     },
     {
       "id": "1007",
@@ -120,7 +181,7 @@
       "product": "Malbec Reserve",
       "amount": 15,
       "total": 450,
-      "status": "Pendiente"
+      "status": "Entregado"
     },
     {
       "id": "1008",
@@ -138,7 +199,7 @@
       "product": "Torrontés",
       "amount": 5,
       "total": 125,
-      "status": "Pendiente"
+      "status": "Entregado"
     },
     {
       "id": "1010",
@@ -460,15 +521,6 @@
   ],
   "orders": [
     {
-      "id": "1002",
-      "client": "Viñedos Santa Clara",
-      "date": "2025-06-05",
-      "product": "Vino Blanco Chardonnay",
-      "quantity": 8,
-      "total": 880,
-      "imageUrl": "https://plazavea.vteximg.com.br/arquivos/ids/493484-1000-1000/932731.jpg"
-    },
-    {
       "id": "1003",
       "client": "Distribuidora Andina",
       "date": "2025-06-08",
@@ -557,6 +609,16 @@
       "quantity": 14,
       "total": 1820,
       "imageUrl": "https://tabernero.vteximg.com.br/arquivos/ids/155503-1000-1000/9010005981_1.jpg?v=637278351442070000"
+    },
+    {
+      "id": "1232",
+      "client": "Juan",
+      "product": "Merlot",
+      "quantity": 1,
+      "date": "2025-05-24",
+      "total": 1.22,
+      "imageUrl": "",
+      "status": "Pendiente"
     }
   ],
   "replenishment": [
@@ -564,8 +626,8 @@
       "id": "1002",
       "name": "Malbec",
       "type": "Tinto",
-      "date": "2025-04-11",
-      "stockActual": 360,
+      "date": "2025-06-12",
+      "stockActual": 100,
       "stockMinimo": 200,
       "price": 30
     },
@@ -573,8 +635,8 @@
       "id": "1003",
       "name": "Merlot",
       "type": "Tinto",
-      "date": "2025-03-20",
-      "stockActual": 720,
+      "date": "2025-06-05",
+      "stockActual": 290,
       "stockMinimo": 300,
       "price": 30
     },
@@ -582,8 +644,8 @@
       "id": "1004",
       "name": "Rosé",
       "type": "Rosado",
-      "date": "2025-04-14",
-      "stockActual": 540,
+      "date": "2025-06-14",
+      "stockActual": 150,
       "stockMinimo": 200,
       "price": 30
     },
@@ -591,10 +653,78 @@
       "id": "1005",
       "name": "Syrah",
       "type": "Tinto",
-      "date": "2025-04-15",
-      "stockActual": 240,
+      "date": "2025-06-15",
+      "stockActual": 40,
       "stockMinimo": 100,
       "price": 30
+    }
+  ],
+  "batchManagement": [
+    {
+      "id": "1001",
+      "name": "Vino Tinto Malbec",
+      "type": "Destilado",
+      "status": "Fermentacion completada",
+      "temperature": "14 C°",
+      "amount": "mediana",
+      "total": 14,
+      "date": "2024-05-10",
+      "NLote": "#102"
+    },
+    {
+      "id": "1002",
+      "name": "Vino Tinto Cabernet Sauvignon",
+      "type": "Destilado",
+      "status": "Fermentacion completada",
+      "temperature": "16 C°",
+      "amount": "grande",
+      "total": 24,
+      "date": "2024-05-11",
+      "NLote": "#103"
+    },
+    {
+      "id": "1003",
+      "name": "Vino Tinto Merlot",
+      "type": "Destilado",
+      "status": "Fermentacion completada",
+      "temperature": "16 C°",
+      "amount": "grande",
+      "total": 94,
+      "date": "2024-05-12",
+      "NLote": "#105"
+    },
+    {
+      "id": "1004",
+      "name": "Vino Tinto Syrah",
+      "type": "Destilado",
+      "status": "Fermentacion completada",
+      "temperature": "18 C°",
+      "amount": "pequeña",
+      "total": 41,
+      "date": "2024-05-01",
+      "NLote": "#104"
+    },
+    {
+      "id": "3612",
+      "name": "prueba",
+      "type": "Tinto",
+      "status": "Fermentación en proceso",
+      "temperature": "12 C°",
+      "amount": "pequeña",
+      "total": 12,
+      "date": "2025-06-02T05:00:00.000Z",
+      "NLote": "#546"
+    },
+    {
+      "id": "5984",
+      "name": "asd",
+      "type": "Destilado",
+      "status": "Fermentación en proceso",
+      "temperature": "12 C°",
+      "amount": "mediana",
+      "total": 12,
+      "date": "2025-06-05",
+      "NLote": "#117"
     }
   ]
 }

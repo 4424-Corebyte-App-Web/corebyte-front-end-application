@@ -25,7 +25,7 @@ const items = ref([
             {
                 label: t('navbar.orders'),
                 icon: 'pi pi-plus-circle',
-                to: '/orders/register'
+                to: '/orders'
             },
             {
                 separator: true
@@ -54,17 +54,17 @@ const items = ref([
             {
                 label: t('navbar.alert'),
                 icon: 'pi pi-bell',
-                to: '/'
+                to: '/*'
             },
             {
                 label: t('navbar.analysis'),
                 icon: 'pi pi-chart-line',
-                to: '/'
+                to: '/*'
             },
             {
                 label: t('navbar.replenishment'),
                 icon: 'pi pi-refresh',
-                to: '/'
+                to: '/replenishment'
             },
             {
                 separator: true

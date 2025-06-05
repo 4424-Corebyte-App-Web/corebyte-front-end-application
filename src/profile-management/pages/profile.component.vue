@@ -1,356 +1,415 @@
-<template>
-    <div class="profile-page">
-      <!-- Sidebar -->
-      <aside class="sidebar">
-        <input type="text" placeholder="Buscar" class="search" />
-        <div class="sidebar-buttons">
-          <button
-              class="btn-outline"
-              :class="{ active: activeSection === 'account' }"
-              @click="activeSection = 'account'"
-          >
-            Mi cuenta
-          </button>
-          <button
-              class="btn-outline"
-              :class="{ active: activeSection === 'plans' }"
-              @click="activeSection = 'plans'"
-          >
-            Planes
-          </button>
-          <button
-              class="btn-outline"
-              :class="{ active: activeSection === 'benefits' }"
-              @click="activeSection = 'benefits'"
-          >
-            Beneficios
-          </button>
-        </div>
-        <small>Corebyte 2025</small>
-      </aside>
-  
-      <!-- Main Content -->
-      <main class="main-content">
-        <!-- Mi Cuenta -->
-        <div v-if="activeSection === 'account'">
-          <h1>Perfil</h1>
-          <div class="profile-container">
-            <section class="profile-card photo-section">
-              <div class="avatar">
-                <img :src="profile.photoUrl || defaultPhoto" alt="Foto de perfil" />
-              </div>
-              <div class="profile-info-text">
-                <h3>{{ profile.name }}</h3>
-                <p><strong>Email:</strong> {{ profile.email }}</p>
-                <p><strong>Rol:</strong> {{ profile.role }}</p>
-                <button class="btn-outline" @click="uploadPhoto">Subir nueva foto</button>
-              </div>
-            </section>
-  
-            <section class="profile-card password-card">
-              <label>Contraseña actual</label>
-              <div class="input-wrapper">
-                <input :type="showCurrentPassword ? 'text' : 'password'" v-model="passwords.current" placeholder="••••••••" />
-                <button class="eye-btn" @click="showCurrentPassword = !showCurrentPassword">
-                  {{ showCurrentPassword ? '👁️‍🗨️' : '👁️' }}
-                </button>
-              </div>
-  
-              <label>Nueva contraseña</label>
-              <div class="input-wrapper">
-                <input :type="showNewPassword ? 'text' : 'password'" v-model="passwords.new" placeholder="••••••••" />
-                <button class="eye-btn" @click="showNewPassword = !showNewPassword">
-                  {{ showNewPassword ? '👁️‍🗨️' : '👁️' }}
-                </button>
-              </div>
-  
-              <label>Confirmar contraseña</label>
-              <div class="input-wrapper">
-                <input :type="showConfirmPassword ? 'text' : 'password'" v-model="passwords.confirm" placeholder="••••••••" />
-                <button class="eye-btn" @click="showConfirmPassword = !showConfirmPassword">
-                  {{ showConfirmPassword ? '👁️‍🗨️' : '👁️' }}
-                </button>
-              </div>
-            </section>
-          </div>
-        </div>
-  
-        <!-- Planes -->
-        <div v-else-if="activeSection === 'plans'">
-          <h2>Tipo de cuenta</h2>
-          <div class="plan-box">
-            <span>Rol: {{ profile.role }}</span>
-            <span>Plan actual: Start</span>
-            <a href="#" class="change-plan">¿Deseas cambiar de plan?</a>
-          </div>
-          <h3>Planes</h3>
-          <div class="plans-cards">
-            <div class="plan-card">
-              <h4>TraceWine Pro</h4>
-              <ul>
-                <li>Gestión de inventario: Control de hasta 500 productos</li>
-                <li>Alertas automáticas de stock</li>
-                <li>Control de proceso de vinificación</li>
-                <li>Gestión de clientes y ventas</li>
-                <li>Atención por correo electrónico</li>
-              </ul>
-              <button class="btn-outline">Elegir</button>
-            </div>
-  
-            <div class="plan-card">
-              <h4>TraceWine Premium</h4>
-              <ul>
-                <li>Todo lo del plan Pro</li>
-                <li>Gestión de hasta 1000 productos</li>
-                <li>Soporte por chat en vivo</li>
-                <li>Simulación de pedidos</li>
-                <li>Atención personalizada</li>
-              </ul>
-              <button class="btn-outline">Elegir</button>
-            </div>
-          </div>
-        </div>
-  
-        <!-- Beneficios -->
-        <div v-else-if="activeSection === 'benefits'">
-          <h2>Beneficios del Plan Pro</h2>
-          <div class="plan-box">
-            <p>
-              Adquiriendo el Plan Pro, podrás acceder a los siguientes beneficios que TraceWine tiene para ofrecerte:
-            </p>
-          </div>
-          <div class="plan-card single">
-            <ul>
-              <li>Gestión de inventarios: Control de hasta 500 productos</li>
-              <li>Alertas de stock bajo o excedente</li>
-              <li>Control del proceso de vinificación</li>
-              <li>Gestión adaptable a distintos tipos de vino</li>
-              <li>Administración de cartera de clientes</li>
-              <li>Seguimiento de pedidos</li>
-              <li>Simulación de pedidos</li>
-              <li>Soporte: correo y chat en vivo</li>
-            </ul>
-          </div>
-        </div>
-      </main>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        activeSection: 'account',
-        defaultPhoto: '/default-profile.png', // Ajusta según ruta foto default
-        profile: {
-          email: '',
-          name: '',
-          role: '',
-          photoUrl: null,
-        },
-        passwords: {
-          current: '',
-          new: '',
-          confirm: '',
-        },
-        showCurrentPassword: false,
-        showNewPassword: false,
-        showConfirmPassword: false,
+<script>
+import LanguageSwitcher from "../../public/components/language-switcher.component.vue";
+
+export default {
+  name: "profile",
+  components: {
+    LanguageSwitcher,
+  },
+  data() {
+    return {
+      activeSection: "account",
+      defaultPhoto: "/default-profile.png",
+      profile: {
+        email: "",
+        name: "",
+        role: "",
+        photoUrl: null,
+        password: "",
+      },
+      passwords: {
+        current: "",
+        new: "",
+        confirm: "",
+      },
+      showCurrentPassword: false,
+      showNewPassword: false,
+      showConfirmPassword: false,
+      isLoading: false,
+      message: {
+        text: "",
+        type: "", // 'success' o 'error'
+      },
+    };
+  },
+  created() {
+    const storedUser = localStorage.getItem("user");
+
+    if (storedUser) {
+      try {
+        const userData = JSON.parse(storedUser);
+        this.profile = {
+          ...this.profile,
+          email: userData.email,
+          name: userData.name,
+          role: userData.role,
+          password: userData.password,
+        };
+        this.passwords.current = userData.password;
+      } catch (error) {
+        console.error("Error al cargar los datos del usuario:", error);
+      }
+    } else {
+      console.error("Usuario no encontrado");
+      this.$router.push("/login");
+    }
+  },
+  computed: {
+    isPasswordFormValid() {
+      return (
+        this.passwords.new &&
+        this.passwords.confirm &&
+        this.passwords.new === this.passwords.confirm &&
+        this.passwords.new.length >= 8
+      );
+    },
+  },
+  methods: {
+    uploadPhoto() {
+      alert("Función para subir foto no implementada");
+    },
+    async updatePassword() {
+      if (!this.isPasswordFormValid) return;
+
+      this.isLoading = true;
+      this.message = { text: "", type: "" };
+
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        this.profile.password = this.passwords.new;
+        this.passwords.current = this.passwords.new;
+
+        this.passwords.new = "";
+        this.passwords.confirm = "";
+
+        this.message = {
+          text: "¡Contraseña actualizada correctamente!",
+          type: "success",
+        };
+      } catch (error) {
+        console.error("Error al actualizar la contraseña:", error);
+        this.message = {
+          text: "Error al actualizar la contraseña. Intenta nuevamente.",
+          type: "error",
+        };
+      } finally {
+        this.isLoading = false;
+
+        if (this.message.text) {
+          setTimeout(() => {
+            this.message = { text: "", type: "" };
+          }, 5000);
+        }
       }
     },
-    created() {
-      fetch('/user.json')
-          .then((res) => {
-            if (!res.ok) throw new Error('No se pudo cargar user.json')
-            return res.json()
-          })
-          .then((data) => {
-            this.profile.email = data.email
-            this.profile.name = data.name
-            this.profile.role = data.role
-            // Si tienes foto, asigna profile.photoUrl = data.photoUrl
-          })
-          .catch((err) => {
-            console.error('Error al cargar user.json:', err)
-          })
-    },
-    methods: {
-      uploadPhoto() {
-        alert('Función para subir foto no implementada')
-      },
-    },
+  },
+};
+</script>
+<template>
+  <div class="profile-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-buttons">
+        <router-link
+          to="/profile"
+          class="btn-outline"
+          :class="{ active: $route.path === '/profile' }"
+        >
+          {{ $t("nav.account") }}
+        </router-link>
+        <router-link
+          to="/profile/type-account"
+          class="btn-outline"
+          :class="{ active: $route.path === '/profile/type-account' }"
+        >
+          {{ $t("nav.plans") }}
+        </router-link>
+        <router-link
+          to="/profile/benefits"
+          class="btn-outline"
+          :class="{ active: $route.path === '/profile/benefits' }"
+        >
+          {{ $t("nav.benefits") }}
+        </router-link>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="p-8 text-white">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold">{{ $t("profile.title") }}</h2>
+          <LanguageSwitcher />
+        </div>
+
+        <div class="profile-container">
+          <!-- Profile Info Card -->
+          <div class="profile-card">
+            <div class="flex items-start gap-6">
+              <div class="avatar">
+                <img
+                  :src="profile.photoUrl || defaultPhoto"
+                  alt="Foto de perfil"
+                  class="w-32 h-32 rounded-full object-cover border-2 border-gold-500"
+                />
+                <button class="btn-outline mt-4 w-full" @click="uploadPhoto">
+                  {{ $t("profile.uploadPhoto") }}
+                </button>
+              </div>
+              <div class="profile-info">
+                <h3 class="text-xl font-semibold mb-2">{{ profile.name }}</h3>
+                <div class="space-y-2">
+                  <p>
+                    <span class="text-gold-400 font-medium"
+                      >{{ $t("profile.texts.Email") }}:</span
+                    >
+                    {{ profile.email }}
+                  </p>
+                  <p>
+                    <span class="text-gold-400 font-medium"
+                      >{{ $t("profile.texts.Role") }}:</span
+                    >
+                    {{ profile.role }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Change Password Card -->
+          <div class="profile-card mt-6">
+            <h3 class="text-xl font-semibold mb-4">
+              {{ $t("profile.texts.change") }}
+            </h3>
+
+            <div class="space-y-4">
+              <!-- Current Password -->
+              <div>
+                <label class="block text-sm font-medium text-gray-300 mb-1">{{
+                  $t("profile.texts.Password")
+                }}</label>
+                <div class="relative">
+                  <input
+                    :type="showCurrentPassword ? 'text' : 'password'"
+                    v-model="passwords.current"
+                    :placeholder="
+                      profile.password ? '••••••••' : 'No disponible'
+                    "
+                    disabled
+                    class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md text-white focus:ring-2 focus:ring-gold-500 focus:border-transparent"
+                  />
+                  <button
+                    v-if="profile.password"
+                    @click="showCurrentPassword = !showCurrentPassword"
+                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+                    type="button"
+                  >
+                    {{ showCurrentPassword ? "👁️‍🗨️" : "👁️" }}
+                  </button>
+                </div>
+              </div>
+
+              <!-- New Password -->
+              <div>
+                <label class="block text-sm font-medium text-gray-300 mb-1">{{
+                  $t("profile.texts.new")
+                }}</label>
+                <div class="relative">
+                  <input
+                    :type="showNewPassword ? 'text' : 'password'"
+                    v-model="passwords.new"
+                    placeholder="••••••••"
+                    class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md text-white focus:ring-2 focus:ring-gold-500 focus:border-transparent"
+                  />
+                  <button
+                    @click="showNewPassword = !showNewPassword"
+                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+                    type="button"
+                  >
+                    {{ showNewPassword ? "👁️‍🗨️" : "👁️" }}
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-300 mb-1">{{
+                  $t("profile.texts.confirm")
+                }}</label>
+                <div class="relative">
+                  <input
+                    :type="showConfirmPassword ? 'text' : 'password'"
+                    v-model="passwords.confirm"
+                    placeholder="••••••••"
+                    class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md text-white focus:ring-2 focus:ring-gold-500 focus:border-transparent"
+                  />
+                  <button
+                    @click="showConfirmPassword = !showConfirmPassword"
+                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+                    type="button"
+                  >
+                    {{ showConfirmPassword ? "👁️‍🗨️" : "👁️" }}
+                  </button>
+                </div>
+              </div>
+              <div class="pt-2">
+                <button
+                  @click="updatePassword"
+                  :disabled="!isPasswordFormValid || isLoading"
+                  class="w-full py-2 px-4 bg-gold-600 hover:bg-gold-700 text-white font-medium rounded-md transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {{ isLoading ? "Guardando..." : $t("profile.texts.update") }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</template>
+
+<style scoped>
+.profile-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #121212;
+  color: #eee;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.sidebar {
+  width: 280px;
+  background-color: #1a1a1a;
+  padding: 2rem 1rem;
+  border-right: 1px solid #333;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.sidebar-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  position: sticky;
+  top: 2rem;
+}
+
+.btn-outline {
+  background: none;
+  border: 1px solid #b58b25;
+  color: #b58b25;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  text-decoration: none;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-outline:hover,
+.btn-outline.router-link-active,
+.btn-outline.active {
+  background-color: #b58b25;
+  color: #121212;
+  transform: translateX(5px);
+}
+
+.main-content {
+  flex: 1;
+  padding: 0;
+  background-color: #121212;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+.profile-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.profile-card {
+  background: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.profile-card:hover {
+  border-color: #b58b25;
+  box-shadow: 0 0 15px rgba(181, 139, 37, 0.1);
+}
+
+.avatar {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.avatar img {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #b58b25;
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.text-gold-400 {
+  color: #d4af37;
+}
+
+@media (max-width: 1024px) {
+  .profile-layout {
+    flex-direction: column;
   }
-  </script>
-  
-  <style scoped>
-  /* Igual estilo que el ejemplo anterior, adaptado para que se vea oscuro y con acento dorado */
-  
-  .profile-page {
-    display: flex;
-    background-color: #121212;
-    color: #eee;
-    min-height: 100vh;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
+
   .sidebar {
-    width: 230px;
-    background-color: #1a1a1a;
-    padding: 20px 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    font-size: 0.9rem;
-    color: #bbb;
-  }
-  
-  .search {
     width: 100%;
-    padding: 6px 10px;
-    border-radius: 12px;
-    border: 1px solid #b58b25;
-    background-color: #121212;
-    color: #eee;
-    outline: none;
-    margin-bottom: 15px;
+    height: auto;
+    position: relative;
+    padding: 1rem;
+    border-right: none;
+    border-bottom: 1px solid #333;
   }
-  
+
   .sidebar-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
-  
+
   .btn-outline {
-    background: none;
-    border: 1px solid #b58b25;
-    color: #b58b25;
-    padding: 8px 18px;
-    border-radius: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
   }
-  
-  .btn-outline:hover,
-  .btn-outline.active {
-    background-color: #b58b25;
-    color: #121212;
-  }
-  
-  .sidebar small {
-    margin-top: auto;
-    font-size: 0.7rem;
-    color: #444;
-  }
-  
-  .main-content {
-    flex: 1;
-    padding: 40px;
-  }
-  
-  .profile-container {
-    display: flex;
-    gap: 30px;
-  }
-  
-  .profile-card {
-    background-color: #2b2b2b;
-    border-radius: 12px;
-    padding: 25px 30px;
-    color: #eee;
-    display: flex;
+}
+
+@media (max-width: 640px) {
+  .flex.items-start {
     flex-direction: column;
-  }
-  
-  .photo-section {
-    width: 300px;
     align-items: center;
     text-align: center;
   }
-  
-  .avatar img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background-color: #444;
-    margin-bottom: 20px;
-    object-fit: cover;
+
+  .profile-info {
+    margin-top: 1.5rem;
+    text-align: center;
   }
-  
-  .password-card {
-    gap: 15px;
-    display: flex;
-    flex-direction: column;
-    width: 280px;
+
+  .btn-outline {
+    justify-content: center;
   }
-  
-  .input-wrapper {
-    position: relative;
-    margin-bottom: 18px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .input-wrapper input {
-    width: 100%;
-    padding: 8px 38px 8px 12px;
-    border-radius: 8px;
-    border: none;
-    font-size: 1rem;
-    color: #121212;
-  }
-  
-  .eye-btn {
-    position: absolute;
-    right: 8px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-    color: #b58b25;
-  }
-  
-  .plan-box {
-    background-color: #2b2b2b;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-  }
-  
-  .plans-cards {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .plan-card {
-    background-color: #2b2b2b;
-    border-radius: 12px;
-    padding: 20px;
-    width: 280px;
-  }
-  
-  .plan-card.single {
-    width: 100%;
-  }
-  
-  .plan-card ul {
-    list-style-type: disc;
-    padding-left: 20px;
-  }
-  
-  .change-plan {
-    display: inline-block;
-    margin-top: 8px;
-    color: #b58b25;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-  
-  h1,
-  h2,
-  h3,
-  h4 {
-    color: #b58b25;
-  }
-  </style>
+}
+</style>

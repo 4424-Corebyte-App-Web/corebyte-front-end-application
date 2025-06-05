@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
-import PasswordRecover from "./password-recover.component.vue";
 
 const router = useRouter();
 const email = ref("");
@@ -16,6 +15,10 @@ const emit = defineEmits(["login"]);
 
 const goToRegister = () => {
   router.push("/register");
+};
+
+const goToRecover = () => {
+  router.push("/recover-code");
 };
 
 const toggleForgot = () => {
@@ -70,11 +73,11 @@ const onSubmit = () => {
   );
 
   if (user) {
+    localStorage.setItem('user', JSON.stringify(user));
+    
     alert(`Bienvenido, ${user.email}`);
-    // Emitir el evento de login con los datos del usuario
     emit("login", { user, rememberMe: rememberMe.value });
-    // Redirigir al dashboard o página principal
-    router.push("/app");
+    router.push("/profile");
   } else {
     error.value = "Correo o contraseña incorrectos.";
   }
@@ -116,7 +119,7 @@ const onSubmit = () => {
 
           <div class="form-field">
             <label for="password" class="sr-only">Contraseña</label>
-            <input
+            <pv-password
                 id="password"
                 v-model="password"
                 type="password"
@@ -126,6 +129,7 @@ const onSubmit = () => {
                 :aria-describedby="error ? 'error-message' : null"
                 autocomplete="current-password"
                 required
+                toggleMask
             />
           </div>
 
@@ -150,11 +154,11 @@ const onSubmit = () => {
           </button>
 
           <button
-              @click="router.push('/recuperar')"
+              @click="goToRecover"
               class="forgot"
               type="button"
           >
-            {{ $t("login.password") }}
+          Forgot your password?
           </button>
 
           <div class="social-login" aria-label="Iniciar sesión con ">

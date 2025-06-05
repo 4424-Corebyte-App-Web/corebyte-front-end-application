@@ -1,19 +1,19 @@
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
-const email = ref('')
-const errorMessage = ref('')
-const router = useRouter()
+const email = ref("");
+const errorMessage = ref("");
+const router = useRouter();
 
 function handleSubmit() {
-  if (!email.value.includes('@')) {
-    errorMessage.value = 'Correo electrónico inválido'
-    return
+  if (!email.value.includes("@")) {
+    errorMessage.value = "Correo electrónico inválido";
+    return;
   }
-  localStorage.setItem('recoveryCode', '123456')
-  localStorage.setItem('recoveryEmail', email.value)
-  router.push('/recuperar-codigo')
+  localStorage.setItem("recoveryCode", "123456");
+  localStorage.setItem("recoveryEmail", email.value);
+  router.push("/confirmation-code");
 }
 </script>
 
@@ -23,13 +23,15 @@ function handleSubmit() {
       <h2>{{ $t("recover.title") }}</h2>
       <p>{{ $t("recover.text") }}</p>
       <input
-          type="email"
-          v-model="email"
-          placeholder="mgonzales@example.com"
-          class="email-input"
+        type="email"
+        v-model="email"
+        placeholder="mgonzales@example.com"
+        class="email-input"
       />
       <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
-      <button @click="handleSubmit" class="submit-btn">{{$t("recover.button") }}</button>
+      <button @click="handleSubmit" class="submit-btn">
+        {{ $t("recover.button") }}
+      </button>
     </div>
   </div>
 </template>
@@ -38,7 +40,7 @@ function handleSubmit() {
 .recover-container {
   width: 100vw;
   height: 100vh;
-  background-image: url('/src/assets/recover-bg.png'); 
+  background-image: url("/src/assets/recover-bg.png");
   background-size: cover;
   background-position: center;
   position: relative;

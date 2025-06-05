@@ -2,7 +2,10 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:3000';
 
-
+/**
+ * Obtiene la lista de órdenes
+ * @returns {Promise<Array>} Lista de órdenes
+ */
 export const getOrders = async () => {
   try {
     const response = await axios.get(`${API_URL}/orders`);
@@ -13,7 +16,11 @@ export const getOrders = async () => {
   }
 };
 
-
+/**
+ * Obtiene una orden por su ID
+ * @param {string} orderId - ID de la orden a obtener
+ * @returns {Promise<Object>} Orden encontrada
+ */
 export const getOrderById = async (orderId) => {
   try {
     const response = await axios.get(`${API_URL}/orders/${orderId}`);
@@ -24,7 +31,11 @@ export const getOrderById = async (orderId) => {
   }
 };
 
-
+/**
+ * Crea una nueva orden
+ * @param {Object} orderData - Datos de la orden a crear
+ * @returns {Promise<Object>} Orden creada
+ */
 export const createOrder = async (orderData) => {
   try {
     const response = await axios.post(`${API_URL}/orders`, orderData);
@@ -35,7 +46,12 @@ export const createOrder = async (orderData) => {
   }
 };
 
-
+/**
+ * Actualiza una orden existente
+ * @param {string} orderId - ID de la orden a actualizar
+ * @param {Object} orderData - Datos actualizados de la orden
+ * @returns {Promise<Object>} Orden actualizada
+ */
 export const updateOrder = async (orderId, orderData) => {
   try {
     const response = await axios.put(`${API_URL}/orders/${orderId}`, orderData);
@@ -46,7 +62,11 @@ export const updateOrder = async (orderId, orderData) => {
   }
 };
 
-
+/**
+ * Elimina una orden
+ * @param {string} orderId - ID de la orden a eliminar
+ * @returns {Promise<void>}
+ */
 export const deleteOrderById = async (orderId) => {
   try {
     await axios.delete(`${API_URL}/orders/${orderId}`);

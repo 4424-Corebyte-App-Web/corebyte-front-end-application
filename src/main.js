@@ -6,6 +6,8 @@ import PrimeVue from 'primevue/config';
 import router from './routes/index.js';
 import {jsPDF} from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import Password from 'primevue/password'
+import Paginator from 'primevue/paginator';
 import {
     Menu,
     Avatar,
@@ -47,6 +49,8 @@ app.component("pv-column", Column);
 app.component("pv-dialog", Dialog);
 app.component("pv-checkbox", Checkbox);
 app.component("pv-checkboxgroup", CheckboxGroup);
+app.component("pv-password", Password);
+app.component("pv-paginator", Paginator);
 window.jsPDF = jsPDF;
 window.autoTable = autoTable;
 app.mount('#app');

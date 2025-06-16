@@ -54,12 +54,12 @@ const items = ref([
             {
                 label: t('navbar.alert'),
                 icon: 'pi pi-bell',
-                to: '/*'
+                to: '/alerts'
             },
             {
                 label: t('navbar.analysis'),
                 icon: 'pi pi-chart-line',
-                to: '/*'
+                to: '/sales-analysis'
             },
             {
                 label: t('navbar.replenishment'),

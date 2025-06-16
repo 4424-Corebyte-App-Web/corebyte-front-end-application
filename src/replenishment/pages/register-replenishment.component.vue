@@ -27,13 +27,13 @@ export default {
       this.replenishmentApiService
         .createResource(this.replenishment)
         .then(() => {
-          alert("Producto registrado correctamente.");
+          alert("Replenishment registered successfully.");
           // Reiniciar el formulario
           this.replenishment = new Replenishment({});
         })
         .catch((error) => {
-          console.error("Error al registrar el producto", error);
-          alert("Hubo un error al registrar el producto.");
+          console.error("Error al registrar el replenishment", error);
+          alert("Hubo un error al registrar el replenishment.");
         });
     },
   },
@@ -42,26 +42,26 @@ export default {
 
 <template>
   <div class="form-container">
-    <h2>Registrar Producto</h2>
+    <h2>Register Replenishment</h2>
 
     <form @submit.prevent="registerReplenishment">
       <div class="form-group">
-        <label>Nombre:</label>
+        <label>Name:</label>
         <input v-model="replenishment.name" required type="text" />
       </div>
 
       <div class="form-group">
-        <label>Tipo:</label>
+        <label>Type:</label>
         <input v-model="replenishment.type" required type="text" />
       </div>
 
       <div class="form-group">
-        <label>Fecha de caducidad:</label>
+        <label>Expiration Date:</label>
         <input v-model="replenishment.date" required type="date" />
       </div>
 
       <div class="form-group">
-        <label>Stock actual:</label>
+        <label>Current Stock:</label>
         <input
           v-model.number="replenishment.stockActual"
           required
@@ -70,7 +70,7 @@ export default {
       </div>
 
       <div class="form-group">
-        <label>Stock mínimo:</label>
+        <label>Stock minimum:</label>
         <input
           v-model.number="replenishment.stockMinimo"
           required
@@ -79,7 +79,7 @@ export default {
       </div>
 
       <div class="form-group">
-        <label>Precio:</label>
+        <label>Price:</label>
         <input
           v-model.number="replenishment.price"
           required
@@ -88,7 +88,7 @@ export default {
         />
       </div>
 
-      <button type="submit" class="submit-btn">Registrar</button>
+      <button type="submit" class="submit-btn">Register</button>
     </form>
   </div>
 </template>

@@ -24,7 +24,6 @@ const goToRecover = () => {
 const toggleForgot = () => {
   showForgot.value = !showForgot.value;
 };
-
 onMounted(async () => {
   loading.value = true;
   try {

@@ -25,7 +25,6 @@ export default {
   },
 };
 </script>
-
 <template>
   <div class="recover-container">
     <h2 class="title">Recuperar Contraseña</h2>

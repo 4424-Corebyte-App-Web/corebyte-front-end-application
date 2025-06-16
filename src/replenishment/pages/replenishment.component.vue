@@ -51,8 +51,9 @@ export default {
           {{ $t("replenishment.texts.register") }}
         </button>
       </router-link>
-
-      <button class="action-btn">{{ $t("replenishment.texts.update") }}</button>
+      <router-link to="/replenishment/update/:id">
+        <button class="action-btn">{{ $t("replenishment.texts.update") }}</button>
+      </router-link>
     </div>
 
     <table class="stock-table">

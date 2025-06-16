@@ -27,7 +27,8 @@ const ClarificationRegister = () => import('../batch-management/pages/Clarificat
 const AgingRegister = () => import('../batch-management/pages/Aging-register.component.vue');
 const BottledRegister = () => import('../batch-management/pages/Bottled-register.component.vue');
 const ClarificationUpdate = () => import('../batch-management/pages/Clarification-update.component.vue');
-
+const UpdateReplenishment = () => import('../replenishment/pages/update-replenishment.component.vue');
+const SalesAnalysisDashboard = () => import('../sales-analysis/pages/sales-analysis-dashboard.component.vue');
 
 const routes = [
     // Rutas públicas
@@ -60,7 +61,9 @@ const routes = [
     {path: "/:pathMatch(.*)*", name: 'not-found', component: PageNotFoundComponent, meta: { title: "Page Not Found" }},
     { path: '/replenishment',name: 'Replenishment',component: ReplenishmentComponent,meta: { title: "Replenishment" }},
     {path: '/replenishment/register',name: 'RegisterReplenishment',component: RegisterReplenishment,meta: { title: "Register Replenishment" }},
-    {path: '/alerts',name: 'AlertDashboard',component: AlertDashboardComponent,meta: { title: "Alert Dashboard" }}
+    {path: '/replenishment/update/:id',name: 'UpdateReplenishment',component: UpdateReplenishment,meta: { title: "Update Replenishment" }},
+    {path: '/alerts',name: 'AlertDashboard',component: AlertDashboardComponent,meta: { title: "Alert Dashboard" }},
+    {path: '/sales-analysis',name: 'SalesAnalysisDashboard',component: SalesAnalysisDashboard,meta: { title: "Sales Analysis Dashboard" }}
 ]
 
 const router = createRouter({

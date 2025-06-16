@@ -46,6 +46,7 @@
       "filter": "Filters",
       "register": "Register New Product",
       "update": "Update Supplies"
+      
     },
     "tables": {
       "name": "Name",
@@ -180,5 +181,21 @@
     "account": "My Account",
     "plans": "Plans",
     "benefits": "Benefits"
+  },
+  "salesAnalysis": {
+    "title": "Sales Analysis",
+    "text":{
+      "higher":"Higher turnover",
+      "lower":"Lower turnover"
+    },
+    "saleRisk":"Sale risk",
+    "table":{
+      "name":"Name",
+      "type":"Type",
+      "expiration":"Expiration Date",
+      "current":"Current Stock",
+      "minimum":"Minimum Stock",
+      "price":"Price"
+    }
   }
 }

@@ -54,10 +54,14 @@ For MacOS/Linux:
 The API endpoints should be access at `http://localhost:3000`. The current API resource endpoints are:
 ```
 - `http://localhost:3000/profiles`
+- `http://localhost:3000/batches`
 - `http://localhost:3000/users`
 - `http://localhost:3000/products`
 - `http://localhost:3000/records`
-- `https://localhost:3001/batches`    
+- `http://localhost:3000/orders`
+- `http://localhost:3000/replenishment`
+- `http://localhost:3000/batchManagement`
+- `https://localhost:3001/analysis`        
 ```
 
 ## Build

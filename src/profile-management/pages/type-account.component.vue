@@ -14,7 +14,6 @@ export default {
       },
     };
   },
-
   created() {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {

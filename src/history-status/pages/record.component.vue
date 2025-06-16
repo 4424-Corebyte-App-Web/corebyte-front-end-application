@@ -3,7 +3,6 @@
     import SideNavbar from '../../public/components/side-navbar.component.vue';
     import LanguageSwitcher from '../../public/components/language-switcher.component.vue'
     import { RecordService } from '../services/record.service.js';
-
     export default {
         name: "record",
         title: "Record",

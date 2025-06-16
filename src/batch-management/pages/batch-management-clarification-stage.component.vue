@@ -27,7 +27,6 @@ export default {
   created() {
     this.fetchBatches();
   },
-
   methods: {
     async fetchBatches() {
       this.loading = true;

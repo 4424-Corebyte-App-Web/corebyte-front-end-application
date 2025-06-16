@@ -165,7 +165,6 @@ export default {
                 </div>
             </div>
         </div>
-        
         <template #footer>
             <div class="dialog-footer">
                 <pv-button 

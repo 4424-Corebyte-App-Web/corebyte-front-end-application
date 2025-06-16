@@ -1,13 +1,201 @@
 {
-    "navbar":{
-        "user":"User",
-        "search":"Search",
-        "orders":"Orders",
-        "status":"Status",
-        "analysis": "Sales analysis",
-        "replenishment":"Replenishment",
-        "record": "Record",
-        "alert": "Alerts",
-        "batch": "Batch management"
+  "navbar": {
+    "user": "User",
+    "orders": "Orders",
+    "status": "Status",
+    "analysis": "Sales and analysis",
+    "replenishment": "Replenishment",
+    "record": "Record",
+    "alert": "Alerts",
+    "batch": "Batch management",
+    "log-out": "Log out"
+  },
+  "login": {
+    "confirmation": "Enter the verification code sent to your email.",
+    "send": "Send",
+    "forgot": "Remember me?",
+    "login": "Log in",
+    "password": "Forgot your password?",
+    "user": "Hello, user",
+    "text": "Register with your personal account to use all the features of the tool",
+    "register": "Register"
+  },
+  "password-recover": {
+    "title": "Password Recovered",
+    "text": "You can now log back in.",
+    "button": "Return to Login"
+  },
+  "recover": {
+    "title": "Recover Password",
+    "text": "Enter your email address and we'll send you a verification code.",
+    "button": "Send"
+  },
+  "register": {
+    "title": "Welcome back",
+    "text": "Enter your personal information to use all the features of the tool",
+    "login": "Login"
+  },
+  "titles": {
+    "state": "States",
+    "record": "Record"
+  },
+  "replenishment": {
+    "title": "Stock Request",
+    "texts": {
+      "search": "Search",
+      "filter": "Filters",
+      "register": "Register New Product",
+      "update": "Update Supplies"
+
+    },
+    "tables": {
+      "name": "Name",
+      "type": "Type",
+      "date": "Expiration Date",
+      "stockActual": "Current Stock",
+      "stockMinimo": "Minimum Stock",
+      "price": "Price"
     }
+  },
+  "alerts": {
+    "titles": {
+      "title": "Alerts",
+      "urgent": "Urgent Replenishment",
+      "close": "Expiring Soon"
+    },
+    "tables": {
+      "date": "Expires in",
+      "days": "days",
+      "stockActual": "Current Stock",
+      "stockMinimo": "Minimum Stock"
+    }
+  },
+  "orders": {
+    "title": "Order Orders",
+    "texts": {
+      "register": "Register new order"
+    },
+    "tables": {
+      "id": "Order ID",
+      "name": "Customer",
+      "type": "Date",
+      "date": "Product",
+      "currentstock": "Quantity",
+      "minimumstock": "Total",
+      "details": "Details"
+    }
+  },
+  "batch": {
+    "title": "Batch Management Overview",
+    "status": "Fermentation Status",
+    "press": "Pressing stage",
+    "clarification": "Clarification stage",
+    "aging": "Aging stage",
+    "bottled": "Bottled stage",
+    "texts": {
+      "register": "New Batch",
+      "update": "Update Batch",
+      "Fermentation": "Fermentation",
+      "pressing": "Pressing",
+      "clarification": "Clarification",
+      "aging": "Aging",
+      "bottled": "Bottled"
+    },
+    "tables": {
+      "name": "Name",
+      "type": "Type",
+      "status": "Status",
+      "temperature": "Temperature",
+      "amount": "Quantity",
+      "total": "Total",
+      "date": "Date",
+      "NLote": "Batch"
+    }
+  },
+
+  "profile": {
+    "title": "Profile",
+    "uploadPhoto": "Upload photo",
+    "texts": {
+      "Email": "Email",
+      "Role": "Role",
+      "Password": "Current Password",
+      "change": "Change Password",
+      "new": "New Password",
+      "confirm": "Confirm Password",
+      "update": "Update Password"
+    }
+  },
+  "plans": {
+    "title": "Account Type",
+    "texts": {
+      "role": "Role",
+      "plan": "Current Plan",
+      "change": "Do you want to change your plan?"
+    },
+    "information": {
+      "title": "Plans",
+      "text": {
+        "pro": "TraceWine Pro",
+        "pro1": "Inventory Management: Control of up to 500 products",
+        "pro2": "Automatic stock alerts",
+        "pro3": "Winemaking process control",
+        "pro4": "Customer and sales management",
+        "pro5": "Email support",
+        "premium": "TraceWine Premium",
+        "premium1": "Everything in the Pro plan",
+        "premium2": "Management of up to 1,000 products",
+        "premium3": "Live chat support",
+        "premium4": "Order simulation",
+        "premium5": "Personalized attention"
+      }
+    },
+    "button": "Change plan"
+  },
+  "benefits": {
+    "title": "Pro Plan Benefits",
+    "text": {
+      "benefit1": "By purchasing the Pro Plan, you will have access to the following benefits: TraceWine offers you:",
+      "benefit2": "Inventory management: Control of up to 500 products",
+      "benefit3": "Low or excess stock alerts",
+      "benefit4": "Winemaking process control",
+      "benefit5": "Adaptable management for different types of wine",
+      "benefit6": "Customer portfolio management",
+      "benefit7": "Order tracking",
+      "benefit8": "Order simulation",
+      "benefit9": "Sales management"
+    }
+  },
+  "benefits2": {
+    "title": "Premium Plan Benefits",
+    "text": {
+      "benefit1": "By purchasing the Premium Plan, you'll have access to the following benefits that TraceWine has to offer:",
+      "benefit2": "Inventory Management: Unlimited product control with advanced reports and stock predictions.",
+      "benefit3": "Winemaking Process Control: Complete and personalized management at every stage, with historical data integration for quality optimization.",
+      "benefit4": "Customer Portfolio Management: Unlimited management with behavioral analysis and advanced segmentation.",
+      "benefit5": "Order Tracking: Unlimited tracking, with integration to distribution systems and real-time tracking.",
+      "benefit6": "Support: 24/7 priority support with personalized attention."
+    }
+  },
+  "nav": {
+    "account": "My Account",
+    "plans": "Plans",
+    "benefits": "Benefits"
+  },
+  "sales-analysis": {
+    "title": "Sales Analysis",
+    "text":{
+      "higher":"Higher turnover",
+      "lower":"Lower turnover"
+    },
+    "Sale risk":"Sale risk",
+    "table":{
+      "name":"Name",
+      "type":"Type",
+      "expiration":"Expiration Date",
+      "current":"Current Stock",
+      "minimum":"Minimum Stock",
+      "price":"Price"
+    }
+  }
 }

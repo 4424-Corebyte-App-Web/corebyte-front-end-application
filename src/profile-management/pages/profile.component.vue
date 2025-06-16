@@ -277,6 +277,9 @@ export default {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+h2 {
+  color: #b58b25;
+}
 .sidebar {
   width: 280px;
   background-color: #1a1a1a;

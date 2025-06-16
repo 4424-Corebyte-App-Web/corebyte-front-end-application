@@ -21,7 +21,6 @@ const isConfirmPasswordValid = computed(
   () => password.value === confirmPassword.value
 );
 const isRoleValid = computed(() => role.value !== "");
-
 const isFormValid = computed(
   () =>
     isNameValid.value &&

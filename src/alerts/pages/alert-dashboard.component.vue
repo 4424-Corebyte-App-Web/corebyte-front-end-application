@@ -55,7 +55,6 @@ export default {
   },
 };
 </script>
-
 <template>
   <div class="dashboard-container">
     <h1 class="dashboard-title">{{ $t("alerts.titles.title") }}</h1>

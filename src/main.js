@@ -3,7 +3,7 @@ import './style.css'
 import App from './App.vue'
 import i18n from "./i18n";
 import PrimeVue from 'primevue/config';
-import router from './routes/index.js';
+import router from './routers/index.js';
 import {jsPDF} from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import Password from 'primevue/password'
@@ -24,7 +24,8 @@ import {
     CheckboxGroup,
     InputNumber,
     InputText,
-    Dropdown 
+    Dropdown,
+    Panel,
 } from "primevue";
 import 'primeicons/primeicons.css';
 
@@ -51,6 +52,7 @@ app.component("pv-checkbox", Checkbox);
 app.component("pv-checkboxgroup", CheckboxGroup);
 app.component("pv-password", Password);
 app.component("pv-paginator", Paginator);
+app.component("pv-panel", Panel);
 window.jsPDF = jsPDF;
 window.autoTable = autoTable;
 app.mount('#app');

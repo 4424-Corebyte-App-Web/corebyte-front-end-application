@@ -726,5 +726,63 @@
       "date": "2025-06-05",
       "NLote": "#117"
     }
+  ],
+  "analysis": [
+    [
+      {
+        "id": 1,
+        "product": "Vino Tinto Malbec",
+        "type": "Tinto",
+        "expirationDate": "2024-05-10",
+        "currentStock": 14,
+        "stockMinimum": 20,
+        "price": 14
+      },
+      {
+        "id": 2,
+        "product": "Vino Blanco Sauvignon",
+        "type": "Blanco",
+        "expirationDate": "2024-06-05",
+        "currentStock": 25,
+        "stockMinimum": 15,
+        "price": 13
+      },
+      {
+        "id": 3,
+        "product": "Vino Rosado Garnacha",
+        "type": "Rosado",
+        "expirationDate": "2024-07-01",
+        "currentStock": 10,
+        "stockMinimum": 12,
+        "price": 11
+      },
+      {
+        "id": 4,
+        "product": "Espumante Brut Nature",
+        "type": "Espumante",
+        "expirationDate": "2024-08-15",
+        "currentStock": 30,
+        "stockMinimum": 20,
+        "price": 18
+      },
+      {
+        "id": 5,
+        "product": "Vino Tinto Cabernet",
+        "type": "Tinto",
+        "expirationDate": "2024-04-20",
+        "currentStock": 8,
+        "stockMinimum": 15,
+        "price": 16
+      },
+      {
+        "id": 6,
+        "product": "Vino Blanco Chardonnay",
+        "type": "Blanco",
+        "expirationDate": "2024-09-30",
+        "currentStock": 22,
+        "stockMinimum": 20,
+        "price": 15
+      }
+    ]
   ]
 }

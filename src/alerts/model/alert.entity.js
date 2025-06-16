@@ -17,3 +17,4 @@ export class Alert {
     this.price = price;
   }
 }
+

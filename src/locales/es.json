@@ -179,5 +179,21 @@
     "account": "Mi cuenta",
     "plans": "Planes",
     "benefits": "Beneficios"
+  },
+  "salesAnalysis": {
+    "title": "Análisis de ventas",
+    "text":{
+      "higher":"Mayor rotacion",
+      "lower":"Menor rotacion"
+    },
+    "saleRisk":"Riesgo de venta",
+    "table":{
+      "name":"Nombre",
+      "type":"Tipo",
+      "expiration":"Fecha de caducidad",
+      "current":"Stock actual",
+      "minimum":"Stock mínimo",
+      "price":"Precio"
+    }
   }
 }

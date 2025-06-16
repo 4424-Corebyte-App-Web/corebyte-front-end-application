@@ -7,6 +7,5 @@ export class Replenishment {
     this.stockActual = stockActual;
     this.stockMinimo = stockMinimo;
     this.price = price;
-    S;
   }
 }

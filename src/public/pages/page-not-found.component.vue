@@ -12,7 +12,6 @@ export default {
   }
 }
 </script>
-
 <template>
   <div class="w-full">
     <h1>Page not found</h1>

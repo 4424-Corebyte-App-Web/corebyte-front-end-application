@@ -10,3 +10,4 @@ export class HistoryStatus {
         this.status = status;
     }
 }
+

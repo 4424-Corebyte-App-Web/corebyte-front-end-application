@@ -1,11 +1,11 @@
 import httpInstance from '../../shared/services/http.instance';
 import { Record } from '../model/record.entity';
 
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = 'https://localhost:44355';
 
 export class RecordService {
     getAllRecords() {
-        return fetch(`${BASE_URL}/records`)
+        return fetch(`${BASE_URL}/api/v1/record`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -14,27 +14,27 @@ export class RecordService {
             })
             .catch(error => {
                 console.error("Could not fetch records:", error);
-                return []; 
+                return [];
             });
     }
 
     updateRecord(recordId, dataToUpdate) {
-        return fetch(`${BASE_URL}/records/${recordId}`, {
+        return fetch(`${BASE_URL}/api/v1/record/${recordId}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(dataToUpdate),
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .catch(error => {
-            console.error(`Could not update record ${recordId}:`, error);
-            throw error;
-        });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .catch(error => {
+                console.error(`Could not update record ${recordId}:`, error);
+                throw error;
+            });
     }
 }

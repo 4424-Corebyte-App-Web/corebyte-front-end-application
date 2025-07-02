@@ -1,7 +1,7 @@
 import httpInstance from '../../shared/services/http.instance';
 import { Record } from '../model/record.entity';
 
-const BASE_URL = 'https://localhost:44355';
+const BASE_URL = 'https://localhost:7164';
 
 export class RecordService {
     getAllRecords() {

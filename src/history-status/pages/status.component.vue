@@ -5,117 +5,159 @@ import LanguageSwitcher from '../../public/components/language-switcher.componen
 import { HistoryStatusService } from '../services/history-status.service';
 
 export default {
-    name: "status",
-    title: "Status",
-    components: {SideNavbar, LanguageSwitcher},
-    emits: ['close', 'update:visible', 'login'],
-    data() {
-        return {
-            historyService: new HistoryStatusService(),
-            value: '',
-            items: [],
-            products: [],
-            showDialog: false,
-            selectedProduct: null,
-            isDelivered: false,
-            historyId: null,
-            status: ''
-        };
-    },
-    methods: {
-        mapStatus(status) {
-            if (!status) return 'PENDING';
-            if (typeof status === 'string') status = status.toUpperCase();
-            
-            switch(status) {
-                case 0:
-                case '0':
-                case 'PENDING':
-                    return 'PENDING';
-                case 1:
-                case '1':
-                case 'SHIPPED':
-                    return 'SHIPPED';
-                case 2:
-                case '2':
-                case 'DELIVERED':
-                    return 'DELIVERED';
-                default:
-                    return 'PENDING';
-            }
-        },
-        search(event) {
-            this.items = [...Array(10).keys()].map((item) => event.query + '-' + item);
-        },
-        modifyProduct(product) {
-            this.selectedProduct = { ...product };
-            this.isDelivered = this.selectedProduct.status === 'DELIVERED';
-            this.showDialog = true;
-        },
-        async saveChanges() {
-            if (this.selectedProduct) {
-                try {
-                    const statusToUpdate = this.isDelivered ? 'DELIVERED' : 'PENDING';
-
-                    const updatedProduct = await this.historyService.updateHistoryStatus(
-                        this.selectedProduct.id,
-                        statusToUpdate
-                    );
-                    
-                    const productIndex = this.products.findIndex(p => p.id === this.selectedProduct.id);
-                    if (productIndex !== -1) {
-                        this.products[productIndex] = {
-                            ...this.products[productIndex],
-                            ...updatedProduct,
-                            status: this.mapStatus(updatedProduct.status)
-                        };
-                    }
-                    
-                    this.showDialog = false;
-                    this.resetForm();
-                } catch (error) {
-                    console.error("Failed to save changes:", error);
-                }
-            }
-        },
-        closeModal() {
-            this.showDialog = false;
-            this.resetForm();
-            this.$emit('close');
-            this.$emit('update:visible', false);
-        },
-        resetForm() {
-            this.selectedProduct = null;
-            this.isDelivered = false;
-            this.historyId = null;
-            this.status = '';
-        },
-    },
-    created() {
-        this.historyService.getAllHistoryStatus().then(data => {
-            this.products = data;
-        });
+  name: "status",
+  title: "Status",
+  components: {SideNavbar, LanguageSwitcher},
+  emits: ['close', 'update:visible', 'login'],
+  data() {
+    return {
+      historyService: new HistoryStatusService(),
+      value: '',
+      items: [],
+      products: [],
+      allProducts: [],
+      showDialog: false,
+      selectedProduct: null,
+      isDelivered: false,
+      historyId: null,
+      status: ''
+    };
+  },
+  computed: {
+    filteredProducts() {
+      if (!this.value) return this.products;
+      const searchTerm = this.value.toLowerCase();
+      return this.products.filter(product =>
+          product.customer && product.customer.toLowerCase().includes(searchTerm)
+      );
     }
+  },
+  methods: {
+    mapStatus(status) {
+      if (!status) return 'PENDING';
+      if (typeof status === 'string') status = status.toUpperCase();
+
+      switch(status) {
+        case 0:
+        case '0':
+        case 'PENDING':
+          return 'PENDING';
+        case 1:
+        case '1':
+        case 'SHIPPED':
+          return 'SHIPPED';
+        case 2:
+        case '2':
+        case 'DELIVERED':
+          return 'DELIVERED';
+        default:
+          return 'PENDING';
+      }
+    },
+    search(event) {
+      this.value = event.query;
+      this.items = [...new Set(this.products
+          .filter(p => p.customer && p.customer.toLowerCase().includes(event.query.toLowerCase()))
+          .map(p => p.customer))];
+    },
+    modifyProduct(product) {
+      this.selectedProduct = { ...product };
+      this.isDelivered = this.selectedProduct.status === 'DELIVERED';
+      this.showDialog = true;
+    },
+    async saveChanges() {
+      if (this.selectedProduct) {
+        try {
+          const statusToUpdate = this.isDelivered ? 'DELIVERED' : 'PENDING';
+
+          const updatedProduct = await this.historyService.updateHistoryStatus(
+              this.selectedProduct.id,
+              statusToUpdate
+          );
+
+          const productIndex = this.products.findIndex(p => p.id === this.selectedProduct.id);
+          if (productIndex !== -1) {
+            this.products[productIndex] = {
+              ...this.products[productIndex],
+              ...updatedProduct,
+              status: this.mapStatus(updatedProduct.status)
+            };
+          }
+
+          this.showDialog = false;
+          this.resetForm();
+        } catch (error) {
+          console.error("Failed to save changes:", error);
+        }
+      }
+    },
+    closeModal() {
+      this.showDialog = false;
+      this.resetForm();
+      this.$emit('close');
+      this.$emit('update:visible', false);
+    },
+    resetForm() {
+      this.selectedProduct = null;
+      this.isDelivered = false;
+      this.historyId = null;
+      this.status = '';
+    },
+  },
+  created() {
+    this.historyService.getAllHistoryStatus().then(data => {
+      this.products = data;
+      this.allProducts = [...data];
+    });
+  }
 }
 
 </script>
 <template>
-    <div class="main-layout" :class="{ 'content-dimmed': showDialog }">
-        <div class="w-full main-content-padding">
-            <div class="header-content">
-                <div class="start">
-            <h1>{{$t('titles.state')}}</h1>
-                </div>
-                <language-switcher/>
-            </div>
-            <div class="filter-controls-container">
-            <div class="card flex justify-center search-filter" style="border-radius:15px; padding:8px">
-                <pv-autocomplete 
-                v-model="value" 
-                :suggestions="items" 
-                @complete="search"
-                placeholder="Search..." 
-                class="w-64"
+  <div class="main-layout" :class="{ 'content-dimmed': showDialog }">
+    <div class="w-full main-content-padding">
+      <div class="header-content">
+        <div class="start">
+          <h1>{{$t('titles.state')}}</h1>
+        </div>
+        <language-switcher/>
+      </div>
+      <div class="filter-controls-container">
+        <div class="card flex justify-center search-filter" style="border-radius:15px; padding:8px">
+          <pv-autocomplete
+              v-model="value"
+              :suggestions="items"
+              @complete="search"
+              placeholder="Search..."
+              class="w-64"
+              @item-select="search({ query: $event.value })"
+          />
+        </div>
+        <div class="card flex flex-col items-center gap-4">
+          <div class="flex flex-wrap gap-4 justify-center ">
+            <pv-button label="Filter" icon="pi pi-filter"  iconPos="right" />
+          </div>
+        </div>
+      </div>
+      <div class="center">
+        <div class="data-table">
+          <pv-datatable :value="filteredProducts" paginator :rows="13" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="min-width: 60rem">
+            <pv-column field="id" header="ID" sortable style="width: 10%"></pv-column>
+            <pv-column field="customer" header="Customer" sortable style="width: 20%"></pv-column>
+            <pv-column field="date" header="Date" sortable style="width: 15%"></pv-column>
+            <pv-column field="product" header="Product" sortable style="width: 20%"></pv-column>
+            <pv-column field="amount" header="Amount" sortable style="width: 10%"></pv-column>
+            <pv-column field="total" header="Total" sortable style="width: 15%"></pv-column>
+            <pv-column field="status" header="Status" sortable style="width: 10%"></pv-column>
+            <pv-column header="Actions" style="width: 10%; text-align: center;">
+              <template #body="slotProps">
+                <pv-button
+                    label="Modify"
+                    icon="pi pi-pencil"
+                    iconPos="right"
+                    class="p-button-sm p-button-info"
+                    @click="modifyProduct(slotProps.data)"
+                    style="z-index: 10;"
                 />
         </div>
         <div class="card flex flex-col items-center gap-4">

@@ -5,3 +5,4 @@ const httpInstance = axios.create({
     headers: {'content-type': 'application/json', 'Access-Control-Allow-Origin': '*'}
 })
 export default httpInstance;
+

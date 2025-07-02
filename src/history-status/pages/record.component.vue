@@ -3,7 +3,6 @@
     import SideNavbar from '../../public/components/side-navbar.component.vue';
     import LanguageSwitcher from '../../public/components/language-switcher.component.vue'
     import { RecordService } from '../services/record.service.js';
-
     export default {
         name: "record",
         title: "Record",
@@ -108,7 +107,7 @@
                 </div>
                 <div class="card flex flex-col items-center gap-4">
                     <div class="flex flex-wrap gap-4 justify-center ">
-                        <pv-button label="Filter" icon="pi pi-filter"  iconPos="right" />
+                        <pv-button label="Filter" icon="pi pi-filter" iconPos="right" @click="applyFilter" class="filter-button"/>
                     </div>
                 </div>
             </div>
@@ -125,8 +124,8 @@
                             <pv-column field="stock" header="Stock" sortable style="width: 10%"></pv-column>
                         </pv-datatable>
                     </div>
-                    <div class="report-button-card card">
-                        <pv-button label="Generate Report" @click="generatePdfReport" icon="pi pi-file-pdf" iconPos="right"/>
+                    <div class="report-button-card">
+                        <pv-button label="Generate Report" @click="generatePdfReport" icon="pi pi-file-pdf" iconPos="right" class="report-button"/>
                     </div>
                 </div>
             </div>
@@ -170,6 +169,7 @@
     transition: background-color 0.2s, color 0.2s;
     padding: 10px;
     border-radius: 25px;
+    box-shadow: none !important;
 }
 
 .filter-controls-container :deep(.p-button:hover) {
@@ -227,11 +227,13 @@
 .report-button-card {
     border: 1px solid #556B2F;    
     color: #556B2F;
-    border-radius: 8px;             
-    padding: 1rem;                  
+    border-radius: 8px;
+    margin-top: 1rem;
+    text-align: center;
+    padding: 1rem;
     display: flex;                 
     align-items: center;         
-    justify-content: center;      
+    justify-content: center; 
 }
 
 .report-button-card:hover {

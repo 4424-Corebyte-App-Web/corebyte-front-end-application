@@ -32,7 +32,7 @@ It also uses the following dependencies:
 - Prime vue (https://primevue.org/vite/)
 - i18n language (https://vue-i18n.intlify.dev/guide/installation.html)
 - Vue axios latest version (https://www.npmjs.com/package/vue-axios)
-- JsPDF (https://www.npmjs.com/package/jspdf)
+- JsPDF (https://www.npmjs.com/package/jspdf-autotable)
 
 ## Fake API start
 

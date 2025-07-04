@@ -1,0 +1,788 @@
+{
+  "profiles": [],
+  "batches": [
+    {
+      "id": "1",
+      "name": "Lote 001",
+      "estado": "fermentation",
+      "grapes": "Cabernet Sauvignon",
+      "quantity": 1000,
+      "startDate": "2025-05-01",
+      "currentStage": "fermentation",
+      "status": "active"
+    },
+    {
+      "id": "2",
+      "name": "Lote 002",
+      "estado": "pressing",
+      "grapes": "Malbec",
+      "quantity": 1200,
+      "startDate": "2025-04-25",
+      "currentStage": "pressing",
+      "status": "active"
+    },
+    {
+      "id": "3",
+      "name": "Lote 003",
+      "estado": "clarification",
+      "grapes": "Merlot",
+      "quantity": 800,
+      "startDate": "2025-04-15",
+      "currentStage": "clarification",
+      "status": "active"
+    },
+    {
+      "id": "4",
+      "name": "Lote 004",
+      "estado": "aging",
+      "grapes": "Syrah",
+      "quantity": 900,
+      "startDate": "2025-04-05",
+      "currentStage": "aging",
+      "status": "active"
+    },
+    {
+      "id": "5",
+      "name": "Lote 005",
+      "estado": "bottled",
+      "grapes": "Rosé",
+      "quantity": 700,
+      "startDate": "2025-03-20",
+      "currentStage": "bottled",
+      "status": "completed"
+    },
+    {
+      "id": "1749086727730",
+      "name": "asd",
+      "type": "asd",
+      "status": "actiasdve",
+      "temperature": 12,
+      "startDate": "2025-06-05",
+      "currentStage": "fermentation",
+      "quantity": 0,
+      "grapes": "Uva no especificada",
+      "estado": "fermentation"
+    },
+    {
+      "id": "1749086743376",
+      "name": "asd",
+      "type": "asd",
+      "status": "acti12ve",
+      "temperature": 12,
+      "startDate": "2025-06-05",
+      "currentStage": "fermentation",
+      "quantity": 0,
+      "grapes": "Uva no especificada",
+      "estado": "fermentation"
+    },
+    {
+      "id": "1749086752823",
+      "name": "ads",
+      "type": "asd",
+      "status": "activeas",
+      "temperature": 1,
+      "startDate": "2025-06-05",
+      "currentStage": "fermentation",
+      "quantity": 0,
+      "grapes": "Uva no especificada",
+      "estado": "fermentation"
+    },
+    {
+      "id": "1749086851282",
+      "name": "asd",
+      "type": "asd",
+      "status": "activasde",
+      "temperature": 12,
+      "startDate": "2025-06-05",
+      "currentStage": "fermentation",
+      "quantity": 0,
+      "grapes": "Uva no especificada",
+      "estado": "fermentation"
+    },
+    {
+      "id": "1749086873584",
+      "name": "asd",
+      "type": "asd",
+      "status": "actiasdve",
+      "temperature": 123,
+      "startDate": "2025-06-05",
+      "currentStage": "fermentation",
+      "quantity": 0,
+      "grapes": "Uva no especificada",
+      "estado": "fermentation"
+    }
+  ],
+  "users": [
+    {
+      "email": "admin@example.com",
+      "password": "password123",
+      "id": "540a"
+    }
+  ],
+  "products": [
+    {
+      "id": "1001",
+      "customer": "Carlos Vega",
+      "date": "2025-05-14",
+      "product": "Cabernet Sauvignon",
+      "amount": 6,
+      "total": 1200,
+      "status": "Entregado"
+    },
+    {
+      "id": "1002",
+      "customer": "Lucía Robles",
+      "date": "2025-04-11",
+      "product": "Malbec",
+      "amount": 12,
+      "total": 360,
+      "status": "Entregado"
+    },
+    {
+      "id": "1003",
+      "customer": "Enoteca",
+      "date": "2025-03-20",
+      "product": "Merlot",
+      "amount": 24,
+      "total": 720,
+      "status": "Entregado"
+    },
+    {
+      "id": "1004",
+      "customer": "Viña Andes",
+      "date": "2025-04-14",
+      "product": "Rosé",
+      "amount": 18,
+      "total": 540,
+      "status": "Entregado"
+    },
+    {
+      "id": "1005",
+      "customer": "Sandra Ruiz",
+      "date": "2025-04-15",
+      "product": "Syrah",
+      "amount": 8,
+      "total": 240,
+      "status": "Entregado"
+    },
+    {
+      "id": "1006",
+      "customer": "Bodega San Luis",
+      "date": "2025-04-16",
+      "product": "Pinot Noir",
+      "amount": 10,
+      "total": 300,
+      "status": "Entregado"
+    },
+    {
+      "id": "1007",
+      "customer": "Casa del Vino",
+      "date": "2025-05-01",
+      "product": "Malbec Reserve",
+      "amount": 15,
+      "total": 450,
+      "status": "Entregado"
+    },
+    {
+      "id": "1008",
+      "customer": "Bodega El Paraíso",
+      "date": "2025-05-02",
+      "product": "Chardonnay",
+      "amount": 20,
+      "total": 800,
+      "status": "Entregado"
+    },
+    {
+      "id": "1009",
+      "customer": "La Vinícola",
+      "date": "2025-05-05",
+      "product": "Torrontés",
+      "amount": 5,
+      "total": 125,
+      "status": "Entregado"
+    },
+    {
+      "id": "1010",
+      "customer": "Familia López",
+      "date": "2025-05-06",
+      "product": "Cabernet Franc",
+      "amount": 12,
+      "total": 600,
+      "status": "Pendiente"
+    },
+    {
+      "id": "1011",
+      "customer": "Don Baco",
+      "date": "2025-05-08",
+      "product": "Malbec Rosé",
+      "amount": 9,
+      "total": 270,
+      "status": "Entregado"
+    },
+    {
+      "id": "1012",
+      "customer": "Viñedos del Valle",
+      "date": "2025-05-10",
+      "product": "Cabernet Sauvignon Reserve",
+      "amount": 7,
+      "total": 1400,
+      "status": "Entregado"
+    },
+    {
+      "id": "1013",
+      "customer": "Los Viñateros",
+      "date": "2025-05-12",
+      "product": "Malbec Selección",
+      "amount": 14,
+      "total": 700,
+      "status": "Pendiente"
+    },
+    {
+      "id": "1014",
+      "customer": "Bodega Sol y Luna",
+      "date": "2025-05-13",
+      "product": "Syrah Gran Reserva",
+      "amount": 11,
+      "total": 550,
+      "status": "Entregado"
+    },
+    {
+      "id": "1015",
+      "customer": "Cosecha Dorada",
+      "date": "2025-05-14",
+      "product": "Chardonnay Premium",
+      "amount": 18,
+      "total": 900,
+      "status": "Pendiente"
+    },
+    {
+      "id": "1016",
+      "customer": "Viña del Sol",
+      "date": "2025-05-15",
+      "product": "Merlot Reserva",
+      "amount": 20,
+      "total": 1000,
+      "status": "Pendiente"
+    },
+    {
+      "id": "1017",
+      "customer": "El Rincón del Vino",
+      "date": "2025-05-16",
+      "product": "Rosé Select",
+      "amount": 7,
+      "total": 245,
+      "status": "Entregado"
+    },
+    {
+      "id": "1018",
+      "customer": "Bodega La Montaña",
+      "date": "2025-05-17",
+      "product": "Pinot Noir Especial",
+      "amount": 9,
+      "total": 405,
+      "status": "Pendiente"
+    },
+    {
+      "id": "1019",
+      "customer": "Vinos del Claro",
+      "date": "2025-05-18",
+      "product": "Cabernet Sauvignon Colección",
+      "amount": 12,
+      "total": 1200,
+      "status": "Pendiente"
+    },
+    {
+      "id": "1020",
+      "customer": "La Bodega Artesanal",
+      "date": "2025-05-19",
+      "product": "Malbec Crianza",
+      "amount": 16,
+      "total": 800,
+      "status": "Entregado"
+    },
+    {
+      "id": "1021",
+      "customer": "Viñedos Aurora",
+      "date": "2025-05-20",
+      "product": "Sauvignon Blanc",
+      "amount": 10,
+      "total": 500,
+      "status": "Pendiente"
+    },
+    {
+      "id": "1022",
+      "customer": "Bodega Río Claro",
+      "date": "2025-05-21",
+      "product": "Tannat Reserva",
+      "amount": 13,
+      "total": 650,
+      "status": "Pendiente"
+    }
+  ],
+  "records": [
+    {
+      "id": "1001",
+      "customer": "Carlos Vega",
+      "type": "Cabernet Sauvignon",
+      "year": "2025",
+      "producer": "Cabernet Sauvignon",
+      "batch": 6,
+      "stock": 1200
+    },
+    {
+      "id": "1001",
+      "customer": "Carlos Vega",
+      "type": "Cabernet Sauvignon",
+      "year": "2025",
+      "producer": "Cabernet Sauvignon",
+      "batch": 6,
+      "stock": 1200
+    },
+    {
+      "id": "2001",
+      "customer": "Carlos Vega",
+      "type": "Cabernet Sauvignon",
+      "year": "2025",
+      "producer": "Viña Andes",
+      "batch": 6,
+      "stock": 1200
+    },
+    {
+      "id": "2002",
+      "customer": "Lucía Robles",
+      "type": "Malbec",
+      "year": "2024",
+      "producer": "Bodega San Luis",
+      "batch": 12,
+      "stock": 800
+    },
+    {
+      "id": "2003",
+      "customer": "Enoteca",
+      "type": "Merlot",
+      "year": "2023",
+      "producer": "Casa del Vino",
+      "batch": 24,
+      "stock": 600
+    },
+    {
+      "id": "2004",
+      "customer": "Viña Montes",
+      "type": "Rosé",
+      "year": "2025",
+      "producer": "Viñedos Aurora",
+      "batch": 18,
+      "stock": 720
+    },
+    {
+      "id": "2005",
+      "customer": "Sandra Ruiz",
+      "type": "Syrah",
+      "year": "2024",
+      "producer": "Bodega El Paraíso",
+      "batch": 8,
+      "stock": 480
+    },
+    {
+      "id": "2006",
+      "customer": "Bodega San Luis",
+      "type": "Pinot Noir",
+      "year": "2023",
+      "producer": "Cosecha Dorada",
+      "batch": 10,
+      "stock": 540
+    },
+    {
+      "id": "2007",
+      "customer": "Familia López",
+      "type": "Chardonnay",
+      "year": "2025",
+      "producer": "Bodega Sol y Luna",
+      "batch": 20,
+      "stock": 1000
+    },
+    {
+      "id": "2008",
+      "customer": "Don Baco",
+      "type": "Torrontés",
+      "year": "2024",
+      "producer": "Viñedos del Valle",
+      "batch": 5,
+      "stock": 300
+    },
+    {
+      "id": "2009",
+      "customer": "La Vinícola",
+      "type": "Cabernet Franc",
+      "year": "2023",
+      "producer": "Bodega La Montaña",
+      "batch": 12,
+      "stock": 650
+    },
+    {
+      "id": "2010",
+      "customer": "Casa del Vino",
+      "type": "Malbec Reserve",
+      "year": "2025",
+      "producer": "Los Viñateros",
+      "batch": 15,
+      "stock": 900
+    },
+    {
+      "id": "2011",
+      "customer": "Bodega El Claro",
+      "type": "Sauvignon Blanc",
+      "year": "2024",
+      "producer": "Bodega Río Claro",
+      "batch": 10,
+      "stock": 700
+    },
+    {
+      "id": "2012",
+      "customer": "Viñedos Aurora",
+      "type": "Tannat",
+      "year": "2023",
+      "producer": "La Bodega Artesanal",
+      "batch": 13,
+      "stock": 800
+    },
+    {
+      "id": "2013",
+      "customer": "Cosecha Dorada",
+      "type": "Chenin Blanc",
+      "year": "2025",
+      "producer": "Bodega La Montaña",
+      "batch": 9,
+      "stock": 450
+    },
+    {
+      "id": "2014",
+      "customer": "Viña del Sol",
+      "type": "Merlot Reserva",
+      "year": "2024",
+      "producer": "El Rincón del Vino",
+      "batch": 20,
+      "stock": 1100
+    },
+    {
+      "id": "2015",
+      "customer": "Family Vine",
+      "type": "Rosé Select",
+      "year": "2023",
+      "producer": "Bodega San Luis",
+      "batch": 7,
+      "stock": 350
+    },
+    {
+      "id": "2016",
+      "customer": "Vinos del Claro",
+      "type": "Cabernet Sauvignon Colección",
+      "year": "2025",
+      "producer": "Viña Montes",
+      "batch": 12,
+      "stock": 1000
+    },
+    {
+      "id": "2017",
+      "customer": "La Montaña",
+      "type": "Pinot Grigio",
+      "year": "2024",
+      "producer": "Bodega El Paraíso",
+      "batch": 14,
+      "stock": 760
+    },
+    {
+      "id": "2018",
+      "customer": "El Rincón",
+      "type": "Syrah Gran Reserva",
+      "year": "2023",
+      "producer": "Bodega Sol y Luna",
+      "batch": 11,
+      "stock": 630
+    },
+    {
+      "id": "2019",
+      "customer": "Vinos del Valle",
+      "type": "Chardonnay Premium",
+      "year": "2025",
+      "producer": "Cosecha Dorada",
+      "batch": 18,
+      "stock": 950
+    },
+    {
+      "id": "2020",
+      "customer": "Bodega Artesanal",
+      "type": "Malbec Crianza",
+      "year": "2024",
+      "producer": "Don Baco",
+      "batch": 16,
+      "stock": 840
+    }
+  ],
+  "orders": [
+    {
+      "id": "1003",
+      "client": "Distribuidora Andina",
+      "date": "2025-06-08",
+      "product": "Vino Rosé Dulce",
+      "quantity": 12,
+      "total": 1320,
+      "imageUrl": "https://acdn-us.mitiendanube.com/stores/001/211/660/products/photoroom_20240208_144642-8816acd89246110ef917074167256714-480-0.webp"
+    },
+    {
+      "id": "1004",
+      "client": "La Casa del Vino",
+      "date": "2025-06-10",
+      "product": "Vino Espumante Brut",
+      "quantity": 6,
+      "total": 780,
+      "imageUrl": "https://licoreria247.pe/wp-content/uploads/2022/11/Espumante-TABERNERO-Brut-Botella-de-750ml.jpg.webp"
+    },
+    {
+      "id": "1005",
+      "client": "Hotel Viña Real",
+      "date": "2025-06-12",
+      "product": "Vino Malbec Premium",
+      "quantity": 15,
+      "total": 2250,
+      "imageUrl": "https://oechsle.vteximg.com.br/arquivos/ids/16425995-1000-1000/image-e3361f30a9294973ae0a7b45e3ab908f.jpg?v=638325077806870000"
+    },
+    {
+      "id": "1006",
+      "client": "Restaurante El Parrillón",
+      "date": "2025-06-15",
+      "product": "Vino Cabernet Sauvignon",
+      "quantity": 20,
+      "total": 3000,
+      "imageUrl": "https://licoreriasunidas.pe/cdn/shop/products/b310be7d91c047a8a912495bbfe89124.webp?v=1677856389&width=400"
+    },
+    {
+      "id": "1007",
+      "client": "Bodega La Cosecha",
+      "date": "2025-06-17",
+      "product": "Vino Syrah Selección",
+      "quantity": 10,
+      "total": 1500,
+      "imageUrl": "https://licoreriasunidas.pe/cdn/shop/products/vino-tributo-seleccion-familia-syrah-750ml.webp?v=1677962863&width=500"
+    },
+    {
+      "id": "1008",
+      "client": "Vinoteca Perú",
+      "date": "2025-06-20",
+      "product": "Vino Blanco Seco",
+      "quantity": 5,
+      "total": 525,
+      "imageUrl": "https://delabodega.pe/wp-content/uploads/2020/06/sauvignon-blanc-89-puntos-.png"
+    },
+    {
+      "id": "1009",
+      "client": "Distribuciones Del Valle",
+      "date": "2025-06-22",
+      "product": "Vino Pinot Noir",
+      "quantity": 7,
+      "total": 980,
+      "imageUrl": "https://metroio.vtexassets.com/arquivos/ids/418792-1200-auto?v=638279378547900000&width=1200&height=auto&aspect=true"
+    },
+    {
+      "id": "1010",
+      "client": "Supermercado Los Viñedos",
+      "date": "2025-07-01",
+      "product": "Vino Rosado Joven",
+      "quantity": 9,
+      "total": 990,
+      "imageUrl": "https://oechsle.vteximg.com.br/arquivos/ids/7245665-1000-1000/image-7953e184bc50447ebe0645d7b98573cc.jpg?v=637805655705500000"
+    },
+    {
+      "id": "1011",
+      "client": "Restaurante Mar & Vino",
+      "date": "2025-07-05",
+      "product": "Vino Blanco Sauvignon Blanc",
+      "quantity": 6,
+      "total": 720,
+      "imageUrl": "https://plazavea.vteximg.com.br/arquivos/ids/29321950-1000-1000/925177.jpg"
+    },
+    {
+      "id": "1012",
+      "client": "Vinoteca Andina",
+      "date": "2025-07-08",
+      "product": "Vino Tinto Crianza",
+      "quantity": 14,
+      "total": 1820,
+      "imageUrl": "https://tabernero.vteximg.com.br/arquivos/ids/155503-1000-1000/9010005981_1.jpg?v=637278351442070000"
+    },
+    {
+      "id": "1232",
+      "client": "Juan",
+      "product": "Merlot",
+      "quantity": 1,
+      "date": "2025-05-24",
+      "total": 1.22,
+      "imageUrl": "",
+      "status": "Pendiente"
+    }
+  ],
+  "replenishment": [
+    {
+      "id": "1002",
+      "name": "Malbec",
+      "type": "Tinto",
+      "date": "2025-06-12",
+      "stockActual": 100,
+      "stockMinimo": 200,
+      "price": 30
+    },
+    {
+      "id": "1003",
+      "name": "Merlot",
+      "type": "Tinto",
+      "date": "2025-06-05",
+      "stockActual": 290,
+      "stockMinimo": 300,
+      "price": 30
+    },
+    {
+      "id": "1004",
+      "name": "Rosé",
+      "type": "Rosado",
+      "date": "2025-06-14",
+      "stockActual": 150,
+      "stockMinimo": 200,
+      "price": 30
+    },
+    {
+      "id": "1005",
+      "name": "Syrah",
+      "type": "Tinto",
+      "date": "2025-06-15",
+      "stockActual": 40,
+      "stockMinimo": 100,
+      "price": 30
+    }
+  ],
+  "batchManagement": [
+    {
+      "id": "1001",
+      "name": "Vino Tinto Malbec",
+      "type": "Destilado",
+      "status": "Fermentacion completada",
+      "temperature": "14 C°",
+      "amount": "mediana",
+      "total": 14,
+      "date": "2024-05-10",
+      "NLote": "#102"
+    },
+    {
+      "id": "1002",
+      "name": "Vino Tinto Cabernet Sauvignon",
+      "type": "Destilado",
+      "status": "Fermentacion completada",
+      "temperature": "16 C°",
+      "amount": "grande",
+      "total": 24,
+      "date": "2024-05-11",
+      "NLote": "#103"
+    },
+    {
+      "id": "1003",
+      "name": "Vino Tinto Merlot",
+      "type": "Destilado",
+      "status": "Fermentacion completada",
+      "temperature": "16 C°",
+      "amount": "grande",
+      "total": 94,
+      "date": "2024-05-12",
+      "NLote": "#105"
+    },
+    {
+      "id": "1004",
+      "name": "Vino Tinto Syrah",
+      "type": "Destilado",
+      "status": "Fermentacion completada",
+      "temperature": "18 C°",
+      "amount": "pequeña",
+      "total": 41,
+      "date": "2024-05-01",
+      "NLote": "#104"
+    },
+    {
+      "id": "3612",
+      "name": "prueba",
+      "type": "Tinto",
+      "status": "Fermentación en proceso",
+      "temperature": "12 C°",
+      "amount": "pequeña",
+      "total": 12,
+      "date": "2025-06-02T05:00:00.000Z",
+      "NLote": "#546"
+    },
+    {
+      "id": "5984",
+      "name": "asd",
+      "type": "Destilado",
+      "status": "Fermentación en proceso",
+      "temperature": "12 C°",
+      "amount": "mediana",
+      "total": 12,
+      "date": "2025-06-05",
+      "NLote": "#117"
+    }
+  ],
+  "analysis": [
+    [
+      {
+        "id": 1,
+        "product": "Vino Tinto Malbec",
+        "type": "Tinto",
+        "expirationDate": "2024-05-10",
+        "currentStock": 14,
+        "stockMinimum": 20,
+        "price": 14
+      },
+      {
+        "id": 2,
+        "product": "Vino Blanco Sauvignon",
+        "type": "Blanco",
+        "expirationDate": "2024-06-05",
+        "currentStock": 25,
+        "stockMinimum": 15,
+        "price": 13
+      },
+      {
+        "id": 3,
+        "product": "Vino Rosado Garnacha",
+        "type": "Rosado",
+        "expirationDate": "2024-07-01",
+        "currentStock": 10,
+        "stockMinimum": 12,
+        "price": 11
+      },
+      {
+        "id": 4,
+        "product": "Espumante Brut Nature",
+        "type": "Espumante",
+        "expirationDate": "2024-08-15",
+        "currentStock": 30,
+        "stockMinimum": 20,
+        "price": 18
+      },
+      {
+        "id": 5,
+        "product": "Vino Tinto Cabernet",
+        "type": "Tinto",
+        "expirationDate": "2024-04-20",
+        "currentStock": 8,
+        "stockMinimum": 15,
+        "price": 16
+      },
+      {
+        "id": 6,
+        "product": "Vino Blanco Chardonnay",
+        "type": "Blanco",
+        "expirationDate": "2024-09-30",
+        "currentStock": 22,
+        "stockMinimum": 20,
+        "price": 15
+      }
+    ]
+  ]
+}

@@ -1,5 +1,4 @@
 export class HistoryStatus {
-
     constructor(id = 0, customer = '', date = '', product = '', amount = 0, total = 0, status = ''){
         this.id = id;
         this.customer = customer;
@@ -10,3 +9,4 @@ export class HistoryStatus {
         this.status = status;
     }
 }
+

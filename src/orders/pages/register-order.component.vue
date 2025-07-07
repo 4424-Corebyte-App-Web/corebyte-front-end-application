@@ -1,23 +1,40 @@
 <script>
 import axios from 'axios';
 
+// Define the product enum to match the backend
+const Products = {
+  Vino: 1,
+  Ron: 2,
+  Perro_Negro: 3,
+  Vodka: 4,
+  Whisky: 5,
+  Cerveza: 6
+};
+
 export default {
   name: "register-order",
   data() {
+    // Convert the Products enum to an array of { name, code } objects for the dropdown
+    const productOptions = Object.entries(Products).map(([name, code]) => ({
+      name: name.replace('_', ' '), // Convert Perro_Negro to 'Perro Negro' for display
+      code: code,
+      value: name // Store the original enum key
+    }));
+
     return {
+      loading: false,
+      submitting: false,
+      error: null,
+      validationErrors: {},
+      products: productOptions,
       formData: {
         client: '',
         product: null,
         quantity: 1,
-        date: new Date(),
+        date: new Date().toISOString().split('T')[0],
         total: 0,
         imageUrl: ''
-      },
-      products: [],
-      loading: false,
-      submitting: false,
-      error: null,
-      validationErrors: {}
+      }
     };
   },
   computed: {
@@ -32,32 +49,10 @@ export default {
     }
   },
   created() {
-    this.fetchProducts();
+    // No need to fetch products as we're using the enum directly
   },
   methods: {
-    async fetchProducts() {
-      this.loading = true;
-      this.error = null;
-      try {
-        const response = await axios.get('http://localhost:3000/products');
-        const uniqueProducts = [...new Set(response.data.map(item => item.product))];
-        this.products = uniqueProducts.map((product, index) => ({
-          name: product,
-          code: `P${index + 1}`
-        }));
-      } catch (error) {
-        console.error('Error fetching products:', error);
-        this.error = 'Error al cargar los productos';
-        this.$toast.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'No se pudieron cargar los productos',
-          life: 3000
-        });
-      } finally {
-        this.loading = false;
-      }
-    },
+    // Remove fetchProducts since we're using the enum directly
     validateForm() {
       this.validationErrors = {};
       if (!this.formData.client) this.validationErrors.client = 'El cliente es requerido';
@@ -81,13 +76,28 @@ export default {
 
       this.submitting = true;
       try {
+        // Send the product as a string (the backend will parse it to the enum)
         const orderData = {
-          ...this.formData,
-          date: this.formatDate(this.formData.date),
-          status: 'Pendiente'
+          customer: this.formData.client,
+          date: new Date(this.formData.date).toISOString(),
+          product: this.formData.product, // Send the string value (e.g., 'Vino', 'Ron')
+          amount: parseInt(this.formData.quantity, 10),
+          total: parseFloat(this.formData.total),
+          url: this.formData.imageUrl || ''
         };
         
-        await axios.post('http://localhost:3000/orders', orderData);
+        console.log('Enviando datos al servidor:', JSON.stringify(orderData, null, 2));
+        
+        console.log('Enviando datos al servidor:', JSON.stringify(orderData, null, 2));
+        
+        const response = await axios.post('https://localhost:7164/api/v1/order', orderData, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
+        });
+        
+        console.log('Respuesta del servidor:', response.data);
         
         this.$toast.add({
           severity: 'success',
@@ -99,11 +109,40 @@ export default {
         this.$router.push('/orders');
       } catch (error) {
         console.error('Error al registrar la orden:', error);
+        let errorMessage = 'No se pudo registrar la orden';
+        
+        if (error.response) {
+          // El servidor respondió con un status code fuera del rango 2xx
+          console.error('Datos de error del servidor:', error.response.data);
+          console.error('Status:', error.response.status);
+          console.error('Headers:', error.response.headers);
+          
+          if (error.response.data && error.response.data.errors) {
+            // Si hay errores de validación, mostrarlos
+            const validationErrors = [];
+            // Procesar los errores de validación del backend
+            for (const [field, errors] of Object.entries(error.response.data.errors)) {
+              validationErrors.push(...errors);
+            }
+            errorMessage = `Errores de validación:\n${validationErrors.join('\n')}`;
+          } else if (error.response.data) {
+            errorMessage = error.response.data.title || error.response.data.message || JSON.stringify(error.response.data);
+          }
+        } else if (error.request) {
+          // La petición fue hecha pero no hubo respuesta
+          console.error('No se recibió respuesta del servidor:', error.request);
+          errorMessage = 'No se pudo conectar con el servidor. Por favor, intente nuevamente.';
+        } else {
+          // Algo pasó en la configuración de la petición
+          console.error('Error al configurar la petición:', error.message);
+          errorMessage = `Error: ${error.message}`;
+        }
+        
         this.$toast.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'No se pudo registrar la orden',
-          life: 3000
+          detail: errorMessage,
+          life: 5000
         });
       } finally {
         this.submitting = false;
@@ -114,6 +153,17 @@ export default {
       const d = new Date(date);
       return d.toISOString().split('T')[0];
     },
+    
+    // Helper to get the product name from the enum value
+    getProductName(value) {
+      return Object.keys(Products).find(key => Products[key] === value) || '';
+    },
+    
+    // Helper to get the enum value from the product name
+    getProductValue(name) {
+      return Products[name] || null;
+    },
+    
     goBack() {
       this.$router.go(-1);
     }
@@ -151,12 +201,19 @@ export default {
           v-model="formData.product" 
           :options="products" 
           optionLabel="name"
-          optionValue="name"
+          optionValue="value"
           placeholder="Seleccione un producto"
           class="w-full"
           :class="{'p-invalid': validationErrors.product}"
           :loading="loading"
-        />
+          showClear
+        >
+          <template #option="slotProps">
+            <div class="flex align-items-center">
+              <div>{{ slotProps.option.name }}</div>
+            </div>
+          </template>
+        </pv-dropdown>
         <small class="p-error" v-if="validationErrors.product">{{ validationErrors.product }}</small>
       </div>
       

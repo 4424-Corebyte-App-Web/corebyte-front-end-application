@@ -4,8 +4,9 @@ import { useRouter } from "vue-router";
 import Column from "primevue/column";
 import DataTable from "primevue/datatable";
 import Button from "primevue/button";
-import { getOrders } from "../services/orders.service.js";
+import {OrderService} from "../services/orders.services.js";
 import LanguageSwitcher from "../../public/components/language-switcher.component.vue";
+
 
 export default {
   name: "OrderTable",
@@ -19,13 +20,16 @@ export default {
     return {
       orders: [],
       router: useRouter(),
+      orderService: new OrderService(),
     };
   },
   methods: {
-    fetchOrders() {
-      getOrders().then((data) => {
-        this.orders = data;
-      });
+    async fetchOrders() {
+      try {
+        this.orders = await this.orderService.getAllOrders();
+      } catch (error) {
+        console.error("Error loading orders:", error);
+      }
     },
     goToRegisterOrder() {
       this.router.push("/orders/register");
@@ -66,10 +70,10 @@ export default {
       </template>
 
       <pv-column field="id" header="ID Pedido" />
-      <pv-column field="client" header="Cliente" />
+      <pv-column field="customer" header="Cliente" />
       <pv-column field="date" header="Fecha" />
       <pv-column field="product" header="Producto" />
-      <pv-column field="quantity" header="Cantidad" />
+      <pv-column field="amount" header="Cantidad" />
       <pv-column field="total" header="Total" />
       <pv-column header=" " style="width: 150px; text-align: center">
         <template #body="slotProps">

@@ -1,18 +1,58 @@
+<script>
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import Column from "primevue/column";
+import DataTable from "primevue/datatable";
+import Button from "primevue/button";
+import {OrderService} from "../services/orders.services.js";
+import LanguageSwitcher from "../../public/components/language-switcher.component.vue";
+
+
+export default {
+  name: "OrderTable",
+  components: {
+    LanguageSwitcher,
+    Column,
+    DataTable,
+    Button,
+  },
+  data() {
+    return {
+      orders: [],
+      router: useRouter(),
+      orderService: new OrderService(),
+    };
+  },
+  methods: {
+    async fetchOrders() {
+      try {
+        this.orders = await this.orderService.getAllOrders();
+      } catch (error) {
+        console.error("Error loading orders:", error);
+      }
+    },
+    goToRegisterOrder() {
+      this.router.push("/orders/register");
+    },
+  },
+  mounted() {
+    this.fetchOrders();
+  },
+};
+</script>
 <template>
   <div class="table-container">
     <h1 class="text-white">Ordenes de pedidos</h1>
-
+    <LanguageSwitcher />
     <div class="flex justify-between items-center mb-4">
-      <Button
+      <pv-button
           label="Procesar órdenes de pedido"
           class="custom-order-button"
-          @click="goToRegister"
+          @click="goToRegisterOrder"
       />
-      <br>
-      <br>
     </div>
 
-    <DataTable
+    <pv-datatable
         :value="orders"
         paginator
         :rows="6"
@@ -21,70 +61,33 @@
         paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         currentPageReportTemplate="{first} a {last} "
     >
-      <!-- Botón izquierdo de paginador -->
       <template #paginatorstart>
-        <div class="p-paginator">
-          <!--CENTRAR-PAGINATOR-->
-        </div>
+        <div class="p-paginator"></div>
       </template>
 
-      <!-- Botón derecho de paginador -->
       <template #paginatorend>
-        <div class="p-paginator">
-          <!--CENTRAR-PAGINATOR-->
-        </div>
+        <div class="p-paginator"></div>
       </template>
 
-      <!-- Columnas -->
-      <Column field="id" header="ID Pedido" />
-      <Column field="client" header="Cliente" />
-      <Column field="date" header="Fecha" />
-      <Column field="product" header="Producto" />
-      <Column field="quantity" header="Cantidad" />
-      <Column field="total" header="Total" />
-      <Column header=" " style="width: 150px; text-align: center">
+      <pv-column field="id" header="ID Pedido" />
+      <pv-column field="customer" header="Cliente" />
+      <pv-column field="date" header="Fecha" />
+      <pv-column field="product" header="Producto" />
+      <pv-column field="amount" header="Cantidad" />
+      <pv-column field="total" header="Total" />
+      <pv-column header=" " style="width: 150px; text-align: center">
         <template #body="slotProps">
-          <Button
-              label="Detalles"
-              icon="pi pi-search"
+          <RouterLink
+              :to="{ name: 'OrderDetails', params: { id: slotProps.data.id } }"
               class="details-button"
-              @click="goToOrderDetails(slotProps.data.id)"
-          />
-
+          >
+            <pv-button label="Detalles" icon="pi pi-search" />
+          </RouterLink>
         </template>
-      </Column>
-
-    </DataTable>
+      </pv-column>
+    </pv-datatable>
   </div>
 </template>
-
-<script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import Column from 'primevue/column';
-import DataTable from 'primevue/datatable';
-import Button from 'primevue/button';
-import { getOrders } from '../services/orders.service.js';
-
-const orders = ref([]);
-const router = useRouter();
-
-onMounted(async () => {
-  orders.value = await getOrders();
-});
-
-
-function goToOrderDetails(orderId) {
-  router.push(`/orders/details/${orderId}`);
-}
-function goToRegister() {
-  router.push('/orders/register');
-}
-
-</script>
-
-
-
 <style scoped>
 .table-container {
   max-width: 1500px;
@@ -112,21 +115,18 @@ function goToRegister() {
 :deep(.p-paginator .p-paginator-next),
 :deep(.p-paginator .p-paginator-last),
 :deep(.p-paginator .p-dropdown) {
-  padding: 0.10rem 0.5rem !important;
+  padding: 0.1rem 0.5rem !important;
   height: auto !important;
   min-height: 1.5rem !important;
   line-height: 1.2rem !important;
   font-size: 0.85rem;
 }
 
-
-/* Encabezado amarillo */
 :deep(.p-datatable-thead > tr > th) {
   background-color: #facc15;
   color: #000;
 }
 
-/* Estilo para paginador */
 :deep(.p-paginator) {
   background-color: #1a1a1a;
   color: white;
@@ -135,18 +135,18 @@ function goToRegister() {
   padding-top: 1rem;
 }
 :deep(.custom-order-button) {
-  background-color: #000 !important;     /* Fondo negro */
-  color: #fff !important;                /* Letras blancas */
-  border: 2px solid #facc15 !important;  /* Borde amarillo */
-  border-radius: 9999px !important;      /* Bordes completamente circulares */
-  padding: 0.5rem 1.5rem !important;     /* Espaciado interno */
+  background-color: #000 !important;
+  color: #fff !important;
+  border: 2px solid #facc15 !important;
+  border-radius: 9999px !important;
+  padding: 0.5rem 1.5rem !important;
   font-weight: bold;
   transition: all 0.3s ease;
 }
 
 :deep(.custom-order-button:hover) {
-  background-color: #facc15 !important;  /* Hover: fondo amarillo */
-  color: #000 !important;                /* Hover: texto negro */
+  background-color: #facc15 !important;
+  color: #000 !important;
 }
 :deep(.details-button) {
   background-color: transparent;
@@ -162,5 +162,8 @@ function goToRegister() {
   background-color: #facc15;
   color: #000;
 }
-
+.custom-order-button {
+  margin: 1rem;
+  padding: 1rem;
+}
 </style>

@@ -6,10 +6,10 @@
         <div class="order-detail">
           <div class="order-info">
             <p><strong>ID:</strong> {{ order.id }}</p>
-            <p><strong>Cliente:</strong> {{ order.client }}</p>
+            <p><strong>Cliente:</strong> {{ order.customer }}</p>
             <p><strong>Fecha:</strong> {{ order.date }}</p>
             <p><strong>Producto:</strong> {{ order.product }}</p>
-            <p><strong>Cantidad:</strong> {{ order.quantity }}</p>
+            <p><strong>Cantidad:</strong> {{ order.amount }}</p>
             <p><strong>Total:</strong> {{ order.total }}</p>
           </div>
           <div v-if="order.imageUrl" class="order-image">
@@ -30,20 +30,81 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { getOrderById, deleteOrderById } from '../services/orders.service.js';
+import { getOrderById, deleteOrderById } from '../services/orders.services.js';
 import Button from 'primevue/button';
 
 const route = useRoute();
 const router = useRouter();
 const order = ref(null);
 
+// Map product IDs to names
+const productMap = {
+  1: 'Vino',
+  2: 'Ron',
+  3: 'Perro Negro',
+  4: 'Vodka',
+  5: 'Whisky',
+  6: 'Cerveza'
+};
+
+// Format date for display
+const formatDate = (dateString) => {
+  if (!dateString) return 'N/A';
+  try {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('es-PE', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  } catch (e) {
+    return dateString;
+  }
+};
+
 onMounted(async () => {
   const id = route.params.id;
+  if (!id) {
+    console.error('No order ID provided in URL');
+    return;
+  }
+
   try {
-    order.value = await getOrderById(id);
-    console.log('Orden cargada:', order.value);
+    console.log('Fetching order with ID:', id);
+    const response = await getOrderById(id);
+    console.log('Raw API Response:', JSON.stringify(response, null, 2));
+
+    // Handle case where response might be an array or have a data property
+    const orderData = Array.isArray(response) ? response[0] : (response.data || response);
+
+    if (!orderData) {
+      console.error('No order data received');
+      return;
+    }
+
+    console.log('Processed order data:', orderData);
+
+    // Map the API response to match our component's expected format
+    const mappedOrder = {
+      id: orderData.id ?? 'N/A',
+      customer: orderData.customer ?? orderData.client ?? 'N/A',
+      date: formatDate(orderData.date),
+      product: orderData.productId ? (productMap[orderData.productId] || 'N/A') : 'N/A',
+      amount: orderData.amount ?? orderData.quantity ?? '0',
+      total: orderData.total ? `S/ ${parseFloat(orderData.total).toFixed(2)}` : 'N/A',
+      imageUrl: orderData.url ?? orderData.imageUrl ?? null
+    };
+
+    console.log('Mapped order data:', mappedOrder);
+    order.value = mappedOrder;
   } catch (error) {
-    console.error('Error al cargar la orden:', error);
+    console.error('Error loading order:', {
+      message: error.message,
+      response: error.response?.data,
+      stack: error.stack
+    });
   }
 });
 

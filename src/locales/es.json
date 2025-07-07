@@ -181,19 +181,19 @@
     "benefits": "Beneficios"
   },
   "salesAnalysis": {
-    "title": "Análisis de ventas",
+    "title": "Sales Analysis",
     "text":{
-      "higher":"Mayor rotacion",
-      "lower":"Menor rotacion"
+      "higher":"Higher turnover",
+      "lower":"Lower turnover"
     },
-    "saleRisk":"Riesgo de venta",
+    "saleRisk":"Sale risk",
     "table":{
-      "name":"Nombre",
-      "type":"Tipo",
-      "expiration":"Fecha de caducidad",
-      "current":"Stock actual",
-      "minimum":"Stock mínimo",
-      "price":"Precio"
+      "name":"Name",
+      "type":"Type",
+      "expiration":"Expiration Date",
+      "current":"Stock",
+      "minimum":"Minimum Stock",
+      "batch":"Batch"
     }
   }
 }

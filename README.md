@@ -33,6 +33,7 @@ It also uses the following dependencies:
 - i18n language (https://vue-i18n.intlify.dev/guide/installation.html)
 - Vue axios latest version (https://www.npmjs.com/package/vue-axios)
 - JsPDF (https://www.npmjs.com/package/jspdf-autotable)
+- Chart.js (https://www.npmjs.com/package/chart.js)(npm install chart.js)
 
 ## Fake API start
 

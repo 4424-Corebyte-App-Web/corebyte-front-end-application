@@ -193,9 +193,9 @@
       "name":"Name",
       "type":"Type",
       "expiration":"Expiration Date",
-      "current":"Current Stock",
+      "current":"Stock",
       "minimum":"Minimum Stock",
-      "price":"Price"
+      "batch":"Batch"
     }
   }
 }

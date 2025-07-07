@@ -1,11 +1,11 @@
 export class SalesAnalysis {
-    constructor(id = 0, product = '', type = '', expirationDate = '', currentStock = 0, stockMinimum = 0, price = 0){
+    constructor(id = 0, customerId = 0, type = '', year = new Date(), product = '', batch = 0, stock = 0) {
         this.id = id;
-        this.product = product;
+        this.customerId = customerId;
         this.type = type;
-        this.expirationDate = expirationDate;
-        this.currentStock = currentStock;
-        this.stockMinimum = stockMinimum;
-        this.price = price;
+        this.year = new Date(year);
+        this.product = product;
+        this.batch = batch;
+        this.stock = stock;
     }
 }

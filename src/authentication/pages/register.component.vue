@@ -5,6 +5,7 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 const name = ref("");
+const username = ref("");
 const email = ref("");
 const password = ref("");
 const confirmPassword = ref("");
@@ -15,15 +16,17 @@ const loading = ref(false);
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const isNameValid = computed(() => name.value.trim().length > 0);
+const isUsernameValid = computed(() => username.value.trim().length >= 3);
 const isEmailValid = computed(() => emailRegex.test(email.value.trim()));
 const isPasswordValid = computed(() => password.value.length >= 8);
 const isConfirmPasswordValid = computed(
-  () => password.value === confirmPassword.value
+  () => password.value === confirmPassword.value && password.value.length > 0
 );
 const isRoleValid = computed(() => role.value !== "");
 const isFormValid = computed(
   () =>
     isNameValid.value &&
+    isUsernameValid.value &&
     isEmailValid.value &&
     isPasswordValid.value &&
     isConfirmPasswordValid.value &&
@@ -45,43 +48,58 @@ const onSubmit = async () => {
   loading.value = true;
 
   try {
-    // Obtener todos los usuarios para verificar si ya existe el email
-    const existingUsersResponse = await fetch("http://localhost:3000/users");
-    const existingUsers = await existingUsersResponse.json();
+    const requestBody = {
+      name: name.value.trim(),
+      username: username.value.trim(),
+      email: email.value.trim(),
+      password: password.value,
+      confirmPassword: confirmPassword.value,
+      role: role.value,
+    };
+    
+    console.log('Sending registration request:', {
+      url: 'https://localhost:7164/api/auth/register',
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(requestBody, null, 2)
+    });
+    
+    const response = await fetch('https://localhost:7164/api/auth/register', {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(requestBody)
+    });
 
-    const emailExists = existingUsers.some(
-      (user) => user.email.toLowerCase() === email.value.trim().toLowerCase()
-    );
-
-    if (emailExists) {
-      error.value = "El correo electrónico ya está registrado.";
-      loading.value = false;
+    const data = await response.json().catch(() => ({}));
+    
+    if (!response.ok) {
+      console.error('Error response:', data);
+      
+      // Handle validation errors
+      if (data.errors) {
+        // Get all error messages from the errors object
+        const errorMessages = Object.entries(data.errors)
+          .map(([field, errors]) => `${field}: ${errors.join(', ')}`)
+          .join('\n');
+        error.value = `Error de validación:\n${errorMessages}`;
+      } else {
+        error.value = data?.title || data?.message || `Error ${response.status}: ${response.statusText}`;
+      }
       return;
     }
 
-    // Si no existe, proceder con el registro
-    const response = await fetch("http://localhost:3000/users", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: name.value.trim(),
-        email: email.value.trim(),
-        password: password.value,
-        role: role.value,
-      }),
-    });
-
-    if (!response.ok) {
-      const data = await response.json();
-      error.value = data?.error || "Error al registrar usuario.";
-    } else {
-      alert("Registro exitoso");
-      router.push("/login");
-    }
+    // Registro exitoso
+    alert("¡Registro exitoso! Por favor inicia sesión.");
+    router.push("/login");
   } catch (err) {
     console.error("Error al conectar con el servidor:", err);
-    error.value =
-      "No se pudo conectar con el servidor. Verifica que esté activo en http://localhost:3000.";
+    error.value = `Error de conexión: ${err.message}. Verifica que el servidor esté activo en https://localhost:7164`;
   } finally {
     loading.value = false;
   }
@@ -106,9 +124,17 @@ const goToLogin = () => router.push("/login");
         <input
           v-model="name"
           type="text"
-          placeholder="Nombre"
+          placeholder="Nombre completo"
           :class="{ invalid: !isNameValid && name.length > 0 }"
           required
+        />
+        <input
+          v-model="username"
+          type="text"
+          placeholder="Nombre de usuario"
+          :class="{ invalid: !isUsernameValid && username.length > 0 }"
+          required
+          minlength="3"
         />
         <input
           v-model="email"
@@ -130,10 +156,14 @@ const goToLogin = () => router.push("/login");
           type="password"
           placeholder="Confirmar contraseña"
           :class="{
-            invalid: !isConfirmPasswordValid && confirmPassword.length > 0,
+            invalid: (!isConfirmPasswordValid && confirmPassword.length > 0) || 
+                    (password.length > 0 && confirmPassword.length > 0 && password !== confirmPassword)
           }"
           required
         />
+        <small v-if="password.length > 0 && confirmPassword.length > 0 && password !== confirmPassword" class="error-text">
+          Las contraseñas no coinciden
+        </small>
         <select
           v-model="role"
           class="role-select"

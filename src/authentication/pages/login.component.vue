@@ -4,12 +4,11 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 const email = ref("");
+const username = ref("");
 const password = ref("");
 const rememberMe = ref(false);
 const error = ref("");
-const users = ref([]);
 const loading = ref(false);
-
 const showForgot = ref(false);
 const emit = defineEmits(["login"]);
 
@@ -24,61 +23,122 @@ const goToRecover = () => {
 const toggleForgot = () => {
   showForgot.value = !showForgot.value;
 };
-onMounted(async () => {
-  loading.value = true;
-  try {
-    const res = await fetch("server/user.json");
-    if (!res.ok) throw new Error("Error al cargar usuarios");
-    users.value = await res.json();
-  } catch (err) {
-    console.error(err);
-    error.value = "Error cargando usuarios. Intenta recargar la página.";
-  } finally {
-    loading.value = false;
-  }
-});
 
 const isEmailValid = (email) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 
 const isFormValid = computed(() => {
   return (
-      email.value.trim() !== "" &&
-      isEmailValid(email.value) &&
+      (email.value.trim() !== "" || username.value.trim() !== "") &&
+      (email.value.trim() === "" || isEmailValid(email.value)) &&
       password.value.length >= 6
   );
 });
 
-const onSubmit = () => {
+const onSubmit = async () => {
   error.value = "";
+  loading.value = true;
 
-  if (!email.value || !password.value) {
-    error.value = "Por favor, complete todos los campos.";
+  // Validación de campos
+  const errorFields = [];
+  
+  // Al menos uno de los dos (email o username) debe estar presente
+  if (!email.value.trim() && !username.value.trim()) {
+    errorFields.push('Se requiere correo electrónico o nombre de usuario');
+  } else if (email.value.trim() && !isEmailValid(email.value)) {
+    errorFields.push('El formato del correo electrónico no es válido');
+  }
+  
+  if (!password.value) {
+    errorFields.push('La contraseña es requerida');
+  } else if (password.value.length < 6) {
+    errorFields.push('La contraseña debe tener al menos 6 caracteres');
+  }
+  
+  if (errorFields.length > 0) {
+    error.value = errorFields.join('\n');
+    loading.value = false;
     return;
   }
 
-  if (!isEmailValid(email.value)) {
-    error.value = "Por favor, ingrese un correo válido.";
-    return;
-  }
-
-  if (password.value.length < 6) {
-    error.value = "La contraseña debe tener al menos 6 caracteres.";
-    return;
-  }
-
-  const user = users.value.find(
-      (u) => u.email === email.value.trim() && u.password === password.value
-  );
-
-  if (user) {
-    localStorage.setItem('user', JSON.stringify(user));
+  try {
+    const loginData = {
+      username: username.value.trim() || email.value.trim(),
+      password: password.value,
+      rememberMe: rememberMe.value
+    };
     
-    alert(`Bienvenido, ${user.email}`);
-    emit("login", { user, rememberMe: rememberMe.value });
-    router.push("/profile");
-  } else {
-    error.value = "Correo o contraseña incorrectos.";
+    console.log('Sending login request...', loginData);
+
+    const response = await fetch('https://localhost:7164/api/auth/login', {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(loginData)
+    });
+
+    console.log('Response status:', response.status);
+
+    const data = await response.json().catch(() => ({}));
+    
+    if (!response.ok) {
+      console.error('Error response:', data);
+      
+      // Mostrar el error completo en consola para depuración
+      console.error('Full error response:', JSON.stringify(data, null, 2));
+      
+      // Manejar errores de validación
+      if (data.errors) {
+        // Convertir los errores a un formato legible
+        const errorMessages = [];
+        for (const [field, errors] of Object.entries(data.errors)) {
+          const fieldName = field === 'Email' ? 'Correo electrónico' :
+                          field === 'Password' ? 'Contraseña' :
+                          field === 'Username' ? 'Usuario' : field;
+                          
+          if (Array.isArray(errors)) {
+            errorMessages.push(`${fieldName}: ${errors.join(', ')}`);
+          } else if (typeof errors === 'string') {
+            errorMessages.push(`${fieldName}: ${errors}`);
+          } else {
+            errorMessages.push(JSON.stringify(errors));
+          }
+        }
+        error.value = errorMessages.join('\n');
+      } else if (data.title || data.message) {
+        error.value = data.message || data.title;
+      } else {
+        error.value = `Error ${response.status}: ${response.statusText || 'Error en la autenticación'}`;
+      }
+      
+      console.error('Error details:', error.value);
+      return;
+    }
+
+    // Almacenar el token y la información del usuario
+    if (data.token) {
+      localStorage.setItem('authToken', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      
+      // Emitir evento de login exitoso
+      emit('login', { 
+        user: data.user, 
+        token: data.token,
+        rememberMe: rememberMe.value 
+      });
+      
+      // Redirigir al dashboard o página principal
+      router.push('/dashboard');
+    } else {
+      throw new Error('No se recibió un token de autenticación');
+    }
+  } catch (err) {
+    console.error('Error al iniciar sesión:', err);
+    error.value = 'Error de conexión. Por favor, intente nuevamente.';
+  } finally {
+    loading.value = false;
   }
 };
 </script>
@@ -103,22 +163,32 @@ const onSubmit = () => {
           <div class="form-field">
             <label for="email" class="sr-only">Correo Electrónico</label>
             <input
+                id="username"
+                v-model="username"
+                type="text"
+                placeholder="Nombre de usuario o correo"
+                class="input"
+                :aria-invalid="error && !username && !email ? 'true' : 'false'"
+                :aria-describedby="error ? 'error-message' : null"
+                autocomplete="username"
+                required
+                autofocus
+            />
+            <input
                 id="email"
                 v-model="email"
                 type="email"
-                placeholder="Correo Electrónico"
+                placeholder="Correo Electrónico (opcional si usas nombre de usuario)"
                 class="input"
-                :aria-invalid="error && !isEmailValid(email) ? 'true' : 'false'"
+                :aria-invalid="error && !isEmailValid(email) && email ? 'true' : 'false'"
                 :aria-describedby="error ? 'error-message' : null"
                 autocomplete="email"
-                required
-                autofocus
             />
           </div>
 
           <div class="form-field">
             <label for="password" class="sr-only">Contraseña</label>
-            <pv-password
+            <input
                 id="password"
                 v-model="password"
                 type="password"
@@ -128,7 +198,6 @@ const onSubmit = () => {
                 :aria-describedby="error ? 'error-message' : null"
                 autocomplete="current-password"
                 required
-                toggleMask
             />
           </div>
 

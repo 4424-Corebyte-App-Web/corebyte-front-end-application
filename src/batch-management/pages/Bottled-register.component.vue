@@ -27,10 +27,10 @@ export default {
   computed: {
     isFormValid() {
       return (
-        this.batch.name &&
-        this.batch.type &&
-        this.batch.status &&
-        this.batch.temperature !== ""
+          this.batch.name &&
+          this.batch.type &&
+          this.batch.status &&
+          this.batch.temperature !== ""
       );
     },
   },
@@ -59,7 +59,7 @@ export default {
 
       if (this.batch.temperature === "" || isNaN(this.batch.temperature)) {
         this.validationErrors.temperature =
-          "La temperatura es requerida y debe ser un número";
+            "La temperatura es requerida y debe ser un número";
         isValid = false;
       }
 
@@ -68,9 +68,9 @@ export default {
     async saveBatch() {
       if (!this.validateForm()) {
         this.showToast(
-          "error",
-          "Error de validación",
-          "Por favor complete todos los campos requeridos"
+            "error",
+            "Error de validación",
+            "Por favor complete todos los campos requeridos"
         );
         return;
       }
@@ -78,23 +78,36 @@ export default {
       this.loading = true;
 
       try {
+        // Generate a new GUID for the batch name
+        const generateGuid = () => {
+          return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            const r = Math.random() * 16 | 0;
+            const v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+          });
+        };
+
         const batchData = {
-          id: ((Date.now() % 9000) + 1000).toString(), 
-          name: this.batch.name,
+          name: generateGuid(),
           type: this.batch.type,
           status: this.batch.status,
-          temperature: `${this.batch.temperature} C°`,
+          temperature: parseFloat(this.batch.temperature),
           amount: this.batch.amount,
-          total: parseInt(this.batch.total) || 0,
-          date: this.batch.date,
-          NLote: this.batch.NLote,
+          total: parseFloat(this.batch.total) || 0,
+          date: new Date(this.batch.date).toISOString(),
+          nLote: this.batch.NLote.replace('#', '')
         };
 
         console.log("Sending batch data to batchManagement:", batchData);
 
         const response = await axios.post(
-          "http://localhost:3000/batchManagement",
-          batchData
+          "https://localhost:7164/api/v1/batch-management",
+          batchData,
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
         );
 
         console.log("Server response:", response.data);
@@ -102,9 +115,9 @@ export default {
         this.showToast(
           "success",
           "Éxito",
-          "Lote de fermentación guardado correctamente"
+          "Lote guardado correctamente"
         );
-        this.$router.push({ name: "FermentationStage" });
+        this.$router.push({ name: "BottledStage" });
       } catch (error) {
         console.error("Error al guardar el lote:", error);
         if (error.response) {
@@ -112,9 +125,9 @@ export default {
           console.error("Error status:", error.response.status);
         }
         this.showToast(
-          "error",
-          "Error",
-          "No se pudo guardar el lote. Por favor, intente nuevamente."
+            "error",
+            "Error",
+            "No se pudo guardar el lote. Por favor, intente nuevamente."
         );
       } finally {
         this.loading = false;
@@ -143,10 +156,10 @@ export default {
     <div class="form-header">
       <h1>Nuevo Registro de Embotellado</h1>
       <pv-button
-        icon="pi pi-arrow-left"
-        class="p-button-text p-button-rounded p-button-secondary"
-        @click="cancel"
-        label="Volver"
+          icon="pi pi-arrow-left"
+          class="p-button-text p-button-rounded p-button-secondary"
+          @click="cancel"
+          label="Volver"
       />
     </div>
 
@@ -156,90 +169,90 @@ export default {
       <div class="p-field">
         <label for="batchName">Nombre del lote</label>
         <pv-inputtext
-          id="batchName"
-          v-model="batch.name"
-          class="w-full"
-          placeholder="Ingrese el nombre del lote"
-          required
+            id="batchName"
+            v-model="batch.name"
+            class="w-full"
+            placeholder="Ingrese el nombre del lote"
+            required
         />
       </div>
 
       <div class="p-field">
         <label for="batchType">Tipo de vino</label>
         <pv-inputtext
-          id="batchType"
-          v-model="batch.type"
-          class="w-full"
-          placeholder="Ingrese el tipo de vino"
-          required
+            id="batchType"
+            v-model="batch.type"
+            class="w-full"
+            placeholder="Ingrese el tipo de vino"
+            required
         />
       </div>
 
       <div class="p-field">
         <label for="batchTemperature">Temperatura (°C)</label>
         <pv-inputnumber
-          id="batchTemperature"
-          v-model="batch.temperature"
-          class="w-full"
-          placeholder="Ej: 16"
-          suffix=" °C"
-          :min="0"
-          :max="30"
-          required
+            id="batchTemperature"
+            v-model="batch.temperature"
+            class="w-full"
+            placeholder="Ej: 16"
+            suffix=" °C"
+            :min="0"
+            :max="30"
+            required
         />
       </div>
 
       <div class="p-field">
         <label for="batchAmount">Tamaño del lote</label>
         <pv-inputtext
-          id="batchAmount"
-          v-model="batch.amount"
-          class="w-full"
-          placeholder="Ingrese el tamaño del lote"
-          required
+            id="batchAmount"
+            v-model="batch.amount"
+            class="w-full"
+            placeholder="Ingrese el tamaño del lote"
+            required
         />
       </div>
 
       <div class="p-field">
         <label for="batchTotal">Cantidad (litros)</label>
         <pv-inputnumber
-          id="batchTotal"
-          v-model="batch.total"
-          class="w-full"
-          placeholder="Ingrese la cantidad en litros"
-          :min="0"
-          required
+            id="batchTotal"
+            v-model="batch.total"
+            class="w-full"
+            placeholder="Ingrese la cantidad en litros"
+            :min="0"
+            required
         />
       </div>
 
       <div class="p-field">
         <label for="batchDate">Fecha</label>
         <pv-datepicker
-          id="batchDate"
-          v-model="batch.date"
-          class="w-full"
-          dateFormat="yy-mm-dd"
-          showIcon
-          required
+            id="batchDate"
+            v-model="batch.date"
+            class="w-full"
+            dateFormat="yy-mm-dd"
+            showIcon
+            required
         />
       </div>
 
       <div class="p-field">
         <label for="batchNumber">N° de lote</label>
         <pv-inputtext
-          id="batchNumber"
-          v-model="batch.NLote"
-          class="w-full"
-          placeholder="Ej: #123"
-          required
+            id="batchNumber"
+            v-model="batch.NLote"
+            class="w-full"
+            placeholder="Ej: #123"
+            required
         />
       </div>
       <div class="form-actions">
         <pv-button label="Cancelar" class="p-button-text" @click="cancel" />
         <pv-button
-          label="Guardar"
-          @click="saveBatch"
-          :disabled="!isFormValid"
+            label="Guardar"
+            @click="saveBatch"
+            :disabled="!isFormValid"
         />
       </div>
     </div>

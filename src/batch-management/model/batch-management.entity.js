@@ -19,4 +19,3 @@ export class Batch {
     this.NLote = NLote;
   }
 }
-

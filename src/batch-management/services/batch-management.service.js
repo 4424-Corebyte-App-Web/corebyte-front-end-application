@@ -1,6 +1,18 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/batchManagement";
+const API_URL = "https://localhost:7164/api/v1/batch-management";
+
+// Crea un nuevo lote en el backend .NET
+export const createBatch = async (batchData) => {
+  try {
+    const response = await axios.post(API_URL, batchData);
+    return response.data;
+  } catch (error) {
+    console.error("Error al crear el lote:", error);
+    throw error;
+  }
+};
+
 
 export const getAllBatches = async () => {
   try {

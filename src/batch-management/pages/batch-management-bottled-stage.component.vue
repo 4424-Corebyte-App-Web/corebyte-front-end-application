@@ -37,8 +37,8 @@ export default {
         this.batchManagement = response;
       } catch (err) {
         this.error =
-          "Error al cargar los lotes: " +
-          (err.message || "No se pudieron cargar los lotes");
+            "Error al cargar los lotes: " +
+            (err.message || "No se pudieron cargar los lotes");
         console.error("Error fetching batches:", err);
       } finally {
         this.loading = false;
@@ -123,9 +123,9 @@ export default {
         </div>
         <div v-else class="batches-grid">
           <div
-            v-for="batch in batchManagement"
-            :key="batch.id"
-            class="batch-card"
+              v-for="batch in batchManagement"
+              :key="batch.id"
+              class="batch-card"
           >
             <div class="batch-header">
               <h3>{{ batch.name }}</h3>
@@ -328,4 +328,3 @@ h1 {
   color: #e53935;
 }
 </style>
-s

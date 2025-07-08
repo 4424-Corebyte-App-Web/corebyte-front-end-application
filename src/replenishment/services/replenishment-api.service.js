@@ -1,5 +1,5 @@
 import axios  from "axios";
-const http= axios.create({baseURL: 'http://localhost:3000'});
+const http= axios.create({baseURL: 'http://localhost:7164/api/v1'});
 
 export class ReplenishmentApiService {
 

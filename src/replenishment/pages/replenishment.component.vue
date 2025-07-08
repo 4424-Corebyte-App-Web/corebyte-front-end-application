@@ -11,18 +11,26 @@ export default {
   data() {
     return {
       replenishment: new Replenishment({}),
-      replenishmentList: null,
+      replenishmentList: [],
+      searchQuery: '',
       replenishmentApiService: new ReplenishmentApiService("replenishment"),
     };
   },
-
+  computed: {
+    filteredItems() {
+      if (!this.searchQuery) return this.replenishmentList;
+      const query = this.searchQuery.toLowerCase();
+      return this.replenishmentList.filter(item => 
+        item.name.toLowerCase().includes(query)
+      );
+    }
+  },
   methods: {
     getAll() {
       this.replenishmentApiService
         .getAllResources()
         .then((response) => {
           this.replenishmentList = response.data;
-          console.log("Replenishment List", response.data);
         })
         .catch((error) => {
           console.error("Error fetching replenishment list", error);
@@ -41,8 +49,12 @@ export default {
     <h2>{{ $t("replenishment.title") }}</h2>
     <LanguageSwitcher />
     <div class="actions">
-      <input type="text" placeholder="Buscar" class="search-input" />
-      <button class="filter-btn">{{ $t("replenishment.texts.filter") }}</button>
+      <input 
+        type="text" 
+        v-model="searchQuery"
+        :placeholder="$t('replenishment.texts.search')" 
+        class="search-input" 
+      />
     </div>
 
     <div class="btn-group">
@@ -69,7 +81,7 @@ export default {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in replenishmentList" :key="item.id">
+        <tr v-for="item in filteredItems" :key="item.id">
           <td><input type="checkbox" /></td>
           <td>{{ item.name }}</td>
           <td>{{ item.type }}</td>

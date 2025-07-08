@@ -70,6 +70,7 @@ const onSubmit = async () => {
     
     console.log('Sending login request...', loginData);
 
+    // Use the proxy path defined in vite.config.js
     const response = await fetch('https://localhost:7164/api/auth/login', {
       method: 'POST',
       headers: { 
@@ -129,8 +130,8 @@ const onSubmit = async () => {
         rememberMe: rememberMe.value 
       });
       
-      // Redirigir al dashboard o página principal
-      router.push('/dashboard');
+      // Redirigir a la página de órdenes por defecto
+      router.push('/orders');
     } else {
       throw new Error('No se recibió un token de autenticación');
     }

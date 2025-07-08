@@ -1,5 +1,7 @@
 <script>
 import LanguageSwitcher from "../../public/components/language-switcher.component.vue";
+import defaultPhoto from '../../assets/defecto.jpg';
+import { getCurrentUser, updateUserPassword } from '../services/profile.service';
 
 export default {
   name: "profile",
@@ -9,13 +11,13 @@ export default {
   data() {
     return {
       activeSection: "account",
-      defaultPhoto: "/default-profile.png",
+      defaultPhoto: defaultPhoto,
       profile: {
+        id: "",
+        username: "",
         email: "",
-        name: "",
-        role: "",
-        photoUrl: null,
         password: "",
+        role: "",
       },
       passwords: {
         current: "",
@@ -32,25 +34,20 @@ export default {
       },
     };
   },
-  created() {
-    const storedUser = localStorage.getItem("user");
-
-    if (storedUser) {
-      try {
-        const userData = JSON.parse(storedUser);
-        this.profile = {
-          ...this.profile,
-          email: userData.email,
-          name: userData.name,
-          role: userData.role,
-          password: userData.password,
-        };
-        this.passwords.current = userData.password;
-      } catch (error) {
-        console.error("Error al cargar los datos del usuario:", error);
-      }
-    } else {
-      console.error("Usuario no encontrado");
+  async created() {
+    try {
+      const userData = await getCurrentUser();
+      this.profile = {
+        id: userData.id,
+        username: userData.username,
+        email: userData.email,
+        password: userData.password,
+        role: userData.role || 'user',
+      };
+      // Don't store password in plain text in memory
+      this.passwords.current = '••••••••';
+    } catch (error) {
+      console.error("Error al cargar los datos del usuario:", error);
       this.$router.push("/login");
     }
   },
@@ -65,6 +62,10 @@ export default {
     },
   },
   methods: {
+    handleImageError(event) {
+      // Set default image if the current one fails to load
+      event.target.src = this.defaultPhoto;
+    },
     uploadPhoto() {
       alert("Función para subir foto no implementada");
     },
@@ -75,22 +76,26 @@ export default {
       this.message = { text: "", type: "" };
 
       try {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
-        this.profile.password = this.passwords.new;
-        this.passwords.current = this.passwords.new;
-
-        this.passwords.new = "";
-        this.passwords.confirm = "";
-
+        // If current password is masked (showing dots), don't send the masked value
+        const currentPassword = this.passwords.current === '••••••••' ? '' : this.passwords.current;
+        
+        await updateUserPassword(currentPassword, this.passwords.new);
+        
         this.message = {
-          text: "¡Contraseña actualizada correctamente!",
+          text: this.$t('profile.messages.passwordUpdated'),
           type: "success",
+        };
+        
+        // Reset password fields
+        this.passwords = { 
+          current: '••••••••', 
+          new: '', 
+          confirm: '' 
         };
       } catch (error) {
         console.error("Error al actualizar la contraseña:", error);
         this.message = {
-          text: "Error al actualizar la contraseña. Intenta nuevamente.",
+          text: this.$t('profile.messages.updateError'),
           type: "error",
         };
       } finally {
@@ -150,6 +155,7 @@ export default {
               <div class="avatar">
                 <img
                   :src="profile.photoUrl || defaultPhoto"
+                  @error="handleImageError"
                   alt="Foto de perfil"
                   class="w-32 h-32 rounded-full object-cover border-2 border-gold-500"
                 />
@@ -158,7 +164,7 @@ export default {
                 </button>
               </div>
               <div class="profile-info">
-                <h3 class="text-xl font-semibold mb-2">{{ profile.name }}</h3>
+                <h3 class="text-xl font-semibold mb-2">{{ profile.username }}</h3>
                 <div class="space-y-2">
                   <p>
                     <span class="text-gold-400 font-medium"

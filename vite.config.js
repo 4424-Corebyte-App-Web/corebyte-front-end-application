@@ -17,18 +17,19 @@ export default defineConfig(({ mode }) => {
           target: 'https://corebyte-backendapplication.azurewebsites.net',
           changeOrigin: true,
           secure: false,
-          rewrite: (path) => path,
+          rewrite: (path) => path.replace(/^\/api/, ''),
           configure: (proxy, _options) => {
             proxy.on('error', (err, _req, _res) => {
               console.error('Proxy error:', err);
             });
             proxy.on('proxyReq', (proxyReq, req, _res) => {
               console.log('Proxying request:', req.method, req.url);
-              // Add CORS headers
-              proxyReq.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
-              proxyReq.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-              proxyReq.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-              proxyReq.setHeader('Access-Control-Allow-Credentials', 'true');
+              // Forward the origin header
+              if (req.headers.origin) {
+                proxyReq.setHeader('Origin', req.headers.origin);
+              }
+              // Add any other required headers
+              proxyReq.setHeader('Accept', 'application/json');
             });
           }
         }
@@ -38,8 +39,10 @@ export default defineConfig(({ mode }) => {
       open: true,
       cors: {
         origin: 'http://localhost:5173',
-        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-        credentials: true
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+        allowedHeaders: 'Content-Type,Authorization,X-Requested-With',
+        credentials: true,
+        optionsSuccessStatus: 204
       }
     } : undefined,
     define: {

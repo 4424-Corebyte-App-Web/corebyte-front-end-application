@@ -1,15 +1,12 @@
 import http from '/src/shared/services/http.instance.js';
 
-// Use relative path in development (will be proxied by Vite)
-// Use full URL in production
-const BASE_URL = import.meta.env.DEV ? '/api/v1' : 'https://corebyte-backendapplication.azurewebsites.net/api/v1';
+const BASE_URL = 'https://corebyte-backendapplication.azurewebsites.net/api/v1';
 
 export class OrderService {
     async getAllOrders() {
-        try{
-            const [orders] = await Promise.all([
-                fetch(`${BASE_URL}/order`).then(res => res.json())
-            ]);
+        try {
+            const response = await http.get(`${BASE_URL}/order`);
+            const orders = response.data;
             const customersMap = orders.reduce((acc, item) => {
                 acc[item.id] = item.customer;
                 return acc;
@@ -43,16 +40,16 @@ export async function getOrders() {
         return [];
     }
 }
+
 export async function addOrder(order) {
     try {
         const response = await http.post(`${BASE_URL}/order`, order);
-        return response.data; 
+        return response.data;
     } catch (error) {
         console.error('Error al agregar la orden:', error);
         throw error;
     }
 }
-
 
 export async function getOrderById(id) {
     try {

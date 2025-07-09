@@ -1,6 +1,8 @@
 import { Alert } from "../model/alert.entity";
 
-const API_BASE_URL = "https://localhost:7164/api/v1/replenishment";
+const API_BASE_URL = import.meta.env.DEV 
+  ? '/api/v1/replenishment' 
+  : 'https://corebyte-backendapplication.azurewebsites.net/api/v1/replenishment';
 
 export class AlertService {
   async getAllAlerts() {    

@@ -58,7 +58,7 @@ const onSubmit = async () => {
     };
     
     console.log('Sending registration request:', {
-      url: 'https://localhost:7164/api/auth/register',
+      url: `${import.meta.env.VITE_API_BASE_URL}/auth/register`,
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
@@ -67,12 +67,13 @@ const onSubmit = async () => {
       body: JSON.stringify(requestBody, null, 2)
     });
     
-    const response = await fetch('https://localhost:7164/api/auth/register', {
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/register`, {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
+      credentials: 'include', // Important for cookies if your API uses them
       body: JSON.stringify(requestBody)
     });
 
@@ -99,7 +100,7 @@ const onSubmit = async () => {
     router.push("/login");
   } catch (err) {
     console.error("Error al conectar con el servidor:", err);
-    error.value = `Error de conexión: ${err.message}. Verifica que el servidor esté activo en https://localhost:7164`;
+    error.value = `Error de conexión: ${err.message}. Verifica que el servidor esté activo en https://corebyte-backendapplication.azurewebsites.net`;
   } finally {
     loading.value = false;
   }

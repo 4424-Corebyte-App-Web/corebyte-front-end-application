@@ -1,6 +1,10 @@
 <script>
 import { createBatch } from "../services/batch-management.service";
 
+const API_URL = import.meta.env.DEV 
+  ? "/api/v1/batch-management" 
+  : "https://corebyte-backendapplication.azurewebsites.net/api/v1/batch-management";
+  
 export default {
   name: "AgingRegister",
   data() {

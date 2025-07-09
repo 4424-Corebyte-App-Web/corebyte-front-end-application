@@ -1,13 +1,15 @@
 import axios from "axios";
 
-// Base URL without any trailing slashes
-const baseURL ='https://localhost:7164';
-// Remove leading slashes to prevent double slashes when combined
-const apiVersion = '/api/v1';
+// Use relative path in development (will be proxied by Vite)
+// Use full URL in production
+const baseURL = import.meta.env.DEV 
+  ? '/api/v1' 
+  : 'https://corebyte-backendapplication.azurewebsites.net/api/v1';
+
 const endpoint = 'replenishment';
 
 const http = axios.create({
-  baseURL: `${baseURL}${apiVersion}`,
+  baseURL,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',

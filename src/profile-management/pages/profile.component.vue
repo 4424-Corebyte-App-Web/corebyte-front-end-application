@@ -16,8 +16,7 @@ export default {
         id: "",
         username: "",
         email: "",
-        password: "",
-        role: "",
+        role: "Distribuidor", // Set default role to Distribuidor
       },
       passwords: {
         current: "",
@@ -35,20 +34,55 @@ export default {
     };
   },
   async created() {
+    this.isLoading = true;
     try {
-      const userData = await getCurrentUser();
+      // Try to get user data from localStorage first (set during login)
+      const storedUser = localStorage.getItem('user');
+      let userData = null;
+      
+      if (storedUser) {
+        try {
+          userData = JSON.parse(storedUser);
+        } catch (e) {
+          console.warn('Error parsing stored user data:', e);
+        }
+      }
+      
+      // If no stored user or invalid data, try to fetch from API
+      if (!userData || !userData.id) {
+        userData = await getCurrentUser();
+      }
+      
+      if (!userData) {
+        throw new Error('No se pudieron cargar los datos del usuario');
+      }
+      
+      // Set profile data with defaults
       this.profile = {
-        id: userData.id,
-        username: userData.username,
-        email: userData.email,
-        password: userData.password,
-        role: userData.role || 'user',
+        id: userData.id || '',
+        username: userData.username || userData.email?.split('@')[0] || 'Usuario',
+        email: userData.email || '',
+        role: 'Distribuidor', // Always set role to Distribuidor
       };
+      
       // Don't store password in plain text in memory
       this.passwords.current = '••••••••';
+      
     } catch (error) {
       console.error("Error al cargar los datos del usuario:", error);
-      this.$router.push("/login");
+      this.message = {
+        text: error.message || 'Error al cargar el perfil',
+        type: 'error'
+      };
+      
+      // Only redirect to login if it's an authentication error
+      if (error.message.includes('token') || error.message.includes('sesión') || error.message.includes('autenticación')) {
+        setTimeout(() => {
+          this.$router.push("/login");
+        }, 2000);
+      }
+    } finally {
+      this.isLoading = false;
     }
   },
   computed: {
@@ -70,7 +104,13 @@ export default {
       alert("Función para subir foto no implementada");
     },
     async updatePassword() {
-      if (!this.isPasswordFormValid) return;
+      if (!this.isPasswordFormValid) {
+        this.message = {
+          text: 'Por favor complete todos los campos requeridos correctamente',
+          type: 'error'
+        };
+        return;
+      }
 
       this.isLoading = true;
       this.message = { text: "", type: "" };
@@ -79,10 +119,14 @@ export default {
         // If current password is masked (showing dots), don't send the masked value
         const currentPassword = this.passwords.current === '••••••••' ? '' : this.passwords.current;
         
+        if (!currentPassword) {
+          throw new Error('Por favor ingrese su contraseña actual');
+        }
+        
         await updateUserPassword(currentPassword, this.passwords.new);
         
         this.message = {
-          text: this.$t('profile.messages.passwordUpdated'),
+          text: '¡Contraseña actualizada exitosamente!',
           type: "success",
         };
         
@@ -92,10 +136,25 @@ export default {
           new: '', 
           confirm: '' 
         };
+        
       } catch (error) {
         console.error("Error al actualizar la contraseña:", error);
+        let errorMessage = 'Error al actualizar la contraseña';
+        
+        if (error.response) {
+          if (error.response.status === 401) {
+            errorMessage = 'Contraseña actual incorrecta';
+          } else if (error.response.status === 400) {
+            errorMessage = 'Datos inválidos. Verifique la información ingresada.';
+          } else if (error.response.data?.message) {
+            errorMessage = error.response.data.message;
+          }
+        } else if (error.message) {
+          errorMessage = error.message;
+        }
+        
         this.message = {
-          text: this.$t('profile.messages.updateError'),
+          text: errorMessage,
           type: "error",
         };
       } finally {

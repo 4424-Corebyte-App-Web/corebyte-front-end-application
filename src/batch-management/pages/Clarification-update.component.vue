@@ -1,5 +1,5 @@
 <script>
-import axios from "axios";
+import http from '../../shared/services/http.instance';
 import { Batch } from "../model/batch-management.entity";
 
 export default {
@@ -74,9 +74,7 @@ export default {
 
       this.loading = true;
       try {
-        const response = await axios.get(
-          `https://localhost:7164/api/v1/batch-management/api/v1/${encodeURIComponent(this.searchName)}`
-        );
+        const response = await http.get(`/api/v1/batch-management/api/v1/${encodeURIComponent(this.searchName)}`);
         
         if (response.data) {
           this.batch = {
@@ -112,30 +110,49 @@ export default {
       this.loading = true;
 
       try {
-        const batchData = new Batch({
+        // Prepare the request data
+        const requestData = {
+          id: this.batch.id || 0,
           name: this.batch.name,
           type: this.batch.type,
           status: this.batch.status,
-          temperature: this.batch.temperature,
+          temperature: parseFloat(this.batch.temperature),
           amount: this.batch.amount,
-          date: this.batch.date,
-          NLote: this.batch.NLote.replace('#', '')
-        });
+          date: this.batch.date
+        };
 
-        console.log("Sending batch data to batchManagement:", batchData);
+        // Only include NLote if it has a value
+        if (this.batch.NLote) {
+          requestData.NLote = this.batch.NLote.replace('#', '');
+        }
 
-        // Use PUT for updates with the batch name
-        const response = await axios.put(
-          `https://localhost:7164/api/v1/batch-management/api/v1/${encodeURIComponent(this.batch.name)}`,
-          batchData,
-          {
-            headers: {
-              'Content-Type': 'application/json'
+        console.log("Sending batch data to batchManagement:", JSON.stringify(requestData, null, 2));
+        console.log("Request URL:", `/api/v1/batch-management/api/v1/${encodeURIComponent(this.batch.name)}`);
+
+        try {
+          // Use PUT for updates with the batch name
+          const response = await http.put(
+            `/api/v1/batch-management/api/v1/${encodeURIComponent(this.batch.name)}`,
+            requestData,
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              }
             }
-          }
-        );
+          );
 
-        console.log("Server response:", response.data);
+          console.log("Server response:", response.data);
+        } catch (error) {
+          console.error("Error details:", {
+            message: error.message,
+            response: error.response?.data,
+            status: error.response?.status,
+            headers: error.response?.headers,
+            config: error.config
+          });
+          throw error;
+        }
 
         this.showToast(
             "success",

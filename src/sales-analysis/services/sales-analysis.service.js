@@ -1,7 +1,9 @@
 import { SalesAnalysis } from '../model/sales-analysis.entity';
 import { HistoryStatusService } from '../../history-status/services/history-status.service';
 
-const BASE_URL = 'https://localhost:7164';
+const BASE_URL = import.meta.env.DEV 
+  ? "/api/v1" 
+  : "https://corebyte-backendapplication.azurewebsites.net/api/v1";
 
 export class SalesAnalysisService {
     constructor() {
@@ -11,7 +13,7 @@ export class SalesAnalysisService {
     async getSalesAnalysis() {
         try {
             const [records, historyStatus] = await Promise.all([
-                fetch(`${BASE_URL}/api/v1/record`).then(res => res.json()),
+                fetch(`${BASE_URL}/record`).then(res => res.json()),
                 this.historyStatusService.getAllHistoryStatus()
             ]);
 

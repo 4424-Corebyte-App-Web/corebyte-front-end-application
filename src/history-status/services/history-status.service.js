@@ -1,11 +1,13 @@
 import httpInstance from '../../shared/services/http.instance';
 import { HistoryStatus } from '../model/history-status.entity';
 
-const BASE_URL = 'https://localhost:7164';
+const BASE_URL = import.meta.env.DEV 
+  ? "/api/v1" 
+  : "https://corebyte-backendapplication.azurewebsites.net/api/v1";
 
 export class HistoryStatusService {
     getAllHistoryStatus() {
-        return fetch(`${BASE_URL}/api/v1/history`)
+        return fetch(`${BASE_URL}/history`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -49,10 +51,10 @@ export class HistoryStatusService {
             }
 
             const requestBody = { status: statusValue };
-            console.log('Sending request to:', `${BASE_URL}/api/v1/history/${id}/status`);
+            console.log('Sending request to:', `${BASE_URL}/history/${id}/status`);
             console.log('Request body:', requestBody);
 
-            const response = await fetch(`${BASE_URL}/api/v1/history/${id}/status`, {
+            const response = await fetch(`${BASE_URL}/history/${id}/status`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

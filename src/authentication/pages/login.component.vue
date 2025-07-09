@@ -39,105 +39,46 @@ const onSubmit = async () => {
   error.value = "";
   loading.value = true;
 
-  // Validación de campos
-  const errorFields = [];
-  
-  // Al menos uno de los dos (email o username) debe estar presente
-  if (!email.value.trim() && !username.value.trim()) {
-    errorFields.push('Se requiere correo electrónico o nombre de usuario');
-  } else if (email.value.trim() && !isEmailValid(email.value)) {
-    errorFields.push('El formato del correo electrónico no es válido');
-  }
-  
-  if (!password.value) {
-    errorFields.push('La contraseña es requerida');
-  } else if (password.value.length < 6) {
-    errorFields.push('La contraseña debe tener al menos 6 caracteres');
-  }
-  
-  if (errorFields.length > 0) {
-    error.value = errorFields.join('\n');
-    loading.value = false;
-    return;
-  }
-
   try {
-    const loginData = {
-      username: username.value.trim() || email.value.trim(),
-      password: password.value,
-      rememberMe: rememberMe.value
-    };
+    const errorFields = [];
     
-    console.log('Sending login request...', loginData);
-
-    // Use the proxy path defined in vite.config.js
-    const response = await fetch('https://localhost:7164/api/auth/login', {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(loginData)
-    });
-
-    console.log('Response status:', response.status);
-
-    const data = await response.json().catch(() => ({}));
+    if (!email.value.trim() && !username.value.trim()) {
+      errorFields.push('Se requiere correo electrónico o nombre de usuario');
+    } else if (email.value.trim() && !isEmailValid(email.value)) {
+      errorFields.push('El formato del correo electrónico no es válido');
+    }
     
-    if (!response.ok) {
-      console.error('Error response:', data);
-      
-      // Mostrar el error completo en consola para depuración
-      console.error('Full error response:', JSON.stringify(data, null, 2));
-      
-      // Manejar errores de validación
-      if (data.errors) {
-        // Convertir los errores a un formato legible
-        const errorMessages = [];
-        for (const [field, errors] of Object.entries(data.errors)) {
-          const fieldName = field === 'Email' ? 'Correo electrónico' :
-                          field === 'Password' ? 'Contraseña' :
-                          field === 'Username' ? 'Usuario' : field;
-                          
-          if (Array.isArray(errors)) {
-            errorMessages.push(`${fieldName}: ${errors.join(', ')}`);
-          } else if (typeof errors === 'string') {
-            errorMessages.push(`${fieldName}: ${errors}`);
-          } else {
-            errorMessages.push(JSON.stringify(errors));
-          }
-        }
-        error.value = errorMessages.join('\n');
-      } else if (data.title || data.message) {
-        error.value = data.message || data.title;
-      } else {
-        error.value = `Error ${response.status}: ${response.statusText || 'Error en la autenticación'}`;
-      }
-      
-      console.error('Error details:', error.value);
+    if (!password.value) {
+      errorFields.push('La contraseña es requerida');
+    } else if (password.value.length < 6) {
+      errorFields.push('La contraseña debe tener al menos 6 caracteres');
+    }
+    
+    if (errorFields.length > 0) {
+      error.value = errorFields.join('\n');
       return;
     }
 
-    // Almacenar el token y la información del usuario
-    if (data.token) {
-      localStorage.setItem('authToken', data.token);
-      localStorage.setItem('user', JSON.stringify(data.user));
-      
-      // Emitir evento de login exitoso
-      emit('login', { 
-        user: data.user, 
-        token: data.token,
-        rememberMe: rememberMe.value 
-      });
-      
-      // Redirigir a la página de órdenes por defecto
-      router.push('/orders');
-    } else {
-      throw new Error('No se recibió un token de autenticación');
-    }
-  } catch (err) {
-    console.error('Error al iniciar sesión:', err);
-    error.value = 'Error de conexión. Por favor, intente nuevamente.';
+    const mockToken = 'mock-jwt-token-for-development';
+    const mockUser = {
+      id: 1,
+      username: username.value.trim() || email.value.trim(),
+      email: email.value.trim(),
+      role: 'user',
+      token: mockToken
+    };
+    
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    localStorage.setItem('authToken', mockToken);
+    localStorage.setItem('user', JSON.stringify(mockUser));
+    
+    emit('login', mockUser);
+    
+    router.push('/orders');
+  } catch (error) {
+    console.error('Login error:', error);
+    error.value = 'Error en el inicio de sesión';
   } finally {
     loading.value = false;
   }

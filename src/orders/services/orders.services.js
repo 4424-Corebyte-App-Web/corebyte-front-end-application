@@ -1,14 +1,14 @@
 import http from '/src/shared/services/http.instance.js';
 
-
-const BASE_URL='https://localhost:7164';
+// Use relative path in development (will be proxied by Vite)
+// Use full URL in production
+const BASE_URL = import.meta.env.DEV ? '/api/v1' : 'https://corebyte-backendapplication.azurewebsites.net/api/v1';
 
 export class OrderService {
     async getAllOrders() {
         try{
             const [orders] = await Promise.all([
-                fetch(`${BASE_URL}/api/v1/order`).then(res => res.json())
-                
+                fetch(`${BASE_URL}/order`).then(res => res.json())
             ]);
             const customersMap = orders.reduce((acc, item) => {
                 acc[item.id] = item.customer;
@@ -36,7 +36,7 @@ export class OrderService {
 
 export async function getOrders() {
     try {
-        const response = await http.get(`${BASE_URL}/api/v1/order`);
+        const response = await http.get(`${BASE_URL}/order`);
         return response.data;
     } catch (error) {
         console.error('Error al cargar órdenes:', error);
@@ -45,7 +45,7 @@ export async function getOrders() {
 }
 export async function addOrder(order) {
     try {
-        const response = await http.post(`${BASE_URL}/api/v1/order`, order);
+        const response = await http.post(`${BASE_URL}/order`, order);
         return response.data; 
     } catch (error) {
         console.error('Error al agregar la orden:', error);
@@ -56,7 +56,7 @@ export async function addOrder(order) {
 
 export async function getOrderById(id) {
     try {
-        const response = await http.get(`${BASE_URL}/api/v1/order/${id}`);
+        const response = await http.get(`${BASE_URL}/order/${id}`);
         return response.data;
     } catch (error) {
         console.error('Error al obtener la orden por ID:', error);
@@ -66,7 +66,7 @@ export async function getOrderById(id) {
 
 export async function deleteOrderById(id) {
     try {
-        const response = await http.delete(`${BASE_URL}/api/v1/order/${id}`);
+        const response = await http.delete(`${BASE_URL}/order/${id}`);
         return response.data;
     } catch (error) {
         console.error('Error al eliminar la orden:', error);

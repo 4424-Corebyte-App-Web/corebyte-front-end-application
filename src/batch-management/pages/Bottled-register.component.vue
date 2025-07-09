@@ -1,6 +1,10 @@
 <script>
 import axios from "axios";
 
+const API_URL = import.meta.env.DEV 
+  ? "/api/v1/batch-management" 
+  : "https://corebyte-backendapplication.azurewebsites.net/api/v1/batch-management";
+
 export default {
   name: "BottledRegister",
   data() {
@@ -101,7 +105,7 @@ export default {
         console.log("Sending batch data to batchManagement:", batchData);
 
         const response = await axios.post(
-          "https://localhost:7164/api/v1/batch-management",
+          API_URL,
           batchData,
           {
             headers: {

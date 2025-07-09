@@ -90,7 +90,11 @@ export default {
         
         console.log('Enviando datos al servidor:', JSON.stringify(orderData, null, 2));
         
-        const response = await axios.post('https://localhost:7164/api/v1/order', orderData, {
+        // Use relative path in development (will be proxied by Vite)
+        // Use full URL in production
+        const apiUrl = import.meta.env.DEV ? '/api/v1/order' : 'https://corebyte-backendapplication.azurewebsites.net/api/v1/order';
+        
+        const response = await axios.post(apiUrl, orderData, {
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'

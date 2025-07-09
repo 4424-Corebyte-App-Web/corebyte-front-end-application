@@ -1,6 +1,10 @@
 <script>
 import axios from "axios";
-const API_URL = "https://localhost:7164/api/v1/batch-management";
+// Use relative path in development (will be proxied by Vite)
+// Use full URL in production
+const API_URL = import.meta.env.DEV 
+  ? "/api/v1/batch-management" 
+  : "https://corebyte-backendapplication.azurewebsites.net/api/v1/batch-management";
 
 export default {
   name: "FermentationRegister",
